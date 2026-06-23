@@ -1,0 +1,66 @@
+﻿<shadUI:Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:shadUI="clr-namespace:ShadUI;assembly=ShadUI"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500" Width="800" Height="500" CanResize="False"
+        x:Class="EasyPrice.NET.Views.EditProduct"
+        Title="Editar producto">
+    
+    <Grid ColumnDefinitions="1*, 1*, 1*, 1*, 1*" RowDefinitions="1*, 1*, 1*, 3*, 1*">
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+            Text="Nombre del producto"
+            Margin="15"
+            FontSize="30"
+            TextAlignment="Center"/>
+        
+        <shadUI:Card Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock
+                    Text="Precio anterior:"
+                    FontSize="15"
+                    TextAlignment="Center"/>
+                <TextBlock
+                    Text="$100"
+                    TextAlignment="Center"/>
+                <TextBlock
+                    Text="Bs. 100"
+                    TextAlignment="Center"/>
+            </StackPanel>
+        </shadUI:Card>
+        <shadUI:Card Grid.Row="1" Grid.Column="3" Grid.RowSpan="2">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock
+                    Text="Precio nuevo:"
+                    FontSize="15"
+                    TextAlignment="Center"/>
+                <TextBlock
+                    Text="$150"
+                    TextAlignment="Center"/>
+                <TextBlock
+                    Text="Bs. 150"
+                    TextAlignment="Center"/>
+            </StackPanel>
+        </shadUI:Card>
+        
+        <StackPanel Grid.Column="0" Grid.Row="3" Grid.RowSpan="3" Grid.ColumnSpan="5" Margin="20 0">
+            <Label
+                Content="Cuanto costo el bulto?"/>
+            <TextBox Margin="0" Height="5"/>
+            <Label
+                Content="Cuantas unidades trae el bulto?" Margin="0 10 0 0"/>
+            <TextBox />
+            <Label
+                Content="Que ganancia desea obtener?" Margin="0 10 0 0"/>
+            <TextBox />
+        </StackPanel>
+        
+        <Button Grid.Column="1" Grid.Row="6"
+            Content="Cancelar"
+            Classes="Destructive"/>
+        
+        <Button Grid.Column="3" Grid.Row="6"
+                Content="Guardar"
+                Classes="Primary"/>
+    </Grid>
+</shadUI:Window>
