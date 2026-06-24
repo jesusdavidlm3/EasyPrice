@@ -15,12 +15,16 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
+    
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
 
     <DockPanel>
         <StackPanel 
             DockPanel.Dock="Top" 
             HorizontalAlignment="Left" 
-            Spacing="15" Margin="5"
+            Spacing="15" Margin="10"
             Orientation="Horizontal">
             <Button
                 Content="Agregar productos"
@@ -39,10 +43,39 @@
                 PlaceholderText="Que producto buscas?"
                 Height="10"
                 Margin="10 0"/>
-            <ListBox Grid.Row="2" Grid.Column="1" 
-                Margin="10 0 10 20">
-                
-            </ListBox>
+            <DataGrid Grid.Row="2" Grid.Column="1" 
+                Margin="10 0 10 20"
+                ItemsSource="{Binding Products}"
+                IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Header="Producto"
+                        Width="2.3*"
+                        Binding="{Binding Name}"/>
+                    <DataGridTextColumn
+                        Width="1*"
+                        Header="Precio en Bs."
+                        Binding="{Binding PackPrice}"/>
+                    <DataGridTextColumn
+                        Width="1*"
+                        Header="Precio en $"
+                        Binding="{Binding PackPrice}"/>
+                    <DataGridTemplateColumn Width="2*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Button
+                                        Content="Cambiar precio"
+                                        Classes="Primary"/>
+                                    <Button
+                                        Content="Eliminar"
+                                        Classes="Destructive"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </DockPanel>
 
