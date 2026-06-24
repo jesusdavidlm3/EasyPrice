@@ -11,6 +11,6 @@
     </Application.DataTemplates>
   
     <Application.Styles>
-        <themes:ShadTheme/>
+        <FluentTheme/>
     </Application.Styles>
 </Application>

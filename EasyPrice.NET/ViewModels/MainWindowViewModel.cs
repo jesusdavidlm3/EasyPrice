@@ -1,10 +1,18 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
+using EasyPrice.NET.Models;
 using EasyPrice.NET.Services;
 
 namespace EasyPrice.NET.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
+    public ObservableCollection<Product> Products { get; set; }
+    public MainWindowViewModel()
+    {
+        Products = new ObservableCollection<Product>(Product.GetAll());
+    }
+    
     [RelayCommand]
     private static void ShowSettingsWindow()
     {
