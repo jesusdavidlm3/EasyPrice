@@ -17,22 +17,19 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private static void ShowSettingsWindow()
     {
-        var settingsWindow = new ShowSettingsService();
-        settingsWindow.ShowWindow();
+        ShowSettingsService.ShowWindow();
     }
 
     [RelayCommand]
     private static void ShowAddProductWindow()
     {
-        var addProduct = new ShowAddProductService();
-        addProduct.showAddProduct();
+        ShowAddProductService.showAddProduct();
     }
 
     [RelayCommand]
     private static void ShowEditProductWindow()
     {
-        var editProduct = new ShowEditProductService();
-        editProduct.ShowEditProduct();
+        ShowEditProductService.ShowEditProduct();
     }
 
     private void UpdateProducts()

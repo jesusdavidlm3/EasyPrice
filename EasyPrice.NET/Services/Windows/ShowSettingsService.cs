@@ -5,15 +5,16 @@ namespace EasyPrice.NET.Services;
 
 public class ShowSettingsService
 {
-    private static Window _owner;
+    private static Window _window;
 
-    public ShowSettingsService()
+    public ShowSettingsService(Window window)
     {
+        _window = window;
     }
     
-    public void ShowWindow()
+    public static void ShowWindow()
     {
         var window = new SettingsWindow();
-        window.Show();
+        window.ShowDialog(_window);
     }
 }

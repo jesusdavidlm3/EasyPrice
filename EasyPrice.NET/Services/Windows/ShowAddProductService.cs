@@ -1,17 +1,20 @@
 ﻿using EasyPrice.NET.Views;
+using ShadUI;
 
 namespace EasyPrice.NET.Services;
 
 public class ShowAddProductService
 {
-    public ShowAddProductService()
+    private static Window _window;
+    
+    public ShowAddProductService(Window window)
     {
-        
+        _window = window;
     }
 
-    public void showAddProduct()
+    public static void showAddProduct()
     {
         var window = new AddProduct();
-        window.Show();
+        window.ShowDialog(_window);
     }
 }
