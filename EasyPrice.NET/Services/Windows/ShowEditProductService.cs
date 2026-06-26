@@ -1,5 +1,5 @@
-﻿using EasyPrice.NET.Views;
-using ShadUI;
+﻿using Avalonia.Controls;
+using EasyPrice.NET.Views;
 
 namespace EasyPrice.NET.Services;
 

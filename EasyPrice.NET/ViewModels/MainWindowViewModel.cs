@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using EasyPrice.NET.Models;
 using EasyPrice.NET.Services;
@@ -8,10 +9,11 @@ namespace EasyPrice.NET.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    public ObservableCollection<Product> Products { get; set; }
+    public ObservableCollection<Product> Products { get; set; } = [];
+    
     public MainWindowViewModel()
     {
-        UpdateProducts();
+        GetProducts();
     }
     
     [RelayCommand]
@@ -21,9 +23,10 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private static void ShowAddProductWindow()
+    private async Task ShowAddProductWindow()
     {
-        ShowAddProductService.showAddProduct();
+        var product = await ShowAddProductService.showAddProduct();
+        Products.Add(product);
     }
 
     [RelayCommand]
@@ -32,8 +35,13 @@ public partial class MainWindowViewModel : ViewModelBase
         ShowEditProductService.ShowEditProduct();
     }
 
-    private void UpdateProducts()
+    private void GetProducts()
     {
-        Products = new ObservableCollection<Product>(Product.GetAll());
+        Products = Product.GetAll();
+    }
+
+    public void UpdateProducts(Product product)
+    {
+        Products.Add(product);
     }
 }

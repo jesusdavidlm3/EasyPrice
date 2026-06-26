@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasyPrice.NET.Models;
 
@@ -6,6 +7,9 @@ namespace EasyPrice.NET.ViewModels;
 
 public partial class AddProductViewModel : ViewModelBase
 {
+    private readonly Window _window;
+    private readonly MainWindowViewModel _ownerVM;
+
     [ObservableProperty]
     private partial string _name { get; set; }
     public string Name
@@ -66,9 +70,16 @@ public partial class AddProductViewModel : ViewModelBase
         }
     }
 
+    public AddProductViewModel(Window window, MainWindowViewModel ownerVM)
+    {
+        _window = window;
+        _ownerVM = ownerVM;
+    }
+
     [RelayCommand]
     public void Finish()
     {
-        Product.AddProduct(Name, (double)PackPrice!, (int)PackQuantity!, (int)Gain!);
+        var product = Product.AddProduct(Name, (double)PackPrice!, (int)PackQuantity!, (int)Gain!);
+        _window.Close(product);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using EasyPrice.NET.Services;
 using Microsoft.Data.Sqlite;
 
@@ -22,9 +23,9 @@ public class Product
         Gain = gain;
     }
 
-    public static List<Product> GetAll()
+    public static ObservableCollection<Product> GetAll()
     {
-        var products = new List<Product>();
+        var products = new ObservableCollection<Product>();
         string query = "SELECT * FROM products";
         var reader = DBService.Query(query);
         while (reader.Read())
@@ -42,19 +43,22 @@ public class Product
         return products;
     }
     
-    public static void AddProduct(string name, double packPrice, int packQuantity, int gain)
+    public static Product AddProduct(string name, double packPrice, int packQuantity, int gain)
     {
+        var product = new Product(Guid.NewGuid(), name, packPrice, packQuantity, gain);
+        
         string query = "INSERT INTO products VALUES (@Id, @Name, @PackPrice, @PackQuantity, @Gain)";
         List<(string, object)> parameters =
         [
-            ("@Id", Guid.NewGuid().ToString()),
-            ("@Name", name),
-            ("@PackPrice", packPrice.ToString()),
-            ("@PackQuantity", packQuantity.ToString()),
-            ("@Gain", gain.ToString())
+            ("@Id", product.Id.ToString()),
+            ("@Name", product.Name),
+            ("@PackPrice", product.PackPrice),
+            ("@PackQuantity", product.PackQuantity),
+            ("@Gain", product.Gain)
         ];
-        
         DBService.Execute(query, parameters);
+        
+        return product;
     }
 
     public static void UpdateProduct(Product product)

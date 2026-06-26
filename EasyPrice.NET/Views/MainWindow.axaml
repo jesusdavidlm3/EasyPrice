@@ -1,9 +1,8 @@
-<themes:Window xmlns="https://github.com/avaloniaui"
+<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:EasyPrice.NET.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:themes="clr-namespace:ShadUI;assembly=ShadUI"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720" MinWidth="800" MinHeight="700"
         x:Class="EasyPrice.NET.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
@@ -15,10 +14,6 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-    
-    <Window.DataContext>
-        <vm:MainWindowViewModel/>
-    </Window.DataContext>
 
     <DockPanel>
         <StackPanel 
@@ -43,10 +38,11 @@
                 PlaceholderText="Que producto buscas?"
                 Height="10"
                 Margin="10 0"/>
-            <DataGrid Grid.Row="2" Grid.Column="1" 
+            <DataGrid Grid.Row="2" Grid.Column="1"
                 Margin="10 0 10 20"
-                ItemsSource="{Binding Products}"
-                IsReadOnly="True">
+                ItemsSource="{Binding Products, Mode=TwoWay}"
+                IsReadOnly="True"
+                Background="Gray">
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Header="Producto"
@@ -79,4 +75,4 @@
         </Grid>
     </DockPanel>
 
-</themes:Window>
+</Window>
