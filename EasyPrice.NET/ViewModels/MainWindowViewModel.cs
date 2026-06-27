@@ -38,7 +38,7 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void ShowDeleteProductWindow()
     {
-        ShowEditProductService.ShowEditProduct();
+        ShowDeleteProductService.ShowDeleteProduct();
     }
     
     private void GetProducts()

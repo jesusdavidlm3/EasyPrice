@@ -15,6 +15,7 @@ public partial class MainWindow : Window
         var showEditProduct = new ShowEditProductService(this);
         var showAddProduct = new ShowAddProductService(this, viewModel);
         var showSettings = new ShowSettingsService(this);
+        var showDeleteProduct = new ShowDeleteProductService(this, viewModel);
         InitializeComponent();
 
     }

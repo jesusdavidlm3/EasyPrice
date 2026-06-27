@@ -73,7 +73,7 @@ public class Product
         ];
     }
 
-    public static void RemoveProduct(Product product)
+    public static void DeleteProduct(Product product)
     {
         string query = "DELETE FROM products WHERE Id = @Id";
         List<(string, object)> parameters = [("@Id", product.Id.ToString())];
