@@ -35,6 +35,12 @@ public partial class MainWindowViewModel : ViewModelBase
         ShowEditProductService.ShowEditProduct();
     }
 
+    [RelayCommand]
+    private void ShowDeleteProductWindow()
+    {
+        ShowEditProductService.ShowEditProduct();
+    }
+    
     private void GetProducts()
     {
         Products = Product.GetAll();
