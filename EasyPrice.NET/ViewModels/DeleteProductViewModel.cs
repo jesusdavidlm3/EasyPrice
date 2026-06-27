@@ -24,12 +24,12 @@ public partial class DeleteProductViewModel : ViewModelBase
     public void Delete()
     {
         Product.DeleteProduct(ProductToDelete);
-        _window.Close(ProductToDelete);
+        _window.Close(true);
     }
 
     [RelayCommand]
     public void Cancel()
     {
-        _window.Close();
+        _window.Close(false);
     }
 }

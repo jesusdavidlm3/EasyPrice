@@ -42,9 +42,9 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task ShowDeleteProductWindow(Product product)
     {
         var res = await ShowDeleteProductService.ShowDeleteProduct(product);
-        if (res != null)
+        if (res == true)
         {
-            Products.Remove(res);
+            Products.Remove(product);
         }
     }
     

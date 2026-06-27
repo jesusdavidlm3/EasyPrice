@@ -15,10 +15,10 @@ public class ShowDeleteProductService
         _window = owner;
     }
 
-    public static async Task<Product?> ShowDeleteProduct(Product product)
+    public static async Task<bool?> ShowDeleteProduct(Product product)
     {
         var window = new DeleteProduct(product);
-        var res =  await window.ShowDialog<Product>(_window);
+        var res =  await window.ShowDialog<bool>(_window);
         return res;
     }
 }
