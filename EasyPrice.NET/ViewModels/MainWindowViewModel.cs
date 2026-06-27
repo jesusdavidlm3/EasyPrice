@@ -26,7 +26,10 @@ public partial class MainWindowViewModel : ViewModelBase
     private async Task ShowAddProductWindow()
     {
         var product = await ShowAddProductService.showAddProduct();
-        Products.Add(product);
+        if (product != null)
+        {
+            Products.Add(product);
+        }
     }
 
     [RelayCommand]
@@ -36,18 +39,17 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void ShowDeleteProductWindow()
+    private async Task ShowDeleteProductWindow(Product product)
     {
-        ShowDeleteProductService.ShowDeleteProduct();
+        var res = await ShowDeleteProductService.ShowDeleteProduct(product);
+        if (res != null)
+        {
+            Products.Remove(res);
+        }
     }
     
     private void GetProducts()
     {
         Products = Product.GetAll();
-    }
-
-    public void UpdateProducts(Product product)
-    {
-        Products.Add(product);
     }
 }

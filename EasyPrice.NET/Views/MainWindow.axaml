@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720" MinWidth="800" MinHeight="700"
+        WindowState="Maximized"
         x:Class="EasyPrice.NET.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
@@ -68,7 +69,7 @@
                                         Content="Eliminar"
                                         Classes="Destructive"
                                         Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ShowDeleteProductWindowCommand}"
-                                        CommandParameter="{Binding Id}"/>
+                                        CommandParameter="{Binding}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

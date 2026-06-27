@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasyPrice.NET.Models;
 
@@ -9,17 +10,21 @@ namespace EasyPrice.NET.ViewModels;
 public partial class DeleteProductViewModel : ViewModelBase
 {
     private Window _window;
+    
+    [ObservableProperty]
+    private Product _productToDelete;
 
-    public DeleteProductViewModel(Window window)
+    public DeleteProductViewModel(Window window, Product productToDelete)
     {
         _window = window;
+        ProductToDelete = productToDelete;
     }
 
     [RelayCommand]
-    public void Delete(Product product)
+    public void Delete()
     {
-        Product.DeleteProduct(product);
-        _window.Close(product);
+        Product.DeleteProduct(ProductToDelete);
+        _window.Close(ProductToDelete);
     }
 
     [RelayCommand]

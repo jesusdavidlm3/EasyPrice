@@ -1,16 +1,19 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using EasyPrice.NET.Models;
 using EasyPrice.NET.ViewModels;
 
 namespace EasyPrice.NET.Views;
 
 public partial class DeleteProduct : Window
 {
-    public DeleteProduct()
+    private DeleteProductViewModel _viewModel;
+    
+    public DeleteProduct(Product product)
     {
-        var ViewModel = new DeleteProductViewModel(this);
-        DataContext = ViewModel;
         InitializeComponent();
+        _viewModel = new DeleteProductViewModel(this, product);
+        DataContext = _viewModel;
     }
 }

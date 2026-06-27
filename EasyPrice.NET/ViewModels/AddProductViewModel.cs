@@ -8,7 +8,6 @@ namespace EasyPrice.NET.ViewModels;
 public partial class AddProductViewModel : ViewModelBase
 {
     private readonly Window _window;
-    private readonly MainWindowViewModel _ownerVM;
 
     [ObservableProperty]
     private partial string _name { get; set; }
@@ -70,10 +69,9 @@ public partial class AddProductViewModel : ViewModelBase
         }
     }
 
-    public AddProductViewModel(Window window, MainWindowViewModel ownerVM)
+    public AddProductViewModel(Window window)
     {
         _window = window;
-        _ownerVM = ownerVM;
     }
 
     [RelayCommand]

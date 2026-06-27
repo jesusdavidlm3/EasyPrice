@@ -16,7 +16,9 @@
             VerticalAlignment="Center"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="15">
             <Button
-                Content="Eliminar"/>
+                Content="Eliminar"
+                Command="{Binding DeleteCommand}"
+                CommandParameter="{Binding ProductToDelete}"/>
             <Button
                 Content="Cancelar"
                 Command="{Binding CancelCommand }"/>

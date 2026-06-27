@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using Avalonia.Controls;
+using EasyPrice.NET.Models;
 using EasyPrice.NET.ViewModels;
 using EasyPrice.NET.Views;
 
@@ -7,17 +9,16 @@ namespace EasyPrice.NET.Services;
 public class ShowDeleteProductService
 {
     private static Window _window;
-    public MainWindowViewModel _ownerVm;
 
     public ShowDeleteProductService(Window owner, MainWindowViewModel ownerVm)
     {
         _window = owner;
-        _ownerVm = ownerVm;
     }
 
-    public static void ShowDeleteProduct()
+    public static async Task<Product?> ShowDeleteProduct(Product product)
     {
-        var window = new DeleteProduct();
-        window.ShowDialog(_window);
+        var window = new DeleteProduct(product);
+        var res =  await window.ShowDialog<Product>(_window);
+        return res;
     }
 }

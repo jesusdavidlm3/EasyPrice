@@ -7,12 +7,12 @@ namespace EasyPrice.NET.Views;
 
 public partial class AddProduct : Window
 {
-    private AddProductViewModel viewModel;
+    private AddProductViewModel _viewModel;
     
-    public AddProduct(MainWindowViewModel ownerVm)
+    public AddProduct()
     {
         InitializeComponent();
-        viewModel = new AddProductViewModel(this, ownerVm);
-        DataContext = viewModel;
+        _viewModel = new AddProductViewModel(this);
+        DataContext = _viewModel;
     }
 }

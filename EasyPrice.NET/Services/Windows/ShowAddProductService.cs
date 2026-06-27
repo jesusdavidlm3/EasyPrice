@@ -18,9 +18,9 @@ public class ShowAddProductService
         _OwnerVM = OwnerVM;
     }
 
-    public static async Task<Product> showAddProduct()
+    public static async Task<Product?> showAddProduct()
     {
-        var window = new AddProduct(_OwnerVM);
+        var window = new AddProduct();
         var res = await window.ShowDialog<Product>(_window);
         return res;
     }
