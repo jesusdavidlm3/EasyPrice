@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EasyPrice.NET.Models;
 using Microsoft.Data.Sqlite;
 
 namespace EasyPrice.NET.Services;
@@ -6,6 +7,7 @@ namespace EasyPrice.NET.Services;
 public class DBService
 {
     private static SqliteConnection connection = new SqliteConnection("Data Source=db.db;Mode=ReadWriteCreate");
+    public static Settings settings {  get; set; }
 
     static DBService()
     {
@@ -15,9 +17,10 @@ public class DBService
 
     private static void InitDb()
     {
-        var command =  connection.CreateCommand();
-        command.CommandText = "CREATE TABLE IF NOT EXISTS products(Id TEXT, Name string, PackPrice REAL,PackQuantity INTEGER, Gain INTEGER)";
-        command.ExecuteNonQuery();
+        settings = Settings.Get();
+        var products = connection.CreateCommand();
+        products.CommandText = "CREATE TABLE IF NOT EXISTS products(Id TEXT, Name string, PackPrice REAL,PackQuantity INTEGER, Gain INTEGER)";
+        products.ExecuteNonQuery();
     }
     
     public static SqliteDataReader Query(string query, List<(string, object)>? parameters = null)

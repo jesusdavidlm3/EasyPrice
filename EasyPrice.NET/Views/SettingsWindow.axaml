@@ -4,6 +4,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="800" Height="450" CanResize="False" WindowStartupLocation="CenterOwner"
         x:Class="EasyPrice.NET.Views.SettingsWindow"
+        xmlns:vm="clr-namespace:EasyPrice.NET.ViewModels"
+        x:DataType="vm:SettingsWindowViewModel"
         Title="Ajustes">
     <StackPanel HorizontalAlignment="Center" Width="250" Margin="20">
         <TextBlock
@@ -14,11 +16,13 @@
         <Label
             Content="Precio del dolar:"/>
         <TextBox
-            Text="Bs. 600"/>
+            Text="{Binding DolarPrice }"/>
         <Button
+            HorizontalAlignment="Center"
             Content="Guardar"
             Classes="Primary"
             Width="90"
-            Margin="20"/>
+            Margin="20"
+            Command="{Binding SaveCommand}"/>
     </StackPanel>
 </Window>
