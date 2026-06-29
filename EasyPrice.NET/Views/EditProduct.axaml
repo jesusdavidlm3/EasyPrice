@@ -13,7 +13,7 @@
             FontSize="30"
             TextAlignment="Center"/>
         
-        <StackPanel Background="Gray" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Classes="Card">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock
                     Text="Precio anterior:"
@@ -27,7 +27,7 @@
                     TextAlignment="Center"/>
             </StackPanel>
         </StackPanel>
-        <StackPanel Background="Gray" Grid.Row="1" Grid.Column="3" Grid.RowSpan="2">
+        <StackPanel Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Classes="Card">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock
                     Text="Precio nuevo:"
@@ -56,10 +56,9 @@
         
         <Button Grid.Column="1" Grid.Row="6"
             Content="Cancelar"
-            Classes="Destructive"/>
+            Classes="Red"/>
         
         <Button Grid.Column="3" Grid.Row="6"
-                Content="Guardar"
-                Classes="Primary"/>
+            Content="Guardar"/>
     </Grid>
 </Window>

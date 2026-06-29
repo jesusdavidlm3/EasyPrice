@@ -27,6 +27,7 @@
         <TextBox 
             Text="{Binding Gain}"/>
         <Button
+            HorizontalAlignment="Center"
             Content="Guardar"
             Classes="Primary"
             Width="90"

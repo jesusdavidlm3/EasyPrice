@@ -42,8 +42,7 @@
             <DataGrid Grid.Row="2" Grid.Column="1"
                 Margin="10 0 10 20"
                 ItemsSource="{Binding Products, Mode=TwoWay}"
-                IsReadOnly="True"
-                Background="Gray">
+                IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Header="Producto"
