@@ -79,4 +79,26 @@ public class Product
         List<(string, object)> parameters = [("@Id", product.Id.ToString())];
         DBService.Execute(query, parameters);
     }
+
+
+    public double GetValueDolar
+    {
+        get
+        {
+            double unitPrice = PackPrice / PackQuantity;
+            double operableGain = Gain / 100d;
+            double unitValue = unitPrice + (operableGain * unitPrice);
+            return unitValue;
+        }
+    }
+    
+    public double GetValueBs
+    {
+        get
+        {
+            double unitValueDolar = GetValueDolar;
+            double unitValueBs = unitValueDolar * DBService.settings.DolarPrice;
+            return unitValueBs;
+        }
+    }
 }

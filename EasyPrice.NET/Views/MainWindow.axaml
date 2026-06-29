@@ -51,11 +51,11 @@
                     <DataGridTextColumn
                         Width="1*"
                         Header="Precio en Bs."
-                        Binding="{Binding PackPrice}"/>
+                        Binding="{Binding GetValueBs, StringFormat=Bs. {0:f2}}"/>
                     <DataGridTextColumn
                         Width="1*"
                         Header="Precio en $"
-                        Binding="{Binding PackPrice}"/>
+                        Binding="{Binding GetValueDolar, StringFormat=${0:f2}}}"/>
                     <DataGridTemplateColumn Width="2*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
