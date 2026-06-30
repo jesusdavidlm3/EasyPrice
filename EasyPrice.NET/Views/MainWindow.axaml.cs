@@ -10,12 +10,8 @@ public partial class MainWindow : Window
     
     public MainWindow()
     {
-        viewModel = new MainWindowViewModel();
+        viewModel = new MainWindowViewModel(this);
         DataContext = viewModel;
-        var showEditProduct = new ShowEditProductService(this);
-        var showAddProduct = new ShowAddProductService(this, viewModel);
-        var showSettings = new ShowSettingsService(this);
-        var showDeleteProduct = new ShowDeleteProductService(this, viewModel);
         InitializeComponent();
 
     }

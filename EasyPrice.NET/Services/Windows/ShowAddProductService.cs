@@ -1,24 +1,23 @@
-﻿using System;
-using System.Threading.Tasks;
-using EasyPrice.NET.ViewModels;
-using EasyPrice.NET.Views;
+﻿using System.Threading.Tasks;
 using Avalonia.Controls;
 using EasyPrice.NET.Models;
+using EasyPrice.NET.ViewModels;
+using EasyPrice.NET.Views;
 
-namespace EasyPrice.NET.Services;
+namespace EasyPrice.NET.Services.Windows;
 
 public class ShowAddProductService
 {
-    private static MainWindowViewModel _OwnerVM;
-    private static Window _window;
+    private MainWindowViewModel _ownerVm;
+    private readonly Window _window;
     
-    public ShowAddProductService(Window window, MainWindowViewModel OwnerVM)
+    public ShowAddProductService(Window window, MainWindowViewModel ownerVm)
     {
         _window = window;
-        _OwnerVM = OwnerVM;
+        _ownerVm = ownerVm;
     }
 
-    public static async Task<Product?> showAddProduct()
+    public async Task<Product?> ShowAddProduct()
     {
         var window = new AddProduct();
         var res = await window.ShowDialog<Product>(_window);

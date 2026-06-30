@@ -4,18 +4,20 @@ using EasyPrice.NET.Models;
 using EasyPrice.NET.ViewModels;
 using EasyPrice.NET.Views;
 
-namespace EasyPrice.NET.Services;
+namespace EasyPrice.NET.Services.Windows;
 
 public class ShowDeleteProductService
 {
-    private static Window _window;
+    private readonly Window _window;
+    private MainWindowViewModel _ownerVm;
 
-    public ShowDeleteProductService(Window owner, MainWindowViewModel ownerVm)
+    public ShowDeleteProductService(Window window, MainWindowViewModel ownerVm)
     {
-        _window = owner;
+        _window = window;
+        _ownerVm = ownerVm;
     }
 
-    public static async Task<bool?> ShowDeleteProduct(Product product)
+    public async Task<bool?> ShowDeleteProduct(Product product)
     {
         var window = new DeleteProduct(product);
         var res =  await window.ShowDialog<bool>(_window);

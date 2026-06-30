@@ -1,31 +1,42 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.Input;
 using EasyPrice.NET.Models;
 using EasyPrice.NET.Services;
+using EasyPrice.NET.Services.Windows;
 
 namespace EasyPrice.NET.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
     public ObservableCollection<Product> Products { get; set; } = [];
+
+    private ShowAddProductService _showAddProductService;
+    private ShowEditProductService _showEditProductService;
+    private ShowDeleteProductService _showDeleteProductService;
+    private ShowSettingsService _showSettingsService;
     
-    public MainWindowViewModel()
+    public MainWindowViewModel(Window  window)
     {
         GetProducts();
+        _showAddProductService = new ShowAddProductService(window, this);
+        _showDeleteProductService = new ShowDeleteProductService(window, this);
+        _showEditProductService = new ShowEditProductService(window);
+        _showSettingsService = new ShowSettingsService(window);
     }
     
     [RelayCommand]
-    private static void ShowSettingsWindow()
+    private void ShowSettingsWindow()
     {
-        ShowSettingsService.ShowWindow();
+        _showSettingsService.ShowWindow();
     }
 
     [RelayCommand]
     private async Task ShowAddProductWindow()
     {
-        var product = await ShowAddProductService.showAddProduct();
+        var product = await _showAddProductService.ShowAddProduct();
         if (product != null)
         {
             Products.Add(product);
@@ -33,15 +44,15 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private static void ShowEditProductWindow()
+    private void ShowEditProductWindow()
     {
-        ShowEditProductService.ShowEditProduct();
+        _showEditProductService.ShowEditProduct();
     }
 
     [RelayCommand]
     private async Task ShowDeleteProductWindow(Product product)
     {
-        var res = await ShowDeleteProductService.ShowDeleteProduct(product);
+        var res = await _showDeleteProductService.ShowDeleteProduct(product);
         if (res == true)
         {
             Products.Remove(product);
