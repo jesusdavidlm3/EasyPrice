@@ -24,7 +24,7 @@ public partial class MainWindowViewModel : ViewModelBase
         _showAddProductService = new ShowAddProductService(window, this);
         _showDeleteProductService = new ShowDeleteProductService(window, this);
         _showEditProductService = new ShowEditProductService(window);
-        _showSettingsService = new ShowSettingsService(window);
+        _showSettingsService = new ShowSettingsService(window, this);
     }
     
     [RelayCommand]
@@ -62,5 +62,15 @@ public partial class MainWindowViewModel : ViewModelBase
     private void GetProducts()
     {
         Products = Product.GetAll();
+    }
+
+    public void Reload()
+    {
+        var newList = Product.GetAll();
+        Products.Clear();
+        foreach (var item in newList)
+        {
+            Products.Add(item);
+        }
     }
 }
