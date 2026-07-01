@@ -6,7 +6,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="800" Height="450" CanResize="False" WindowStartupLocation="CenterOwner"
         x:Class="EasyPrice.NET.Views.AddProduct"
         Title="Agregar producto"
-        x:DataType="vm:AddProductViewModel">
+        x:DataType="vm:AddProductViewModel"
+        ShowInTaskbar="False">
     
     <StackPanel Width="500">
         <TextBlock
@@ -15,23 +16,41 @@
             Margin="0 10 0 20"
             FontSize="30"/>
         <Label Content="Nombre del producto"/>
-        <TextBox 
+        <TextBox
             Text="{Binding Name}"/>
         <Label Content="Cuanto costo el bulto?" Margin="0 15 0 0"/>
-        <TextBox 
-            Text="{Binding PackPrice}"/>
+        <NumericUpDown
+            ShowButtonSpinner="False"
+            AllowSpin="False"
+            Increment="0.01"
+            Value="{Binding PackPrice}"/>
         <Label Content="Cuantas unidades trae el bulto?" Margin="0 15 0 0"/>
-        <TextBox 
-            Text="{Binding PackQuantity}"/>
+        <NumericUpDown
+            ShowButtonSpinner="False"
+            AllowSpin="False"
+            Increment="1"
+            Value="{Binding PackQuantity}"/>
         <Label Content="Que ganancia desea obtener?" Margin="0 15 0 0"/>
-        <TextBox 
+        <NumericUpDown
+            ShowButtonSpinner="False"
+            AllowSpin="False"
+            Increment="1"
             Text="{Binding Gain}"/>
-        <Button
+        <StackPanel
+            Orientation="Horizontal"
             HorizontalAlignment="Center"
-            Content="Guardar"
-            Classes="Primary"
-            Width="90"
-            Margin="20"
-            Command="{Binding Finish}"/>
+            Spacing="40"
+            Margin="0 20">
+            <Button
+                Content="Cancelar"
+                Classes="Red"
+                Width="90"
+                Command="{Binding CancelCommand}"/>
+            <Button
+                Content="Guardar"
+                Classes="Primary"
+                Width="90"
+                Command="{Binding FinishCommand}"/>
+        </StackPanel>
     </StackPanel>
 </Window>

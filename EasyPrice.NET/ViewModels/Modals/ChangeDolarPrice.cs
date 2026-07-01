@@ -6,7 +6,7 @@ using EasyPrice.NET.Services;
 
 namespace EasyPrice.NET.ViewModels;
 
-public partial class SettingsWindowViewModel : ViewModelBase
+public partial class ChangeDolarPrice : ViewModelBase
 {
     private Window _ownerWindow;
     public MainWindowViewModel _ownerVm { get; set; }
@@ -25,7 +25,7 @@ public partial class SettingsWindowViewModel : ViewModelBase
         }
     }
 
-    public SettingsWindowViewModel(Window ownerWindow, MainWindowViewModel ownerVm)
+    public ChangeDolarPrice(Window ownerWindow, MainWindowViewModel ownerVm)
     {
         _ownerWindow = ownerWindow;
         _ownerVm = ownerVm;
@@ -36,6 +36,12 @@ public partial class SettingsWindowViewModel : ViewModelBase
     {
         DBService.settings.UpdateDolarPrice(DolarPrice);
         _ownerVm.Reload();
+        _ownerWindow.Close();
+    }
+    
+    [RelayCommand]
+    public void Cancel()
+    {
         _ownerWindow.Close();
     }
 }

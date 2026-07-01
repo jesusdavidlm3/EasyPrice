@@ -5,11 +5,11 @@ using EasyPrice.NET.ViewModels;
 
 namespace EasyPrice.NET.Views;
 
-public partial class SettingsWindow : Window
+public partial class ChangeDolarPrice : Window
 {
-    public SettingsWindow(MainWindowViewModel ownerVm)
+    public ChangeDolarPrice(MainWindowViewModel ownerVm)
     {
-        var viewModel = new SettingsWindowViewModel(this,  ownerVm);
+        var viewModel = new ViewModels.ChangeDolarPrice(this,  ownerVm);
         DataContext = viewModel;
         InitializeComponent();
     }

@@ -60,7 +60,7 @@
                     <DataGridTemplateColumn Width="2*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
                                     <Button
                                         Content="Cambiar precio"
                                         Classes="Primary"
@@ -68,7 +68,7 @@
                                         CommandParameter="{Binding}"/>
                                     <Button
                                         Content="Eliminar"
-                                        Classes="Destructive"
+                                        Classes="Red"
                                         Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ShowDeleteProductWindowCommand}"
                                         CommandParameter="{Binding}"/>
                                 </StackPanel>

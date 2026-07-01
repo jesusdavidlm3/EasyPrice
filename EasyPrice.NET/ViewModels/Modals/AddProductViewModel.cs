@@ -80,4 +80,10 @@ public partial class AddProductViewModel : ViewModelBase
         var product = Product.AddProduct(Name, (double)PackPrice!, (int)PackQuantity!, (int)Gain!);
         _window.Close(product);
     }
+
+    [RelayCommand]
+    public void Cancel()
+    {
+        _window.Close();
+    }
 }

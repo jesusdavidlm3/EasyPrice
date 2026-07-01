@@ -31,4 +31,23 @@
         <HintPath>..\..\..\.nuget\packages\avalonia.controls.datagrid\12.0.0\lib\net8.0\Avalonia.Controls.DataGrid.dll</HintPath>
       </Reference>
     </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\Modals\AddProduct.axaml.cs">
+        <DependentUpon>AddProduct.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Modals\DeleteProduct.axaml.cs">
+        <DependentUpon>DeleteProduct.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Modals\EditProduct.axaml.cs">
+        <DependentUpon>EditProduct.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+      <Compile Update="Views\Modals\ChangeDolarPrice.axaml.cs">
+        <DependentUpon>SettingsWindow.axaml</DependentUpon>
+        <SubType>Code</SubType>
+      </Compile>
+    </ItemGroup>
 </Project>
