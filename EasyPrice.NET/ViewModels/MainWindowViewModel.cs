@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasyPrice.NET.Models;
 using EasyPrice.NET.Services;
@@ -11,7 +12,30 @@ namespace EasyPrice.NET.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    public ObservableCollection<Product> Products { get; set; } = [];
+    public ObservableCollection<Product> FullList { get; set; } = [];
+    public ObservableCollection<Product> ShownList { get; set; } = [];
+    
+    [ObservableProperty]
+    public partial string SearchText { get; set; } = string.Empty;
+
+    partial void OnSearchTextChanged(string value)
+    {
+        ShownList.Clear();
+        if (value != "")
+        {
+            foreach (var product in FullList)
+            {
+                if (product.Name.ToLower().Contains(value.ToLower()))
+                {
+                    ShownList.Add(product);
+                }
+            }
+        }
+        else
+        {
+            Reload();
+        }
+    }
 
     private ShowAddProductService _showAddProductService;
     private ShowEditProductService _showEditProductService;
@@ -39,7 +63,8 @@ public partial class MainWindowViewModel : ViewModelBase
         var product = await _showAddProductService.ShowAddProduct();
         if (product != null)
         {
-            Products.Add(product);
+            FullList.Add(product);
+            ShownList.Add(product);
         }
     }
 
@@ -49,8 +74,11 @@ public partial class MainWindowViewModel : ViewModelBase
         var newProduct = await _showEditProductService.ShowEditProduct(product);
         if (newProduct != null)
         {
-            Products.Remove(product);
-            Products.Add(new Product(newProduct));
+            var toAdd = new Product(newProduct);
+            FullList.Remove(product);
+            FullList.Add(toAdd);
+            ShownList.Remove(product);
+            ShownList.Add(toAdd);
         }
     }
 
@@ -60,22 +88,31 @@ public partial class MainWindowViewModel : ViewModelBase
         var res = await _showDeleteProductService.ShowDeleteProduct(product);
         if (res == true)
         {
-            Products.Remove(product);
+            FullList.Remove(product);
+            ShownList.Remove(product);
         }
     }
     
     private void GetProducts()
     {
-        Products = Product.GetAll();
+        FullList = Product.GetAll();
+        ShownList = new ObservableCollection<Product>(FullList);
     }
 
     public void Reload()
     {
         var newList = Product.GetAll();
-        Products.Clear();
+        FullList.Clear();
+        ShownList.Clear();
         foreach (var item in newList)
         {
-            Products.Add(item);
+            FullList.Add(item);
+            ShownList.Add(item);
         }
+    }
+
+    public void Search()
+    {
+        
     }
 }

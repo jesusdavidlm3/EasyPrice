@@ -37,11 +37,12 @@
                 FontSize="30"/>
             <TextBox Grid.Row="1" Grid.Column="1"
                 PlaceholderText="Que producto buscas?"
+                Text="{Binding SearchText}"
                 Height="10"
                 Margin="10 0"/>
             <DataGrid Grid.Row="2" Grid.Column="1"
                 Margin="10 0 10 20"
-                ItemsSource="{Binding Products, Mode=TwoWay}"
+                ItemsSource="{Binding ShownList, Mode=TwoWay}"
                 IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn
