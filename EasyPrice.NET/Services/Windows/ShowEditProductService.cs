@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using EasyPrice.NET.Models;
 using EasyPrice.NET.Views;
 
 namespace EasyPrice.NET.Services.Windows;
@@ -11,9 +12,9 @@ public class ShowEditProductService
         _window = window;
     }
 
-    public void ShowEditProduct()
+    public void ShowEditProduct(Product product)
     {
-        var window = new EditProduct();
+        var window = new EditProduct(product);
         window.ShowDialog(_window);
     }
 }

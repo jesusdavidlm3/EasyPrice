@@ -44,9 +44,9 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void ShowEditProductWindow()
+    private void ShowEditProductWindow(Product product)
     {
-        _showEditProductService.ShowEditProduct();
+        _showEditProductService.ShowEditProduct(product);
     }
 
     [RelayCommand]

@@ -63,7 +63,8 @@
                                     <Button
                                         Content="Cambiar precio"
                                         Classes="Primary"
-                                        Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ShowEditProductWindowCommand}"/>
+                                        Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ShowEditProductWindowCommand}"
+                                        CommandParameter="{Binding}"/>
                                     <Button
                                         Content="Eliminar"
                                         Classes="Destructive"
