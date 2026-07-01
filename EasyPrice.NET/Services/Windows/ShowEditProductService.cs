@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using System.Threading.Tasks;
+using Avalonia.Controls;
 using EasyPrice.NET.Models;
 using EasyPrice.NET.Views;
 
@@ -12,9 +13,10 @@ public class ShowEditProductService
         _window = window;
     }
 
-    public void ShowEditProduct(Product product)
+    public async Task<Product?> ShowEditProduct(Product product)
     {
         var window = new EditProduct(product);
-        window.ShowDialog(_window);
+        var res = await window.ShowDialog<Product>(_window);
+        return res;
     }
 }

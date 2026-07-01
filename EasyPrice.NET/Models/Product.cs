@@ -23,6 +23,15 @@ public class Product
         Gain = gain;
     }
 
+    public Product(Product newProduct)
+    {
+        Id = newProduct.Id;
+        Name = newProduct.Name;
+        PackPrice = newProduct.PackPrice;
+        PackQuantity = newProduct.PackQuantity;
+        Gain = newProduct.Gain;
+    }
+
     public static ObservableCollection<Product> GetAll()
     {
         var products = new ObservableCollection<Product>();
@@ -63,7 +72,7 @@ public class Product
 
     public static void UpdateProduct(Product product)
     {
-        string query = "UPDATE poducts SET PackPrice = @PackPrice, PackQuantity = @PackQuantity, Gain = @Gain WHERE Id = @Id";
+        string query = "UPDATE products SET PackPrice = @PackPrice, PackQuantity = @PackQuantity, Gain = @Gain WHERE Id = @Id";
         List< (string, object)> parameters =
         [
             ("@PackPrice", product.PackPrice.ToString()),
@@ -71,6 +80,7 @@ public class Product
             ("@Gain", product.Gain.ToString()),
             ("@Id", product.Id.ToString())
         ];
+        DBService.Execute(query, parameters);
     }
 
     public static void DeleteProduct(Product product)

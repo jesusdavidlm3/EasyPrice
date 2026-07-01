@@ -22,10 +22,10 @@
                     FontSize="15"
                     TextAlignment="Center"/>
                 <TextBlock
-                    Text="{Binding Product.GetValueDolar, StringFormat=${0:f2}}"
+                    Text="{Binding CurrentProduct.GetValueDolar, StringFormat=${0:f2}}"
                     TextAlignment="Center"/>
                 <TextBlock
-                    Text="{Binding Product.GetValueBs, StringFormat=Bs. {0:f2}}"
+                    Text="{Binding CurrentProduct.GetValueBs, StringFormat=Bs. {0:f2}}"
                     TextAlignment="Center"/>
             </StackPanel>
         </StackPanel>
@@ -67,6 +67,7 @@
             Command="{Binding CancelCommand}"/>
         
         <Button Grid.Column="3" Grid.Row="6"
-            Content="Guardar"/>
+            Content="Guardar"
+            Command="{Binding SaveCommand}"/>
     </Grid>
 </Window>

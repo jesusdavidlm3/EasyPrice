@@ -10,7 +10,7 @@ public partial class EditProductViewModel : ViewModelBase
 {
     private  readonly Window _window;
     [ObservableProperty]
-    public Product _product;
+    public partial Product CurrentProduct { get; set; }
     
     [ObservableProperty]
     public partial double PackPrice { get; set; }
@@ -29,7 +29,7 @@ public partial class EditProductViewModel : ViewModelBase
     
     public EditProductViewModel(Window window, Product product)
     {
-        _product = product;
+        CurrentProduct = product;
         _window = window;
         PackPrice = product.PackPrice;
         PackQuantity = product.PackQuantity;
@@ -65,5 +65,14 @@ public partial class EditProductViewModel : ViewModelBase
     {
         _window.Close();
     }
-    
+
+    [RelayCommand]
+    public void Save()
+    {
+        CurrentProduct.PackPrice = PackPrice;
+        CurrentProduct.PackQuantity = PackQuantity;
+        CurrentProduct.Gain = Gain;
+        Product.UpdateProduct(CurrentProduct);
+        _window.Close(CurrentProduct);
+    }
 }

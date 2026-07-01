@@ -44,9 +44,14 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void ShowEditProductWindow(Product product)
+    private async Task ShowEditProductWindow(Product product)
     {
-        _showEditProductService.ShowEditProduct(product);
+        var newProduct = await _showEditProductService.ShowEditProduct(product);
+        if (newProduct != null)
+        {
+            Products.Remove(product);
+            Products.Add(new Product(newProduct));
+        }
     }
 
     [RelayCommand]
