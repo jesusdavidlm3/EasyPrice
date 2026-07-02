@@ -16,7 +16,6 @@ public partial class MainWindowViewModel : ViewModelBase
     public ObservableCollection<Product> ShownList { get; set; } = [];
 
     private ShowAdministrationWindowService _showAdministrationWindowService;
-    private ShowPasswordService _showPasswordService;
     
     [ObservableProperty]
     public partial string SearchText { get; set; } = string.Empty;
@@ -44,17 +43,12 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         GetProducts();
         _showAdministrationWindowService = new ShowAdministrationWindowService(window);
-        _showPasswordService = new ShowPasswordService(window);
     }
 
     [RelayCommand]
     public async Task ShowAdministration()
     {
-        var res = await _showPasswordService.ShowPassword();
-        if (res is true)
-        {
-            _showAdministrationWindowService.ShowAdministrationWindow(this);
-        }
+        _showAdministrationWindowService.ShowAdministrationWindow(this);
     }
     
     private void GetProducts()

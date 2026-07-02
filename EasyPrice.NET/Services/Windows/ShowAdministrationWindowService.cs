@@ -4,10 +4,8 @@ using EasyPrice.NET.ViewModels;
 
 namespace EasyPrice.NET.Services.Windows;
 
-public class ShowAdministrationWindowService
+public class ShowAdministrationWindowService : ProtectedViewServiceBase
 {
-    private Window _window;
-
     public ShowAdministrationWindowService(Window window)
     {
         _window = window;
@@ -16,6 +14,6 @@ public class ShowAdministrationWindowService
     public void ShowAdministrationWindow(MainWindowViewModel ownerVm)
     {
         var administrationWindow = new Administration(ownerVm);
-        administrationWindow.ShowDialog(_window);
+        _ = ShowProtected(administrationWindow);
     }
 }
