@@ -8,8 +8,15 @@
         x:DataType="vm:ChangeDolarPrice"
         Title="Cambiar precio del dolar"
         ShowInTaskbar="False">
+    
+    <Window.KeyBindings>
+        <KeyBinding
+            Gesture="Escape"
+            Command="{Binding CancelCommand}"/>
+    </Window.KeyBindings>
+    
     <Grid RowDefinitions="4* 1*" 
-        HorizontalAlignment="Center" >
+          HorizontalAlignment="Center" >
         <StackPanel
             Grid.Row="0"
             Margin="20">
@@ -22,7 +29,13 @@
                 AllowSpin="False"
                 ShowButtonSpinner="False"
                 Increment="0.01"
-                Value="{Binding DolarPrice }"/>    
+                Value="{Binding DolarPrice }">
+                <NumericUpDown.KeyBindings>
+                    <KeyBinding 
+                        Gesture="Enter"
+                        Command="{Binding $parent[Window].((vm:ChangeDolarPrice)DataContext).SaveCommand}"/>
+                </NumericUpDown.KeyBindings>
+            </NumericUpDown>
         </StackPanel>
         
         <StackPanel

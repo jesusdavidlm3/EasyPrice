@@ -24,4 +24,10 @@ public partial class ChangePasswordViewModel : ViewModelBase
         DBService.settings.UpdatePassword(NewPassword);
         _window.Close();
     }
+
+    [RelayCommand]
+    public void Cancel()
+    {
+        _window.Close();
+    }
 }

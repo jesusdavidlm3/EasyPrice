@@ -9,6 +9,12 @@
         Title="Eliminar producto"
         ShowInTaskbar="False">
     
+    <Window.KeyBindings>
+        <KeyBinding
+            Gesture="Escape"
+            Command="{Binding CancelCommand}"/>
+    </Window.KeyBindings>
+    
     <Grid RowDefinitions="3* 1*" HorizontalAlignment="Center">
         <StackPanel Grid.Row="0"
             HorizontalAlignment="Center"

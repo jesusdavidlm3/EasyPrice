@@ -30,4 +30,10 @@ public partial class PasswordViewModel : ViewModelBase
             _window.Close(true);
         }
     }
+    
+    [RelayCommand]
+    public void Exit()
+    {
+        _window.Close();
+    }
 }

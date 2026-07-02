@@ -9,6 +9,15 @@
         x:DataType="vm:AddProductViewModel"
         ShowInTaskbar="False">
     
+    <Window.KeyBindings>
+        <KeyBinding
+            Gesture="Enter"
+            Command="{Binding FinishCommand}"/>
+        <KeyBinding
+            Gesture="Escape"
+            Command="{Binding CancelCommand}"/>
+    </Window.KeyBindings>
+    
     <StackPanel Width="500">
         <TextBlock
             Text="Agregar producto" 
