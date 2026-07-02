@@ -14,6 +14,8 @@ public partial class MainWindowViewModel : ViewModelBase
 {
     public ObservableCollection<Product> FullList { get; set; } = [];
     public ObservableCollection<Product> ShownList { get; set; } = [];
+
+    private ShowAdministrationWindowService _showAdministrationWindowService;
     
     [ObservableProperty]
     public partial string SearchText { get; set; } = string.Empty;
@@ -36,61 +38,17 @@ public partial class MainWindowViewModel : ViewModelBase
             Reload();
         }
     }
-
-    private ShowAddProductService _showAddProductService;
-    private ShowEditProductService _showEditProductService;
-    private ShowDeleteProductService _showDeleteProductService;
-    private ShowSettingsService _showSettingsService;
     
-    public MainWindowViewModel(Window  window)
+    public MainWindowViewModel(Window window)
     {
         GetProducts();
-        _showAddProductService = new ShowAddProductService(window, this);
-        _showDeleteProductService = new ShowDeleteProductService(window, this);
-        _showEditProductService = new ShowEditProductService(window);
-        _showSettingsService = new ShowSettingsService(window, this);
-    }
-    
-    [RelayCommand]
-    private void ShowSettingsWindow()
-    {
-        _showSettingsService.ShowWindow();
+        _showAdministrationWindowService = new ShowAdministrationWindowService(window);
     }
 
     [RelayCommand]
-    private async Task ShowAddProductWindow()
+    public void ShowAdministration()
     {
-        var product = await _showAddProductService.ShowAddProduct();
-        if (product != null)
-        {
-            FullList.Add(product);
-            ShownList.Add(product);
-        }
-    }
-
-    [RelayCommand]
-    private async Task ShowEditProductWindow(Product product)
-    {
-        var newProduct = await _showEditProductService.ShowEditProduct(product);
-        if (newProduct != null)
-        {
-            var toAdd = new Product(newProduct);
-            FullList.Remove(product);
-            FullList.Add(toAdd);
-            ShownList.Remove(product);
-            ShownList.Add(toAdd);
-        }
-    }
-
-    [RelayCommand]
-    private async Task ShowDeleteProductWindow(Product product)
-    {
-        var res = await _showDeleteProductService.ShowDeleteProduct(product);
-        if (res == true)
-        {
-            FullList.Remove(product);
-            ShownList.Remove(product);
-        }
+        _showAdministrationWindowService.ShowAdministrationWindow(this);
     }
     
     private void GetProducts()
@@ -109,10 +67,5 @@ public partial class MainWindowViewModel : ViewModelBase
             FullList.Add(item);
             ShownList.Add(item);
         }
-    }
-
-    public void Search()
-    {
-        
     }
 }

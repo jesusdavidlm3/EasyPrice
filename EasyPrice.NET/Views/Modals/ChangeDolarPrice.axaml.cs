@@ -7,7 +7,7 @@ namespace EasyPrice.NET.Views;
 
 public partial class ChangeDolarPrice : Window
 {
-    public ChangeDolarPrice(MainWindowViewModel ownerVm)
+    public ChangeDolarPrice(AdministrationViewModel ownerVm)
     {
         var viewModel = new ViewModels.ChangeDolarPrice(this,  ownerVm);
         DataContext = viewModel;

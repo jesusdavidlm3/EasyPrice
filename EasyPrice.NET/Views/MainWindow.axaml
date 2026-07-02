@@ -23,11 +23,8 @@
             Spacing="15" Margin="10"
             Orientation="Horizontal">
             <Button
-                Content="Agregar productos"
-                Command="{Binding ShowAddProductWindowCommand}"/>
-            <Button
-                Content="Ajustes"
-                Command="{Binding ShowSettingsWindowCommand}"/>
+                Content="Administrar"
+                Command="{Binding ShowAdministrationCommand}"/>
         </StackPanel>
         <Grid ColumnDefinitions="1* 15* 1*" RowDefinitions=".25* .5* 4*">
             <TextBlock Grid.Column="1" Grid.Row="0"
@@ -57,24 +54,6 @@
                         Width="1*"
                         Header="Precio en $"
                         Binding="{Binding GetValueDolar, StringFormat=${0:f2}}"/>
-                    <DataGridTemplateColumn Width="2*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
-                                    <Button
-                                        Content="Cambiar precio"
-                                        Classes="Primary"
-                                        Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ShowEditProductWindowCommand}"
-                                        CommandParameter="{Binding}"/>
-                                    <Button
-                                        Content="Eliminar"
-                                        Classes="Red"
-                                        Command="{Binding $parent[Window].((vm:MainWindowViewModel)DataContext).ShowDeleteProductWindowCommand}"
-                                        CommandParameter="{Binding}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

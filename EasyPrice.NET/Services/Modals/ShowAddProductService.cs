@@ -8,10 +8,10 @@ namespace EasyPrice.NET.Services.Windows;
 
 public class ShowAddProductService
 {
-    private MainWindowViewModel _ownerVm;
+    private AdministrationViewModel _ownerVm;
     private readonly Window _window;
     
-    public ShowAddProductService(Window window, MainWindowViewModel ownerVm)
+    public ShowAddProductService(Window window, AdministrationViewModel ownerVm)
     {
         _window = window;
         _ownerVm = ownerVm;

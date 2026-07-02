@@ -9,7 +9,7 @@ namespace EasyPrice.NET.ViewModels;
 public partial class ChangeDolarPrice : ViewModelBase
 {
     private Window _ownerWindow;
-    public MainWindowViewModel _ownerVm { get; set; }
+    public AdministrationViewModel _ownerVm { get; set; }
     
     [ObservableProperty]
     private partial float _dolarPrice { get; set; } = DBService.settings.DolarPrice;
@@ -25,7 +25,7 @@ public partial class ChangeDolarPrice : ViewModelBase
         }
     }
 
-    public ChangeDolarPrice(Window ownerWindow, MainWindowViewModel ownerVm)
+    public ChangeDolarPrice(Window ownerWindow, AdministrationViewModel ownerVm)
     {
         _ownerWindow = ownerWindow;
         _ownerVm = ownerVm;
