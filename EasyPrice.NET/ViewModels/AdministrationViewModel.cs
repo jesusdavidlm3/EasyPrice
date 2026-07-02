@@ -41,6 +41,7 @@ public partial class AdministrationViewModel : ViewModelBase
     private ShowEditProductService _showEditProductService;
     private ShowDeleteProductService _showDeleteProductService;
     private ShowSettingsService _showSettingsService;
+    private ShowChangePasswordService _showChangePasswordService;
     
     public AdministrationViewModel(Window window, MainWindowViewModel ownerVm)
     {
@@ -51,6 +52,7 @@ public partial class AdministrationViewModel : ViewModelBase
         _showDeleteProductService = new ShowDeleteProductService(window, this);
         _showEditProductService = new ShowEditProductService(window);
         _showSettingsService = new ShowSettingsService(window, this);
+        _showChangePasswordService = new ShowChangePasswordService(window);
     }
     
     [RelayCommand]
@@ -93,6 +95,12 @@ public partial class AdministrationViewModel : ViewModelBase
             FullList.Remove(product);
             ShownList.Remove(product);
         }
+    }
+
+    [RelayCommand]
+    private void ShowChangePassword()
+    {
+        _showChangePasswordService.ShowChangePassword();
     }
     
     private void GetProducts()

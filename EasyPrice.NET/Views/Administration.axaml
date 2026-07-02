@@ -29,6 +29,9 @@
             <Button
                 Content="Cambiar precio del dolar"
                 Command="{Binding ShowSettingsWindowCommand}"/>
+            <Button
+                Content="Cambiar contraseña"
+                Command="{Binding ShowChangePasswordCommand}"/>
         </StackPanel>
         <Grid ColumnDefinitions="1* 15* 1*" RowDefinitions=".25* .5* 4*">
             <TextBlock Grid.Column="1" Grid.Row="0"
