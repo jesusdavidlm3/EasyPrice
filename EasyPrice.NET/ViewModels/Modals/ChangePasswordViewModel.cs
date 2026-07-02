@@ -9,21 +9,24 @@ namespace EasyPrice.NET.ViewModels;
 public partial class ChangePasswordViewModel : ViewModelBase
 {
     private Window _window;
-    
-    [ObservableProperty]
-    public partial string NewPassword { get; set; }
+
+    [ObservableProperty] 
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    public partial string NewPassword { get; set; } = string.Empty;
 
     public ChangePasswordViewModel(Window window)
     {
         _window = window;
     }
     
-    [RelayCommand]
+    [RelayCommand(CanExecute =  nameof(CanSave))]
     public void Save()
     {
         DBService.settings.UpdatePassword(NewPassword);
         _window.Close();
     }
+    
+    private bool CanSave() => NewPassword != "";
 
     [RelayCommand]
     public void Cancel()

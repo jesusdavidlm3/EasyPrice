@@ -9,23 +9,27 @@ namespace EasyPrice.NET.ViewModels;
 public partial class EditProductViewModel : ViewModelBase
 {
     private  readonly Window _window;
+    
     [ObservableProperty]
     public partial Product CurrentProduct { get; set; }
     
     [ObservableProperty]
-    public partial double PackPrice { get; set; }
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    public partial double? PackPrice { get; set; }
     
     [ObservableProperty]
-    public partial int PackQuantity { get; set; }
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    public partial int? PackQuantity { get; set; }
     
     [ObservableProperty]
-    public partial int Gain { get; set; }
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    public partial int? Gain { get; set; }
     
     [ObservableProperty]
-    public partial double NewPriceDolar { get; set; }
+    public partial double? NewPriceDolar { get; set; }
     
     [ObservableProperty]
-    public partial double NewPriceBs { get; set; }
+    public partial double? NewPriceBs { get; set; }
     
     public EditProductViewModel(Window window, Product product)
     {
@@ -38,24 +42,24 @@ public partial class EditProductViewModel : ViewModelBase
 
     public void CalculateNewPrices()
     {
-        double unitPrice = PackPrice / PackQuantity;
-        double operableGain = Gain / 100d;
-        double unitValueDolar = unitPrice + (operableGain * unitPrice);
+        double? unitPrice = PackPrice / PackQuantity;
+        double? operableGain = Gain / 100d;
+        double? unitValueDolar = unitPrice + (operableGain * unitPrice);
         NewPriceDolar = unitValueDolar;
         NewPriceBs = unitValueDolar * DBService.settings.DolarPrice;
     }
 
-    partial void OnPackPriceChanged(double value)
+    partial void OnPackPriceChanged(double? value)
     {
         CalculateNewPrices();
     }
 
-    partial void OnPackQuantityChanged(int value)
+    partial void OnPackQuantityChanged(int? value)
     {
         CalculateNewPrices();
     }
 
-    partial void OnGainChanged(int value)
+    partial void OnGainChanged(int? value)
     {
         CalculateNewPrices();
     }
@@ -66,13 +70,15 @@ public partial class EditProductViewModel : ViewModelBase
         _window.Close();
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSave))]
     public void Save()
     {
-        CurrentProduct.PackPrice = PackPrice;
-        CurrentProduct.PackQuantity = PackQuantity;
-        CurrentProduct.Gain = Gain;
+        CurrentProduct.PackPrice = (double)PackPrice!;
+        CurrentProduct.PackQuantity = (int)PackQuantity!;
+        CurrentProduct.Gain = (int)Gain!;
         Product.UpdateProduct(CurrentProduct);
         _window.Close(CurrentProduct);
     }
+
+    private bool CanSave() => PackPrice != null && PackQuantity != null && Gain != null;
 }

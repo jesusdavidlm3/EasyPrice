@@ -11,6 +11,7 @@ public partial class PasswordViewModel : ViewModelBase
     private Window _window { get; set; }
 
     [ObservableProperty] 
+    [NotifyCanExecuteChangedFor(nameof(LoginCommand))]
     public partial string Password { get; set; } = string.Empty;
 
     public PasswordViewModel(Window window)
@@ -18,7 +19,7 @@ public partial class PasswordViewModel : ViewModelBase
         _window = window;
     }
     
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanLogin))]
     public void Login()
     {
         if (Crypto.Hash(Password) != DBService.settings.Password)
@@ -30,6 +31,8 @@ public partial class PasswordViewModel : ViewModelBase
             _window.Close(true);
         }
     }
+
+    private bool CanLogin() => Password != "";
     
     [RelayCommand]
     public void Exit()

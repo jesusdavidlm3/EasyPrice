@@ -9,35 +9,27 @@ namespace EasyPrice.NET.ViewModels;
 public partial class ChangeDolarPrice : ViewModelBase
 {
     private Window _ownerWindow;
-    public AdministrationViewModel _ownerVm { get; set; }
+    private AdministrationViewModel _ownerVm { get; set; }
     
     [ObservableProperty]
-    private partial float _dolarPrice { get; set; } = DBService.settings.DolarPrice;
-    public float DolarPrice
-    {
-        get => _dolarPrice;
-        set
-        {
-            if (value != _dolarPrice)
-            {
-                _dolarPrice = value;
-            }
-        }
-    }
-
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+    public partial float? DolarPrice { get; set; } = DBService.settings.DolarPrice;
+    
     public ChangeDolarPrice(Window ownerWindow, AdministrationViewModel ownerVm)
     {
         _ownerWindow = ownerWindow;
         _ownerVm = ownerVm;
     }
     
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSave))]
     public void Save()
     {
-        DBService.settings.UpdateDolarPrice(DolarPrice);
+        DBService.settings.UpdateDolarPrice((float)DolarPrice!);
         _ownerVm.Reload();
         _ownerWindow.Close();
     }
+    
+    private bool CanSave() => DolarPrice > 0;
     
     [RelayCommand]
     public void Cancel()
