@@ -27,13 +27,13 @@
                 Content="Agregar productos"
                 Command="{Binding ShowAddProductWindowCommand}"/>
             <Button
-                Content="Ajustes"
+                Content="Cambiar precio del dolar"
                 Command="{Binding ShowSettingsWindowCommand}"/>
         </StackPanel>
         <Grid ColumnDefinitions="1* 15* 1*" RowDefinitions=".25* .5* 4*">
             <TextBlock Grid.Column="1" Grid.Row="0"
                 TextAlignment="Center"
-                Text="Lista de productos"
+                Text="Administracion"
                 Margin="1"
                 FontSize="30"/>
             <TextBox Grid.Row="1" Grid.Column="1"

@@ -2,12 +2,14 @@
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using EasyPrice.NET.Utils;
 
 namespace EasyPrice.NET.Models;
 
 public class Settings
 {
     public float DolarPrice { get; set; }
+    public string Password { get; set; }
 
     public Settings(){}
 
@@ -39,17 +41,27 @@ public class Settings
     {
         var settings = new Settings();
         settings.DolarPrice = 1;
-        var options = new JsonSerializerOptions{WriteIndented=true, };
-        var json = JsonSerializer.Serialize(settings, options);
-        File.WriteAllText("settings.json", json);
+        settings.Password = Crypto.Hash("1234");
+        SaveToFile(settings);
         return settings;
     }
 
     public void UpdateDolarPrice(float dolarPrice)
     {
         DolarPrice = dolarPrice;
+        SaveToFile(this);
+    }
+    
+    public void UpdatePassword(string password)
+    {
+        Password = Crypto.Hash(password);
+        SaveToFile(this);
+    }
+
+    private static void SaveToFile(Settings settings)
+    {
         var options = new JsonSerializerOptions{WriteIndented=true, };
-        var json = JsonSerializer.Serialize(this, options);
+        var json = JsonSerializer.Serialize(settings, options);
         File.WriteAllText("settings.json", json);
     }
 }
