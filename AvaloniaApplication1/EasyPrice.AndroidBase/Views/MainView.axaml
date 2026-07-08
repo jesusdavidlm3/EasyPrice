@@ -12,5 +12,29 @@
     <vm:MainViewModel />
   </Design.DataContext>
 
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid Classes="PrincipalBackground" RowDefinitions="1* 1* 9*">
+      <TextBlock Grid.Row="0" 
+        Text="Lista de precios" 
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Margin="0 15 "
+        FontSize="30"/>
+      <TextBox Grid.Row="1"
+        PlaceholderText="Que producto buscas?"
+        Height="10"
+        Margin="10 0"/>
+      <DataGrid Grid.Row="2" Margin="10 0 10 20">
+        <DataGrid.Columns>
+          <DataGridTextColumn
+            Header="Producto"
+            Width="2*"/>
+          <DataGridTextColumn
+            Header="Bs."
+            Width="1*"/>
+          <DataGridTextColumn
+            Header="$"
+            Width="1*"/>
+        </DataGrid.Columns>
+      </DataGrid>
+    </Grid>
 </UserControl>
