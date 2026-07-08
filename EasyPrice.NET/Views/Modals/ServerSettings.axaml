@@ -1,0 +1,54 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Height="450" Width="800" CanResize="False" WindowStartupLocation="CenterOwner"
+        x:Class="EasyPrice.NET.Views.Modals.ServerSettings"
+        Title="Ajustes de servidor"
+        xmlns:vm="clr-namespace:EasyPrice.NET.ViewModels"
+        x:DataType="vm:ServerSettingsViewModel">
+    
+    <Window.KeyBindings>
+        <KeyBinding Gesture="Escape" Command="{Binding CancelCommand}"/>
+        <KeyBinding Gesture="Enter" Command="{Binding SaveCommand}"/>
+    </Window.KeyBindings>
+    
+    <StackPanel HorizontalAlignment="Center" Width="500" Margin="0 15 0 0">
+        <TextBlock
+            HorizontalAlignment="Center"
+            FontSize="30"
+            Text="Ajustes de servidor"
+            Margin="0 0 0 15"/>
+        <Label
+            Content="Modo de trabajo"/>
+        <ComboBox
+            Width="500"
+            ItemsSource="{Binding WorkModeNames, Mode=TwoWay}"
+            SelectedValue="{Binding SelectedWorkMode}"
+            />
+        <Label
+            Content="Direccion del servidor"/>
+        <TextBox
+            IsEnabled="{Binding NonServer}"
+            Text="{Binding ServerIp}"/>
+        <Label
+            Content="Contraseña del servidor"/>
+        <TextBox
+            IsEnabled="{Binding NonServer}"
+            Text="{Binding ServerPassword}"
+            PasswordChar="*"/>
+        <StackPanel 
+            Orientation="Horizontal" 
+            HorizontalAlignment="Center"
+            Margin="10"
+            Spacing="15">
+            <Button
+                Command="{Binding CancelCommand}"
+                Classes="Red"
+                Content="Cancelar"/>
+            <Button
+                Command="{Binding SaveCommand}"
+                Content="Guardar"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using EasyPrice.NET.Utils;
@@ -10,6 +11,10 @@ public class Settings
 {
     public float DolarPrice { get; set; }
     public string Password { get; set; }
+    public int Server { get; set; }         //0-works individually, 1-works as server, 2-works as client
+    public IPAddress? ServerIp { get; set; }
+    public string? ServerPassword { get; set; }
+    public DateTime LastUpdate { get; set; }
 
     public Settings(){}
 
@@ -42,6 +47,10 @@ public class Settings
         var settings = new Settings();
         settings.DolarPrice = 1;
         settings.Password = Crypto.Hash("1234");
+        settings.Server = 0;
+        settings.ServerIp = null;
+        settings.ServerPassword = null;
+        settings.LastUpdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
         SaveToFile(settings);
         return settings;
     }

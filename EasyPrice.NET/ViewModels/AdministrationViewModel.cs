@@ -42,6 +42,7 @@ public partial class AdministrationViewModel : ViewModelBase
     private ShowDeleteProductService _showDeleteProductService;
     private ShowSettingsService _showSettingsService;
     private ShowChangePasswordService _showChangePasswordService;
+    private ShowServerSettingsService _showServerSettingsService;
     
     public AdministrationViewModel(Window window, MainWindowViewModel ownerVm)
     {
@@ -53,6 +54,7 @@ public partial class AdministrationViewModel : ViewModelBase
         _showEditProductService = new ShowEditProductService(window);
         _showSettingsService = new ShowSettingsService(window, this);
         _showChangePasswordService = new ShowChangePasswordService(window);
+        _showServerSettingsService = new ShowServerSettingsService(window);
     }
     
     [RelayCommand]
@@ -107,6 +109,12 @@ public partial class AdministrationViewModel : ViewModelBase
     {
         FullList = Product.GetAll();
         ShownList = new ObservableCollection<Product>(FullList);
+    }
+
+    [RelayCommand]
+    private void ShowServerSettings()
+    {
+        _showServerSettingsService.ShowServerSettings();
     }
 
     public void Reload()
