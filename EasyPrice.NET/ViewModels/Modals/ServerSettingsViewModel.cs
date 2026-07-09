@@ -1,5 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -10,7 +15,8 @@ namespace EasyPrice.NET.ViewModels;
 public partial class ServerSettingsViewModel : ViewModelBase
 {
     private Window _window;
-    private Dictionary<string, int> WorkModes { get; } = new Dictionary<string, int>{
+
+    private static Dictionary<string, int> WorkModes { get; } = new Dictionary<string, int>{
         { "Individual", 0 },
         { "Servidor", 1 },
         { "Cliente", 2 }
@@ -23,9 +29,10 @@ public partial class ServerSettingsViewModel : ViewModelBase
         "Cliente"
     ];
 
-    [ObservableProperty] 
-    [NotifyPropertyChangedFor(nameof(NonServer))]
-    public partial string SelectedWorkMode { get; set; }
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ClientMode))]
+    [NotifyPropertyChangedFor(nameof(ServerMode))]
+    public partial string SelectedWorkMode { get; set; } = WorkModes.FirstOrDefault(x => DBService.settings.Server == x.Value).Key.ToString();
     
     [ObservableProperty]
     public partial string ServerPassword { get; set; } = string.Empty;
@@ -33,7 +40,8 @@ public partial class ServerSettingsViewModel : ViewModelBase
     [ObservableProperty]
     public partial string ServerIp { get; set; } = string.Empty;
     
-    public bool NonServer => SelectedWorkMode == "Cliente";
+    public bool ClientMode => SelectedWorkMode == "Cliente";
+    public bool ServerMode =>  SelectedWorkMode == "Servidor";
 
     public ServerSettingsViewModel(Window window)
     {
