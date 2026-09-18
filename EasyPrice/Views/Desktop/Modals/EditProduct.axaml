@@ -1,0 +1,97 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500" Width="800" Height="500" CanResize="False" WindowStartupLocation="CenterOwner"
+        x:Class="EasyPrice.Views.EditProduct"
+        xmlns:vm="clr-namespace:EasyPrice.ViewModels"
+        x:DataType="vm:EditProductViewModel"
+        ShowInTaskbar="False"
+        Title="Editar producto">
+    
+    <Window.KeyBindings>
+        <KeyBinding 
+            Gesture="Escape"
+            Command="{Binding CancelCommand}"/>
+        <KeyBinding
+            Gesture="Enter"
+            Command="{Binding SaveCommand}"/>
+    </Window.KeyBindings>
+    
+    <Grid ColumnDefinitions="1*, 1*, 1*, 1*, 1*" RowDefinitions="1*, 1*, 1*, 3*, 1*">
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+            Text="{Binding CurrentProduct.Name}"
+            Margin="15"
+            FontSize="30"
+            TextAlignment="Center"/>
+        
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Classes="Card">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock
+                    Text="Precio anterior:"
+                    FontSize="15"
+                    TextAlignment="Center"/>
+                <TextBlock
+                    Text="{Binding CurrentProduct.GetValueDolar, StringFormat=${0:f2}}"
+                    TextAlignment="Center"/>
+                <TextBlock
+                    Text="{Binding CurrentProduct.GetValueBs, StringFormat=Bs. {0:f2}}"
+                    TextAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Classes="Card">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock
+                    Text="Precio nuevo:"
+                    FontSize="15"
+                    TextAlignment="Center"/>
+                <TextBlock
+                    Text="{Binding NewPriceDolar, StringFormat=${0:f2}}"
+                    TextAlignment="Center"/>
+                <TextBlock
+                    Text="{Binding NewPriceBs, StringFormat=Bs. {0:f2}}"
+                    TextAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+        
+        <StackPanel Grid.Column="0" Grid.Row="3" Grid.RowSpan="1" Grid.ColumnSpan="5" Margin="20 0">
+            <Label
+                Content="Cuanto costo el bulto?"/>
+            <NumericUpDown
+                ShowButtonSpinner="False"
+                AllowSpin="False"
+                Increment="0.01"
+                Margin="0" 
+                Height="5" 
+                Value="{Binding PackPrice}"/>
+            <Label
+                Content="Cuantas unidades trae el bulto?" Margin="0 10 0 0"/>
+            <NumericUpDown
+                ShowButtonSpinner="False"
+                AllowSpin="False"
+                Increment="1"
+                Value="{Binding PackQuantity}"/>
+            <Label
+                Content="Que ganancia desea obtener?" Margin="0 10 0 0"/>
+            <NumericUpDown
+                ShowButtonSpinner="False"
+                AllowSpin="False"
+                Increment="0.01"
+                Value="{Binding Gain}"/>
+        </StackPanel>
+        
+        <StackPanel Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3"
+            Orientation="Horizontal"
+            Spacing="40"
+            HorizontalAlignment="Center">
+            <Button 
+                    Content="Cancelar"
+                    Classes="Red"
+                    Command="{Binding CancelCommand}"/>
+        
+            <Button
+                    Content="Guardar"
+                    Command="{Binding SaveCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>

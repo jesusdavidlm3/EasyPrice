@@ -1,0 +1,65 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:EasyPrice.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="800" Height="450" CanResize="False" WindowStartupLocation="CenterOwner"
+        x:Class="EasyPrice.Views.AddProduct"
+        Title="Agregar producto"
+        x:DataType="vm:AddProductViewModel"
+        ShowInTaskbar="False">
+    
+    <Window.KeyBindings>
+        <KeyBinding
+            Gesture="Enter"
+            Command="{Binding FinishCommand}"/>
+        <KeyBinding
+            Gesture="Escape"
+            Command="{Binding CancelCommand}"/>
+    </Window.KeyBindings>
+    
+    <StackPanel Width="500">
+        <TextBlock
+            Text="Agregar producto" 
+            TextAlignment="Center" 
+            Margin="0 10 0 20"
+            FontSize="30"/>
+        <Label Content="Nombre del producto"/>
+        <TextBox
+            Text="{Binding Name}"/>
+        <Label Content="Cuanto costo el bulto?" Margin="0 15 0 0"/>
+        <NumericUpDown
+            ShowButtonSpinner="False"
+            AllowSpin="False"
+            Increment="0.01"
+            Value="{Binding PackPrice}"/>
+        <Label Content="Cuantas unidades trae el bulto?" Margin="0 15 0 0"/>
+        <NumericUpDown
+            ShowButtonSpinner="False"
+            AllowSpin="False"
+            Increment="1"
+            Value="{Binding PackQuantity}"/>
+        <Label Content="Que ganancia desea obtener?" Margin="0 15 0 0"/>
+        <NumericUpDown
+            ShowButtonSpinner="False"
+            AllowSpin="False"
+            Increment="1"
+            Text="{Binding Gain}"/>
+        <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Center"
+            Spacing="40"
+            Margin="0 20">
+            <Button
+                Content="Cancelar"
+                Classes="Red"
+                Width="90"
+                Command="{Binding CancelCommand}"/>
+            <Button
+                Content="Guardar"
+                Classes="Primary"
+                Width="90"
+                Command="{Binding FinishCommand}"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

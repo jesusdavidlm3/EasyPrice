@@ -1,0 +1,11 @@
+﻿<Solution>
+  <Project Path="EasyPrice.Android/EasyPrice.Android.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="EasyPrice.Browser/EasyPrice.Browser.csproj" />
+  <Project Path="EasyPrice.Desktop/EasyPrice.Desktop.csproj" />
+  <Project Path="EasyPrice.iOS/EasyPrice.iOS.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="EasyPrice/EasyPrice.csproj" />
+</Solution>

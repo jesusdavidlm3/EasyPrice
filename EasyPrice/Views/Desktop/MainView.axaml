@@ -1,0 +1,62 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:EasyPrice.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720" MinWidth="800" MinHeight="700"
+        WindowState="Maximized"
+        x:Class="EasyPrice.Views.MainView"
+        x:DataType="vm:MainViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="EasyPrice">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainViewModel/>
+    </Design.DataContext>
+
+    <DockPanel>
+        <StackPanel 
+            DockPanel.Dock="Top" 
+            HorizontalAlignment="Left" 
+            Spacing="15" Margin="10"
+            Orientation="Horizontal">
+            <Button
+                Content="Administrar"
+                Command="{Binding ShowAdministrationCommand}"/>
+        </StackPanel>
+        <Grid ColumnDefinitions="1* 15* 1*" RowDefinitions=".25* .5* 4*">
+            <TextBlock Grid.Column="1" Grid.Row="0"
+                TextAlignment="Center"
+                Text="Lista de productos"
+                Margin="1"
+                FontSize="30"/>
+            <TextBox Grid.Row="1" Grid.Column="1"
+                PlaceholderText="Que producto buscas?"
+                Text="{Binding SearchText}"
+                Height="10"
+                Margin="10 0"/>
+            <DataGrid Grid.Row="2" Grid.Column="1"
+                Margin="10 0 10 20"
+                ItemsSource="{Binding ShownList, Mode=TwoWay}"
+                IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Header="Producto"
+                        Width="2.3*"
+                        Binding="{Binding Name}"/>
+                    <DataGridTextColumn
+                        Width="1*"
+                        Header="Precio en Bs."
+                        Binding="{Binding GetValueBs, StringFormat=Bs. {0:f2}}"/>
+                    <DataGridTextColumn
+                        Width="1*"
+                        Header="Precio en $"
+                        Binding="{Binding GetValueDolar, StringFormat=${0:f2}}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </DockPanel>
+
+</Window>
