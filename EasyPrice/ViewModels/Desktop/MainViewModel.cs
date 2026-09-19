@@ -8,7 +8,7 @@ using EasyPrice.Models;
 using EasyPrice.Services;
 using EasyPrice.Services.Windows;
 
-namespace EasyPrice.ViewModels;
+namespace EasyPrice.ViewModels.Desktop;
 
 public partial class MainViewModel : ViewModelBase
 {

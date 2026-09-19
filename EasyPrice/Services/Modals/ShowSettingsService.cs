@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
-using EasyPrice.ViewModels;
-using EasyPrice.Views;
-using ChangeDolarPrice = EasyPrice.Views.ChangeDolarPrice;
+using EasyPrice.ViewModels.Desktop;
+using EasyPrice.Views.Desktop;
+using ChangeDolarPrice = EasyPrice.Views.Desktop.ChangeDolarPrice;
 
 namespace EasyPrice.Services.Windows;
 

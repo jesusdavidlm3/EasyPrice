@@ -2,9 +2,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using EasyPrice.Models;
-using EasyPrice.ViewModels;
+using EasyPrice.ViewModels.Desktop;
 
-namespace EasyPrice.Views;
+namespace EasyPrice.Views.Desktop;
 
 public partial class DeleteProduct : Window
 {

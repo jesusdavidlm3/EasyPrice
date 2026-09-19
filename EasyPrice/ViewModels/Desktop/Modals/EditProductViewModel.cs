@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using EasyPrice.Models;
 using EasyPrice.Services;
 
-namespace EasyPrice.ViewModels;
+namespace EasyPrice.ViewModels.Desktop;
 
 public partial class EditProductViewModel : ViewModelBase
 {

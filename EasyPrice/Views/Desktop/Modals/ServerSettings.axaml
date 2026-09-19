@@ -3,9 +3,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Height="450" Width="800" CanResize="False" WindowStartupLocation="CenterOwner"
-        x:Class="EasyPrice.Views.Modals.ServerSettings"
+        x:Class="EasyPrice.Views.Desktop.Modals.ServerSettings"
         Title="Ajustes de servidor"
-        xmlns:vm="clr-namespace:EasyPrice.ViewModels"
+        xmlns:vm="clr-namespace:EasyPrice.ViewModels.Desktop"
         x:DataType="vm:ServerSettingsViewModel">
     
     <Window.KeyBindings>

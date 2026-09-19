@@ -1,0 +1,68 @@
+<UserControl 
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+    x:Class="EasyPrice.Views.Mobile.MainView"
+    xmlns:views="using:EasyPrice.Views.Mobile"
+    xmlns:vm="using:EasyPrice.ViewModels.Mobile"
+    x:DataType="vm:MainViewModel">
+    <SplitView
+        PanePlacement="Right"
+        IsPaneOpen="{Binding OpenMenu}"
+        OpenPaneLength="200"
+        PaneBackground="Transparent">
+        <SplitView.Pane>
+            <Border Background="Gray" CornerRadius="30 0 0 30">
+                <StackPanel>
+                    <StackPanel>
+                        <TextBlock
+                            Text="Menu"
+                            HorizontalAlignment="Center"
+                            Margin="20"
+                            FontSize="30"/>
+                    </StackPanel>
+                    <Button
+                        Margin="0 0 10 0"
+                        HorizontalAlignment="Right"
+                        Content="Inicio"
+                        Classes="TextButton"
+                        FontSize="15"/>
+                    <Button
+                        Margin="0 0 10 0"
+                        HorizontalAlignment="Right"
+                        Content="Ajustes"
+                        Classes="TextButton"
+                        FontSize="15"/>
+                </StackPanel>
+            </Border>
+        </SplitView.Pane>
+        
+        <Grid RowDefinitions="1* 9*" Classes="PrincipalBackground">
+            <DockPanel
+                Margin="20 0"
+                Classes="PrincipalBackground">
+                <TextBlock
+                    Text="{Binding Title}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    TextAlignment="Center"
+                    FontSize="30"/>
+                <Button
+                    HorizontalAlignment="Right"
+                    Classes=""
+                    Command="{Binding HandleMenuCommand}">
+                    <Image
+                        VerticalAlignment="Center"
+                        Source="{Binding MenuIcon}"
+                        Width="20"
+                        Height="20"
+                    />
+                </Button>
+            </DockPanel>
+            <views:SettingsView
+                Grid.Row="1"/>
+        </Grid>
+    </SplitView>
+</UserControl>

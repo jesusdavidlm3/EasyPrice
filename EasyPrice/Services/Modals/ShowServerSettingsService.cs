@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Avalonia.Controls;
 using EasyPrice.Models;
-using EasyPrice.Views;
-using EasyPrice.Views.Modals;
+using EasyPrice.Views.Desktop;
+using EasyPrice.Views.Desktop.Modals;
 
 namespace EasyPrice.Services.Windows;
 

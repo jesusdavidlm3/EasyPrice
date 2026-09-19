@@ -2,9 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:EasyPrice.ViewModels"
+        xmlns:vm="clr-namespace:EasyPrice.ViewModels.Desktop"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="800" Height="450" CanResize="False" WindowStartupLocation="CenterOwner"
-        x:Class="EasyPrice.Views.AddProduct"
+        x:Class="EasyPrice.Views.Desktop.AddProduct"
         Title="Agregar producto"
         x:DataType="vm:AddProductViewModel"
         ShowInTaskbar="False">

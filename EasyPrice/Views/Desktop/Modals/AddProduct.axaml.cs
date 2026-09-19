@@ -1,9 +1,9 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using EasyPrice.ViewModels;
+using EasyPrice.ViewModels.Desktop;
 
-namespace EasyPrice.Views;
+namespace EasyPrice.Views.Desktop;
 
 public partial class AddProduct : Window
 {

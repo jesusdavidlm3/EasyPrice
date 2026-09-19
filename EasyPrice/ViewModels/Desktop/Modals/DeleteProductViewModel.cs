@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasyPrice.Models;
 
-namespace EasyPrice.ViewModels;
+namespace EasyPrice.ViewModels.Desktop;
 
 public partial class DeleteProductViewModel : ViewModelBase
 {

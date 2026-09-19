@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace EasyPrice.Views;
+namespace EasyPrice.Views.Desktop;
 
 public partial class MainWindow : Window
 {

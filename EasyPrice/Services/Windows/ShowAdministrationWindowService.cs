@@ -1,6 +1,6 @@
-﻿using EasyPrice.Views;
+﻿using EasyPrice.Views.Desktop;
 using Avalonia.Controls;
-using EasyPrice.ViewModels;
+using EasyPrice.ViewModels.Desktop;
 
 namespace EasyPrice.Services.Windows;
 

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Avalonia.Controls;
 using EasyPrice.Models;
-using EasyPrice.Views;
+using EasyPrice.Views.Desktop;
 
 namespace EasyPrice.Services.Windows;
 

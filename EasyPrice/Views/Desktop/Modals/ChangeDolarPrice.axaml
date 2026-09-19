@@ -3,9 +3,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" Width="800" Height="450" CanResize="False" WindowStartupLocation="CenterOwner"
-        x:Class="EasyPrice.Views.ChangeDolarPrice"
-        xmlns:vm="clr-namespace:EasyPrice.ViewModels"
-        x:DataType="vm:ChangeDolarPrice"
+        x:Class="EasyPrice.Views.Desktop.ChangeDolarPrice"
+        xmlns:vm="clr-namespace:EasyPrice.ViewModels.Desktop"
+        x:DataType="vm:ChangeDolarPriceViewModel"
         Title="Cambiar precio del dolar"
         ShowInTaskbar="False">
     
@@ -33,7 +33,7 @@
                 <NumericUpDown.KeyBindings>
                     <KeyBinding 
                         Gesture="Enter"
-                        Command="{Binding $parent[Window].((vm:ChangeDolarPrice)DataContext).SaveCommand}"/>
+                        Command="{Binding $parent[Window].((vm:ChangeDolarPriceViewModel)DataContext).SaveCommand}"/>
                 </NumericUpDown.KeyBindings>
             </NumericUpDown>
         </StackPanel>

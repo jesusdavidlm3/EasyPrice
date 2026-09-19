@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using EasyPrice.Services;
 using EasyPrice.Utils;
 
-namespace EasyPrice.ViewModels;
+namespace EasyPrice.ViewModels.Desktop;
 
 public partial class PasswordViewModel : ViewModelBase
 {

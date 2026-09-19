@@ -4,9 +4,9 @@ using CommunityToolkit.Mvvm.Input;
 using EasyPrice.Models;
 using EasyPrice.Services;
 
-namespace EasyPrice.ViewModels;
+namespace EasyPrice.ViewModels.Desktop;
 
-public partial class ChangeDolarPrice : ViewModelBase
+public partial class ChangeDolarPriceViewModel : ViewModelBase
 {
     private Window _ownerWindow;
     private AdministrationViewModel _ownerVm { get; set; }
@@ -15,7 +15,7 @@ public partial class ChangeDolarPrice : ViewModelBase
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
     public partial float? DolarPrice { get; set; } = DBService.settings.DolarPrice;
     
-    public ChangeDolarPrice(Window ownerWindow, AdministrationViewModel ownerVm)
+    public ChangeDolarPriceViewModel(Window ownerWindow, AdministrationViewModel ownerVm)
     {
         _ownerWindow = ownerWindow;
         _ownerVm = ownerVm;

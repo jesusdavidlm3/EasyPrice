@@ -1,8 +1,8 @@
 using Avalonia.Controls;
 using EasyPrice.Services;
-using EasyPrice.ViewModels;
+using EasyPrice.ViewModels.Desktop;
 
-namespace EasyPrice.Views;
+namespace EasyPrice.Views.Desktop;
 
 public partial class MainView : Window
 {
@@ -13,6 +13,5 @@ public partial class MainView : Window
         viewModel = new MainViewModel(this);
         DataContext = viewModel;
         InitializeComponent();
-
     }
 }
