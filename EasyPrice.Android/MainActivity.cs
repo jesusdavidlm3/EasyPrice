@@ -6,7 +6,7 @@ using Avalonia.Android;
 namespace EasyPrice.Android;
 
 [Activity(
-    Label = "EasyPrice.Android",
+    Label = "Easy Price",
     Theme = "@style/MyTheme.NoActionBar",
     Icon = "@drawable/icon",
     MainLauncher = true,

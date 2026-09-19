@@ -2,44 +2,56 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="250" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="1000"
              x:Class="EasyPrice.Views.Mobile.InitialSettingsView">
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBlock
-            Text="Bienvenido"
-            FontSize="30"
-            TextAlignment="Center"/>
-        <TextBlock
-            Text="a EasyPrice"
-            Margin="0 0 0 30"
-            TextAlignment="Center"
+    <Grid 
+        RowDefinitions="1* 8* 1*" 
+        ColumnDefinitions="1* 5* 1*"
+        Classes="PrincipalBackground">
+        <StackPanel 
+            VerticalAlignment="Center"
+            Grid.Row="1"
+            Grid.Column="1">
+            <TextBlock
+                HorizontalAlignment="Center"
+                Text="Bienvenido"
+                FontSize="50"
+                TextAlignment="Center"/>
+            <TextBlock
+                HorizontalAlignment="Center"
+                Text="a EasyPrice"
+                FontSize="30"
+                Margin="0 0 0 30"
+                TextAlignment="Center"
             />
-        <Border 
-            CornerRadius="12"
-            Background="Gray">
-            <StackPanel
-                Width="200"
-                HorizontalAlignment="Center">
-                <TextBlock
-                    FontSize="20"
-                    Text="Vinculacion"
-                    TextAlignment="Center"
-                    Margin="0 10 0 0"/>
-                <Label
-                    Content="Direccion de servidor:"
-                    Margin="15 0"/>
-                <TextBox
-                    Margin=" 15 0"/>
-                <Label
-                    Content="Contraseña:"
-                    Margin=" 15 0"/>
-                <TextBox
-                    Margin="15 0"/>
-                <Button
-                    HorizontalAlignment="Center"
-                    Content="Vincular"
-                    Margin=" 0 15"/>
-            </StackPanel>
-        </Border>
-    </StackPanel>
+            <Border 
+                CornerRadius="12"
+                Classes="Card">
+                <StackPanel
+                    Margin="30">
+                    <TextBlock
+                        FontSize="25"
+                        HorizontalAlignment="Center"
+                        Text="Vinculacion"
+                        TextAlignment="Center"
+                        Margin="0 0 0 20"/>
+                    <Label
+                        Content="Direccion de servidor:"
+                        Margin="15 0"/>
+                    <TextBox
+                        Margin=" 15 0"/>
+                    <Label
+                        Content="Contraseña:"
+                        Margin=" 15 20 15 0"/>
+                    <TextBox
+                        PasswordChar="*"
+                        Margin="15 0"/>
+                    <Button
+                        HorizontalAlignment="Center"
+                        Content="Vincular"
+                        Margin=" 0 35 0 0"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
 </UserControl>

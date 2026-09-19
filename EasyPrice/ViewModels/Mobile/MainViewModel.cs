@@ -11,7 +11,7 @@ namespace EasyPrice.ViewModels.Mobile;
 public partial class MainViewModel : ViewModelBase
 {
     [ObservableProperty] public partial bool OpenMenu { get; set; } = false;
-    [ObservableProperty] public partial string Title { get; set; } = "Easy Price";
+    [ObservableProperty] public partial string Title { get; set; } = "Lista de precios";
     public Bitmap MenuIcon { get; } = new Bitmap(AssetLoader.Open(new Uri("avares://EasyPrice/Assets/icons/menudots.png")));
     
     [RelayCommand]

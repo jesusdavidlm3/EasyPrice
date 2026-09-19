@@ -13,10 +13,11 @@
             <TextBox
                 Margin="20 0 20 20"/>
             
-            <Label 
+            <Label
                 Content="Contraseña:"
                 Margin="20 0"/>
             <TextBox
+                PasswordChar="*"
                 Margin="20 0 20 20"/>
             <StackPanel
                 Orientation="Horizontal"
