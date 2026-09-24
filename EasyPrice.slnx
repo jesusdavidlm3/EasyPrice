@@ -1,4 +1,7 @@
 ﻿<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="compose.yaml" />
+  </Folder>
   <Project Path="EasyPrice.Android/EasyPrice.Android.csproj">
     <Deploy />
   </Project>
@@ -8,4 +11,6 @@
     <Deploy />
   </Project>
   <Project Path="EasyPrice/EasyPrice.csproj" />
+  <Project Path="Models\Models.csproj" />
+  <Project Path="ServerSideAPI/ServerSideAPI.csproj" />
 </Solution>

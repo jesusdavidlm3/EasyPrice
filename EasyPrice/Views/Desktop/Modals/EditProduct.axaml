@@ -5,9 +5,14 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="500" Width="800" Height="500" CanResize="False" WindowStartupLocation="CenterOwner"
         x:Class="EasyPrice.Views.Desktop.EditProduct"
         xmlns:vm="clr-namespace:EasyPrice.ViewModels.Desktop"
+        xmlns:local="clr-namespace:EasyPrice.Converters"
         x:DataType="vm:EditProductViewModel"
         ShowInTaskbar="False"
         Title="Editar producto">
+    
+    <Window.Resources>
+        <local:DolarToBs x:Key="DolarToBs"/>
+    </Window.Resources>
     
     <Window.KeyBindings>
         <KeyBinding 
@@ -25,7 +30,7 @@
             FontSize="30"
             TextAlignment="Center"/>
         
-        <StackPanel Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Classes="Card">
+        <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Classes="Card">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock
                     Text="Precio anterior:"
@@ -35,11 +40,11 @@
                     Text="{Binding CurrentProduct.GetValueDolar, StringFormat=${0:f2}}"
                     TextAlignment="Center"/>
                 <TextBlock
-                    Text="{Binding CurrentProduct.GetValueBs, StringFormat=Bs. {0:f2}}"
+                    Text="{Binding CurrentProduct.GetValueDolar, StringFormat=Bs. {0:f2}, Converter={StaticResource DolarToBs}, ConverterParameter={Binding DolarPrice, RelativeSource={RelativeSource AncestorType=vm:EditProductViewModel}}}"
                     TextAlignment="Center"/>
             </StackPanel>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Classes="Card">
+        </Border>
+        <Border Grid.Row="1" Grid.Column="3" Grid.RowSpan="2" Classes="Card">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock
                     Text="Precio nuevo:"
@@ -52,7 +57,7 @@
                     Text="{Binding NewPriceBs, StringFormat=Bs. {0:f2}}"
                     TextAlignment="Center"/>
             </StackPanel>
-        </StackPanel>
+        </Border>
         
         <StackPanel Grid.Column="0" Grid.Row="3" Grid.RowSpan="1" Grid.ColumnSpan="5" Margin="20 0">
             <Label

@@ -3,7 +3,8 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EasyPrice.Models;
+using EasyPrice.Services;
+using Models;
 
 namespace EasyPrice.ViewModels.Desktop;
 
@@ -23,7 +24,7 @@ public partial class DeleteProductViewModel : ViewModelBase
     [RelayCommand]
     public void Delete()
     {
-        Product.DeleteProduct(ProductToDelete);
+        ProductService.DeleteProduct(ProductToDelete);
         _window.Close(true);
     }
 

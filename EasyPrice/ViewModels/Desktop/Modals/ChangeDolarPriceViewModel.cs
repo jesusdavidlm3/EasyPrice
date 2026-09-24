@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EasyPrice.Models;
+using Models;
 using EasyPrice.Services;
 
 namespace EasyPrice.ViewModels.Desktop;
@@ -13,7 +13,7 @@ public partial class ChangeDolarPriceViewModel : ViewModelBase
     
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
-    public partial float? DolarPrice { get; set; } = DBService.settings.DolarPrice;
+    public partial double DolarPrice { get; set; } = SettingsService.Settings.DolarPrice;
     
     public ChangeDolarPriceViewModel(Window ownerWindow, AdministrationViewModel ownerVm)
     {
@@ -24,7 +24,7 @@ public partial class ChangeDolarPriceViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanSave))]
     public void Save()
     {
-        DBService.settings.UpdateDolarPrice((float)DolarPrice!);
+        SettingsService.UpdateDolarPrice((double)DolarPrice!);
         _ownerVm.Reload();
         _ownerWindow.Close();
     }

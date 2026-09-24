@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EasyPrice.Models;
+using Models;
 using EasyPrice.Services;
 using EasyPrice.Services.Windows;
 
@@ -107,7 +107,7 @@ public partial class AdministrationViewModel : ViewModelBase
     
     private void GetProducts()
     {
-        FullList = Product.GetAll();
+        FullList = ProductService.GetAll();
         ShownList = new ObservableCollection<Product>(FullList);
     }
 
@@ -119,7 +119,7 @@ public partial class AdministrationViewModel : ViewModelBase
 
     public void Reload()
     {
-        var newList = Product.GetAll();
+        var newList = ProductService.GetAll();
         FullList.Clear();
         ShownList.Clear();
         foreach (var item in newList)

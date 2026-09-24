@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using EasyPrice.Models;
+using Models;
 using EasyPrice.ViewModels.Desktop;
 
 namespace EasyPrice.Views.Desktop;

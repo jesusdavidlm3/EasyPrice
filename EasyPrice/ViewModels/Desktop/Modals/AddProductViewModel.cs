@@ -1,7 +1,8 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EasyPrice.Models;
+using EasyPrice.Services;
+using Models;
 
 namespace EasyPrice.ViewModels.Desktop;
 
@@ -33,7 +34,7 @@ public partial class AddProductViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanFinish))]
     public void Finish()
     {
-        var product = Product.AddProduct(Name, (double)PackPrice!, (int)PackQuantity!, (int)Gain!);
+        var product = ProductService.AddProduct(Name, (double)PackPrice!, (int)PackQuantity!, (int)Gain!);
         _window.Close(product);
     }
     

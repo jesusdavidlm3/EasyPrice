@@ -3,6 +3,7 @@
         xmlns:vm="using:EasyPrice.ViewModels.Desktop"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:EasyPrice.Converters"
         mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="720" MinWidth="800" MinHeight="700"
         WindowState="Maximized"
         x:Class="EasyPrice.Views.Desktop.MainView"
@@ -10,6 +11,10 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="EasyPrice">
 
+    <Window.Resources>
+        <converters:DolarToBs x:Key="DolarToBs"/>
+    </Window.Resources>
+    
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
@@ -37,25 +42,25 @@
                 Text="{Binding SearchText}"
                 Height="10"
                 Margin="10 0"/>
-            <DataGrid Grid.Row="2" Grid.Column="1"
+            <TableView Grid.Row="2" Grid.Column="1"
                 Margin="10 0 10 20"
                 ItemsSource="{Binding ShownList, Mode=TwoWay}"
-                IsReadOnly="True">
-                <DataGrid.Columns>
-                    <DataGridTextColumn
+                CanUserResizeColumns="False">
+                <TableView.Columns>
+                    <TableViewColumn
                         Header="Producto"
                         Width="2.3*"
                         Binding="{Binding Name}"/>
-                    <DataGridTextColumn
+                    <TableViewColumn
                         Width="1*"
                         Header="Precio en Bs."
-                        Binding="{Binding GetValueBs, StringFormat=Bs. {0:f2}}"/>
-                    <DataGridTextColumn
+                        Binding="{Binding GetValueDolar, StringFormat=Bs. {0:f2}, Converter={StaticResource DolarToBs}}"/>
+                    <TableViewColumn
                         Width="1*"
                         Header="Precio en $"
                         Binding="{Binding GetValueDolar, StringFormat=${0:f2}}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                </TableView.Columns>
+            </TableView>
         </Grid>
     </DockPanel>
 

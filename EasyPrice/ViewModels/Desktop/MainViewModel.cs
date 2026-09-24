@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EasyPrice.Models;
+using Models;
 using EasyPrice.Services;
 using EasyPrice.Services.Windows;
 
@@ -19,6 +19,9 @@ public partial class MainViewModel : ViewModelBase
     
     [ObservableProperty]
     public partial string SearchText { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial double DolarPrice { get; private set; } = SettingsService.Settings.DolarPrice;
 
     partial void OnSearchTextChanged(string value)
     {
@@ -53,13 +56,13 @@ public partial class MainViewModel : ViewModelBase
     
     private void GetProducts()
     {
-        FullList = Product.GetAll();
+        FullList = ProductService.GetAll();
         ShownList = new ObservableCollection<Product>(FullList);
     }
 
     public void Reload()
     {
-        var newList = Product.GetAll();
+        var newList = ProductService.GetAll();
         FullList.Clear();
         ShownList.Clear();
         foreach (var item in newList)

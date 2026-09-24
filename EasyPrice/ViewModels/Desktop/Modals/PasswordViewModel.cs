@@ -22,7 +22,7 @@ public partial class PasswordViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanLogin))]
     public void Login()
     {
-        if (Crypto.Hash(Password) != DBService.settings.Password)
+        if (Crypto.Hash(Password) != SettingsService.Settings.AdminPassword)
         {
             _window.Close();
         }

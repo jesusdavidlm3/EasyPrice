@@ -43,12 +43,12 @@
         <Setter Property="Background" Value="#003049"/>
     </Style>
     
-    <Style Selector="DataGrid">
+    <Style Selector="TableView">
         <Setter Property="Background" Value="#143f56"/>
         <Setter Property="CornerRadius" Value="12"/>
     </Style>
         
-    <Style Selector="DataGridRow">
+    <Style Selector="TableViewRow">
         <Setter Property="Background" Value="#264d61"/>
         <Setter Property="Padding" Value="0 15"/>
     </Style>
@@ -69,6 +69,7 @@
     <Style Selector="Border.Card">
         <Setter Property="Background" Value="#264d61"/>
         <Setter Property="Margin" Value="5"/>
+        <Setter Property="CornerRadius" Value="20"/>
     </Style>
     
     <!--Phone Styles-->

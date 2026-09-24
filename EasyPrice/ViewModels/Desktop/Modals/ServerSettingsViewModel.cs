@@ -32,7 +32,7 @@ public partial class ServerSettingsViewModel : ViewModelBase
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(ClientMode))]
     [NotifyPropertyChangedFor(nameof(ServerMode))]
-    public partial string SelectedWorkMode { get; set; } = WorkModes.FirstOrDefault(x => DBService.settings.Server == x.Value).Key.ToString();
+    public partial string SelectedWorkMode { get; set; } = WorkModes.FirstOrDefault(x => SettingsService.Settings.WorkMode == x.Value).Key.ToString();
     
     [ObservableProperty]
     public partial string ServerPassword { get; set; } = string.Empty;

@@ -1,7 +1,7 @@
 ﻿using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using EasyPrice.Models;
+using Models;
 using EasyPrice.Services;
 
 namespace EasyPrice.ViewModels.Desktop;
@@ -31,6 +31,8 @@ public partial class EditProductViewModel : ViewModelBase
     [ObservableProperty]
     public partial double? NewPriceBs { get; set; }
     
+    public double DolarPrice { get; } = SettingsService.Settings.DolarPrice;
+    
     public EditProductViewModel(Window window, Product product)
     {
         CurrentProduct = product;
@@ -46,7 +48,7 @@ public partial class EditProductViewModel : ViewModelBase
         double? operableGain = Gain / 100d;
         double? unitValueDolar = unitPrice + (operableGain * unitPrice);
         NewPriceDolar = unitValueDolar;
-        NewPriceBs = unitValueDolar * DBService.settings.DolarPrice;
+        NewPriceBs = unitValueDolar * SettingsService.Settings.DolarPrice;
     }
 
     partial void OnPackPriceChanged(double? value)
@@ -76,7 +78,7 @@ public partial class EditProductViewModel : ViewModelBase
         CurrentProduct.PackPrice = (double)PackPrice!;
         CurrentProduct.PackQuantity = (int)PackQuantity!;
         CurrentProduct.Gain = (int)Gain!;
-        Product.UpdateProduct(CurrentProduct);
+        ProductService.UpdateProduct(CurrentProduct);
         _window.Close(CurrentProduct);
     }
 

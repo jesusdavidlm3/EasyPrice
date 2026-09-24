@@ -22,7 +22,7 @@ public partial class ChangePasswordViewModel : ViewModelBase
     [RelayCommand(CanExecute =  nameof(CanSave))]
     public void Save()
     {
-        DBService.settings.UpdatePassword(NewPassword);
+        SettingsService.UpdateAdminPassword(NewPassword);
         _window.Close();
     }
     

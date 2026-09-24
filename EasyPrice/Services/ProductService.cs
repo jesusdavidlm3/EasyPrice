@@ -1,37 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using EasyPrice.Services;
-using Microsoft.Data.Sqlite;
+using Models;
 
-namespace EasyPrice.Models;
+namespace EasyPrice.Services;
 
-public class Product
+public static class ProductService
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public double PackPrice { get; set; }
-    public int PackQuantity { get; set; }
-    public int Gain { get; set; }
-
-    public Product(Guid id, string name, double packPrice, int packQuantity, int gain)
-    {
-        Id = id;
-        Name = name;
-        PackPrice = packPrice;
-        PackQuantity = packQuantity;
-        Gain = gain;
-    }
-
-    public Product(Product newProduct)
-    {
-        Id = newProduct.Id;
-        Name = newProduct.Name;
-        PackPrice = newProduct.PackPrice;
-        PackQuantity = newProduct.PackQuantity;
-        Gain = newProduct.Gain;
-    }
-
     public static ObservableCollection<Product> GetAll()
     {
         var products = new ObservableCollection<Product>();
@@ -88,27 +63,5 @@ public class Product
         string query = "DELETE FROM products WHERE Id = @Id";
         List<(string, object)> parameters = [("@Id", product.Id.ToString())];
         DBService.Execute(query, parameters);
-    }
-
-
-    public double GetValueDolar
-    {
-        get
-        {
-            double unitPrice = PackPrice / PackQuantity;
-            double operableGain = Gain / 100d;
-            double unitValue = unitPrice + (operableGain * unitPrice);
-            return unitValue;
-        }
-    }
-    
-    public double GetValueBs
-    {
-        get
-        {
-            double unitValueDolar = GetValueDolar;
-            double unitValueBs = unitValueDolar * DBService.settings.DolarPrice;
-            return unitValueBs;
-        }
     }
 }

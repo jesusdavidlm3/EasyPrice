@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Avalonia.Controls;
-using EasyPrice.Models;
+using Models;
 using EasyPrice.ViewModels.Desktop;
 using EasyPrice.Views.Desktop;
 
