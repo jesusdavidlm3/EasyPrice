@@ -16,6 +16,14 @@ public class ProductController : Controller
         return Ok(response);
     }
 
+    [HttpGet]
+    [Route("{date}")]
+    public IActionResult Update([FromServices] IProductsRepo productsRepo, [FromRoute] DateTime date)
+    {
+        var response = JsonSerializer.Serialize(productsRepo.GetProducts(date));
+        return Ok(response);
+    }
+
     [HttpPost]
     public IActionResult Post([FromServices] IProductsRepo productsRepo, [FromBody]Product product)
     {

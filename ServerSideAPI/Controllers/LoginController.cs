@@ -1,4 +1,6 @@
+using Libs;
 using Microsoft.AspNetCore.Mvc;
+using ServerSideAPI.Interfaces;
 
 namespace ServerSideAPI.Controllers;
 
@@ -6,9 +8,25 @@ namespace ServerSideAPI.Controllers;
 [Route("[controller]")]
 public class LoginController : Controller
 {
-    [HttpPost]
-    public IActionResult Index()
+    public struct LoginData
     {
-        return Ok();
+        public string Password { get; set; }
+    }
+    
+    [HttpPost]
+    public IActionResult Index([FromServices] ISettingsRepo  settingsRepo, [FromBody] LoginData loginData)
+    {
+        var receivedPass = Crypto.Hash(loginData.Password);
+        if (receivedPass.Equals(settingsRepo.Current.AdminPassword))
+        {
+            return Accepted();
+        }else if (receivedPass.Equals(settingsRepo.Current.ConnPassword))
+        {
+            return Ok();
+        }
+        else
+        {
+            return Unauthorized();
+        }
     }
 }

@@ -28,7 +28,7 @@ public static class ApiRest
         
         builder.Services.AddSingleton(_dbService);
         builder.Services.AddSingleton<IProductsRepo, ProductsRepo>();
-        builder.Services.AddSingleton(new SettingsRepo());
+        builder.Services.AddSingleton<ISettingsRepo, SettingsRepo>();
         
         app = builder.Build();
 

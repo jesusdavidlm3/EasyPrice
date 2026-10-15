@@ -31,6 +31,28 @@ public class ProductsRepo : IProductsRepo
         }
         return res;
     }
+    
+    public List<Product> GetProducts(DateTime date)
+    {
+        var res = new List<Product>();
+        var queryParams = new List<(string, object)>
+        {
+            ("@Date", date)
+        };
+        var dbResponse = _dbService.Query("SELECT * FROM Products WHERE LastUpdate > @Date", queryParams);
+        while (dbResponse.Read())
+        {
+            var id = dbResponse.GetGuid("Id");
+            var name = dbResponse.GetString("Name");
+            var packPrice = dbResponse.GetDouble("PackPrice");
+            var packQuantity = dbResponse.GetInt32("PackQuantity");
+            var gain = dbResponse.GetInt32("Gain");
+            var lastUpdate = dbResponse.GetDateTime("LastUpdate");
+            var product = new Product(id, name, packPrice, packQuantity, gain, lastUpdate);
+            res.Add(product);
+        }
+        return res;
+    }
 
     public Product SaveProduct(Product product)
     {
