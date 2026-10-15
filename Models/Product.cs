@@ -2,11 +2,13 @@
 
 public class Product
 {
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
     public string Name { get; set; }
     public double PackPrice { get; set; }
     public int PackQuantity { get; set; }
     public int Gain { get; set; }
+    
+    public Product(){}
     
     public Product(Guid id, string name, double packPrice, int packQuantity, int gain)
     {
@@ -16,10 +18,19 @@ public class Product
         PackQuantity = packQuantity;
         Gain = gain;
     }
+    
+    public Product(string name, double packPrice, int packQuantity, int gain)
+    {
+        Id = Guid.NewGuid();
+        Name = name;
+        PackPrice = packPrice;
+        PackQuantity = packQuantity;
+        Gain = gain;
+    }
 
     public Product(Product newProduct)
     {
-        Id = newProduct.Id;
+        Id = newProduct.Id ?? Guid.NewGuid();
         Name = newProduct.Name;
         PackPrice = newProduct.PackPrice;
         PackQuantity = newProduct.PackQuantity;
@@ -35,5 +46,6 @@ public class Product
             double unitValue = unitPrice + (operableGain * unitPrice);
             return unitValue;
         }
+        set{}
     }
 }

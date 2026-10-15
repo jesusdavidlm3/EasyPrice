@@ -1,7 +1,9 @@
 ﻿services:
-  serversideapi:
+  easyprice_api:
     image: serversideapi
     build:
       context: .
       dockerfile: ServerSideAPI/Dockerfile
 
+  easyprice_mariadb:
+    
