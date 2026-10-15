@@ -7,25 +7,28 @@ public class Product
     public double PackPrice { get; set; }
     public int PackQuantity { get; set; }
     public int Gain { get; set; }
+    public DateTime? LastUpdate { get; set; }
     
     public Product(){}
     
-    public Product(Guid id, string name, double packPrice, int packQuantity, int gain)
+    public Product(Guid id, string name, double packPrice, int packQuantity, int gain, DateTime lastUpdate)
     {
         Id = id;
         Name = name;
         PackPrice = packPrice;
         PackQuantity = packQuantity;
         Gain = gain;
+        LastUpdate = lastUpdate;
     }
     
-    public Product(string name, double packPrice, int packQuantity, int gain)
+    public Product(string name, double packPrice, int packQuantity, int gain, DateTime lastUpdate)
     {
         Id = Guid.NewGuid();
         Name = name;
         PackPrice = packPrice;
         PackQuantity = packQuantity;
         Gain = gain;
+        LastUpdate =  lastUpdate;
     }
 
     public Product(Product newProduct)
@@ -35,6 +38,7 @@ public class Product
         PackPrice = newProduct.PackPrice;
         PackQuantity = newProduct.PackQuantity;
         Gain = newProduct.Gain;
+        LastUpdate = newProduct.LastUpdate ?? DateTime.Now;
     }
     
     public double GetValueDolar

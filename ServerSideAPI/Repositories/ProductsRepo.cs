@@ -25,7 +25,8 @@ public class ProductsRepo : IProductsRepo
             var packPrice = dbResponse.GetDouble("PackPrice");
             var packQuantity = dbResponse.GetInt32("PackQuantity");
             var gain = dbResponse.GetInt32("Gain");
-            var product = new Product(id, name, packPrice, packQuantity, gain);
+            var lastUpdate = dbResponse.GetDateTime("LastUpdate");
+            var product = new Product(id, name, packPrice, packQuantity, gain, lastUpdate);
             res.Add(product);
         }
         return res;
@@ -34,29 +35,33 @@ public class ProductsRepo : IProductsRepo
     public Product SaveProduct(Product product)
     {
         product.Id = Guid.NewGuid();
+        product.LastUpdate = DateTime.Now;
         var queryParams = new List<(string, object)>
         {
             ("@Id", product.Id.ToString())!,
             ("@Name", product.Name),
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
-            ("@Gain", product.Gain)
+            ("@Gain", product.Gain),
+            ("@LastUpdate", product.LastUpdate)
         };
-        _dbService.Execute("INSERT INTO products(Id, Name, PackPrice, PackQuantity, Gain) VALUES(@Id, @Name, @PackPrice, @PackQuantity, @Gain)", queryParams);
+        _dbService.Execute("INSERT INTO products(Id, Name, PackPrice, PackQuantity, Gain, LastUpdate) VALUES(@Id, @Name, @PackPrice, @PackQuantity, @Gain, @LastUpdate)", queryParams);
         return product;
     }
 
     public Product EditProduct(Product product)
     {
+        product.LastUpdate = DateTime.Now;
         var queryParams = new List<(string, object)>
         {
             ("@Id", product.Id.ToString()!),
             ("@Name", product.Name),
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
-            ("@Gain", product.Gain)
+            ("@Gain", product.Gain),
+            ("@LastUpdate", product.LastUpdate)
         };
-        _dbService.Execute("UPDATE products SET Name=@Name, PackPrice=@PackPrice, PackQuantity=@PackQuantity, Gain=@Gain WHERE Id=@Id", queryParams);
+        _dbService.Execute("UPDATE products SET Name=@Name, PackPrice=@PackPrice, PackQuantity=@PackQuantity, Gain=@Gain, LastUpdate=@LastUpdate WHERE Id=@Id", queryParams);
         return product;
     }
 
@@ -75,7 +80,8 @@ public class ProductsRepo : IProductsRepo
             var packPrice = dbResponse.GetDouble("PackPrice");
             var packQuantity = dbResponse.GetInt32("PackQuantity");
             var gain = dbResponse.GetInt32("Gain");
-            var product = new Product(id, name, packPrice, packQuantity, gain);
+            var lastUpdate = dbResponse.GetDateTime("LastUpdate");
+            var product = new Product(id, name, packPrice, packQuantity, gain, lastUpdate);
             res.Add(product);
         }
         return res;
