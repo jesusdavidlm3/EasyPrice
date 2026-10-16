@@ -1,6 +1,7 @@
 using Libs;
 using Microsoft.AspNetCore.Mvc;
 using ServerSideAPI.Interfaces;
+using ServerSideAPI.Middlewares;
 
 namespace ServerSideAPI.Controllers;
 
@@ -15,6 +16,7 @@ public class PasswordController : Controller
     
     [HttpPatch]
     [Route("conn")]
+    [TypeFilter(typeof(AuthAdmin))]
     public IActionResult ChangeConnPassword([FromServices] ISettingsRepo settingsRepo, [FromBody] UpdatePasswordDTO updatePasswordDto)
     {
         var response = settingsRepo.UpdateConnPassword(updatePasswordDto.NewPassword);
@@ -28,6 +30,7 @@ public class PasswordController : Controller
     
     [HttpPatch]
     [Route("admin")]
+    [TypeFilter(typeof(AuthAdmin))]
     public IActionResult ChangeAdminPassword([FromServices] ISettingsRepo settingsRepo, [FromBody] UpdatePasswordDTO updatePasswordDto)
     {
         var response = settingsRepo.UpdateAdminPassword(updatePasswordDto.NewPassword);

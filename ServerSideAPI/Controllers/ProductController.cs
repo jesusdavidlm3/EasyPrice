@@ -2,6 +2,7 @@ using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using ServerSideAPI.Interfaces;
+using ServerSideAPI.Middlewares;
 
 namespace ServerSideAPI.Controllers;
 [ApiController]
@@ -10,6 +11,7 @@ public class ProductController : Controller
 {
     
     [HttpGet]
+    [TypeFilter(typeof(AuthConn))]
     public IActionResult Get([FromServices] IProductsRepo productsRepo)
     {
         var response = JsonSerializer.Serialize(productsRepo.GetProducts());
@@ -18,6 +20,7 @@ public class ProductController : Controller
 
     [HttpGet]
     [Route("{date}")]
+    [TypeFilter(typeof(AuthConn))]
     public IActionResult Update([FromServices] IProductsRepo productsRepo, [FromRoute] DateTime date)
     {
         var response = JsonSerializer.Serialize(productsRepo.GetProducts(date));
@@ -25,6 +28,7 @@ public class ProductController : Controller
     }
 
     [HttpPost]
+    [TypeFilter(typeof(AuthAdmin))]
     public IActionResult Post([FromServices] IProductsRepo productsRepo, [FromBody]Product product)
     {
         var response = productsRepo.SaveProduct(product);
@@ -33,6 +37,7 @@ public class ProductController : Controller
 
     [HttpDelete]
     [Route("{id}")]
+    [TypeFilter(typeof(AuthAdmin))]
     public IActionResult Delete([FromServices] IProductsRepo productsRepo, [FromRoute]Guid id)
     {
         productsRepo.DeleteProduct(id);
@@ -40,6 +45,7 @@ public class ProductController : Controller
     }
 
     [HttpPatch]
+    [TypeFilter(typeof(AuthAdmin))]
     public IActionResult Patch([FromServices] IProductsRepo productsRepo, [FromBody]Product product)
     {
         var response = productsRepo.EditProduct(product);

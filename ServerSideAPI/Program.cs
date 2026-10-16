@@ -1,4 +1,5 @@
 using ServerSideAPI.Interfaces;
+using ServerSideAPI.Middlewares;
 using ServerSideAPI.Repositories;
 using ServerSideAPI.Services;
 

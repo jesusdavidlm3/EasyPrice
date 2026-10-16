@@ -92,7 +92,7 @@ public class SettingsRepo : ISettingsRepo
         else
         {
             var newSettings =  Current;
-            newSettings.ConnPassword = newConnPassword;
+            newSettings.ConnPassword = encryptedPassword;
             SaveToFile(newSettings);
             _current = newSettings;
             return true;
@@ -109,7 +109,7 @@ public class SettingsRepo : ISettingsRepo
         else
         {
             var newSettings = Current;
-            newSettings.AdminPassword = newAdminPassword;
+            newSettings.AdminPassword = encryptedPassword;
             SaveToFile(newSettings);
             _current = newSettings;
             return true;
