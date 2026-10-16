@@ -56,8 +56,8 @@ public class SettingsRepo : ISettingsRepo
     {
         var settings = new Settings();
         settings.DolarPrice = newSettings?.DolarPrice ?? 1;
-        settings.AdminPassword = newSettings?.AdminPassword ?? Crypto.Hash("1234");
-        settings.ConnPassword = newSettings?.ConnPassword ?? Crypto.Hash("123456");
+        settings.AdminPassword = newSettings?.AdminPassword ?? Crypto.Hash("123456");
+        settings.ConnPassword = newSettings?.ConnPassword ?? Crypto.Hash("1234");
         settings.WorkMode = newSettings?.WorkMode ?? 1;
         settings.ServerIp = newSettings?.ServerIp ?? null;
         settings.LastUpdate = newSettings?.LastUpdate ?? new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
