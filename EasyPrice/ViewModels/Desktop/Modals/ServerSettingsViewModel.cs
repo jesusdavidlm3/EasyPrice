@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
 /*using SystemworkInformation;
 using System.Sockets;*/
 using Avalonia.Controls;
@@ -18,14 +19,14 @@ public partial class ServerSettingsViewModel : ViewModelBase
 
     private static Dictionary<string, int> WorkModes { get; } = new Dictionary<string, int>{
         { "Individual", 0 },
-        { "Servidor", 1 },
+        /*{ "Servidor", 1 },*/
         { "Cliente", 2 }
     };
     
     public ObservableCollection<string> WorkModeNames { get; set; } =
     [
         "Individual",
-        "Servidor",
+        /*"Servidor",*/
         "Cliente"
     ];
 
@@ -38,7 +39,7 @@ public partial class ServerSettingsViewModel : ViewModelBase
     public partial string ServerPassword { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial string ServerIp { get; set; } = string.Empty;
+    public partial string ServerIp { get; set; } = SettingsService.Settings.ServerIp ?? string.Empty;
     
     public bool ClientMode => SelectedWorkMode == "Cliente";
     public bool ServerMode =>  SelectedWorkMode == "Servidor";
@@ -55,8 +56,34 @@ public partial class ServerSettingsViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public void Save()
+    public async Task Save()
     {
-        
+        try
+        {
+            if (SelectedWorkMode == "Cliente")
+            {
+                var res = await ClientService.Login(ServerIp, ServerPassword);
+                if (res)
+                {
+                    SettingsService.UpdateWorkMode(WorkModes.FirstOrDefault(x => x.Key == SelectedWorkMode).Value);
+                    var productsRes = await ClientService.GetProducts();
+                    foreach (var product in productsRes)
+                    {
+                        //Se estan agregando a la base de datos pero no la lista del programa en tiempo real
+                        //Revisar eso
+                        ProductService.AddProduct(product);
+                        _window.Close();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Cancelado");
+                }
+            }
+        }
+        catch (Exception err)
+        {
+            Console.WriteLine(err);
+        }
     }
 }

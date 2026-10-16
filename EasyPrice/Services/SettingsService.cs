@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Net;
 using System.Text.Json;
 using Avalonia.Controls.ApplicationLifetimes;
 using Models;
@@ -94,8 +95,27 @@ public class SettingsService
         SaveToFile(_settings);
     }
 
-    public static void UpdateWorkMode()
+    public static void UpdateConnPassword(string connPassword)
     {
-        
+        _settings.ConnPassword = Crypto.Hash(connPassword);
+        SaveToFile(_settings);
+    }
+    
+    public static void UpdateWorkMode(int newWorkMode)
+    {
+        _settings.WorkMode = newWorkMode;
+        SaveToFile(_settings);
+    }
+
+    public static void UpdateServerIp(string newServerIp)
+    {
+        _settings.ServerIp = newServerIp;
+        SaveToFile(_settings);
+    }
+
+    public static void UpdateLastUpdate(DateTime newLastUpdate)
+    {
+        _settings.LastUpdate = newLastUpdate;
+        SaveToFile(_settings);
     }
 }

@@ -1,14 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Microsoft.Data.Sqlite;
 
 namespace EasyPrice.Services;
 
 public class DBService
 {
-    private static SqliteConnection connection = new SqliteConnection("Data Source=db.db;Mode=ReadWriteCreate");
+    private static SqliteConnection connection { get; set; }
 
     static DBService()
     {
+        var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        var filePath = Path.Combine(appDataFolder, "EasyPrice");
+        if(!Directory.Exists(filePath))
+            Directory.CreateDirectory(filePath);
+        filePath = Path.Combine(filePath, "db.db");
+        connection = new SqliteConnection($"Data Source={filePath};Mode=ReadWriteCreate");
         connection.Open();
         InitDb();
     }
@@ -16,7 +24,7 @@ public class DBService
     private static void InitDb()
     {
         var products = connection.CreateCommand();
-        products.CommandText = "CREATE TABLE IF NOT EXISTS products(Id TEXT, Name string, PackPrice REAL,PackQuantity INTEGER, Gain INTEGER)";
+        products.CommandText = "CREATE TABLE IF NOT EXISTS products(Id TEXT, Name string, PackPrice REAL,PackQuantity INTEGER, Gain INTEGER, LastUpdate DATETIME)";
         products.ExecuteNonQuery();
     }
     

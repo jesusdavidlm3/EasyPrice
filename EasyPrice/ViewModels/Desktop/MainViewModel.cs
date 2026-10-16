@@ -45,7 +45,11 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel(Window window)
     {
         GetProducts();
+        ProductService.productList = FullList;
         _showAdministrationWindowService = new ShowAdministrationWindowService(window);
+        if (SettingsService.Settings.WorkMode == 2)
+            ClientService.StartServerWatcher(() => Reload());
+        
     }
 
     [RelayCommand]
@@ -60,7 +64,7 @@ public partial class MainViewModel : ViewModelBase
         ShownList = new ObservableCollection<Product>(FullList);
     }
 
-    public void Reload()
+    private Action? Reload()
     {
         var newList = ProductService.GetAll();
         FullList.Clear();
@@ -70,5 +74,7 @@ public partial class MainViewModel : ViewModelBase
             FullList.Add(item);
             ShownList.Add(item);
         }
+
+        return null;
     }
 }
