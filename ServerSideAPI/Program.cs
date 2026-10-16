@@ -18,19 +18,20 @@ public static class ApiRest
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 
-        if (args.Contains("-desktop"))
+        /*if (args.Contains("-desktop"))
         {
             _dbService = new DbService(true);
         }
         else
         {
             _dbService = new DbService();
-        }
+        }*/
+        _dbService = new DbService(true);
         
         builder.Services.AddSingleton(_dbService);
         builder.Services.AddSingleton<IProductsRepo, ProductsRepo>();
         builder.Services.AddSingleton<ISettingsRepo, SettingsRepo>();
-        
+
         app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -46,10 +47,11 @@ public static class ApiRest
 
         app.MapControllers();
 
-        if (args.Contains("--start-server"))
+        /*if (args.Contains("--start-server"))
         {
             start();
-        }
+        }*/
+        app.Run();
     }
 
     public static void start()

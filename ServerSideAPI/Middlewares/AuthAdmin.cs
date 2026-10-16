@@ -16,9 +16,8 @@ public class AuthAdmin :  IActionFilter
 
     public void OnActionExecuting(ActionExecutingContext context)
     {
-        context.HttpContext.Request.Headers.TryGetValue("Authorization", out var rawPass);
-        var encrypted = Crypto.Hash(rawPass.ToString());
-        if (!encrypted.Equals(_settingsRepo.Current.AdminPassword))
+        context.HttpContext.Request.Headers.TryGetValue("Authorization", out var pass);
+        if (!pass.Equals(_settingsRepo.Current.AdminPassword))
         {
             context.Result = new UnauthorizedResult();
         }

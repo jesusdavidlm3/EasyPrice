@@ -16,9 +16,8 @@ public class AuthConn : IActionFilter
 
     public void OnActionExecuting(ActionExecutingContext context )
     {
-        context.HttpContext.Request.Headers.TryGetValue("Authorization", out var rawPassword);
-        var encrypted = Crypto.Hash(rawPassword.ToString());
-        if (!encrypted.Equals(_settingsRepo.Current.AdminPassword) && !encrypted.Equals(_settingsRepo.Current.ConnPassword))
+        context.HttpContext.Request.Headers.TryGetValue("Authorization", out var pass);
+        if (!pass.Equals(_settingsRepo.Current.AdminPassword) && !pass.Equals(_settingsRepo.Current.ConnPassword))
         {
             context.Result = new UnauthorizedResult();
         }
