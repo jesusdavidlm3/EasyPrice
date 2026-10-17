@@ -34,7 +34,14 @@ public partial class ServerPasswordsViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanSave))]
     public void Save()
     {
-        SettingsService.UpdateAdminPassword(NewPassword);
+        if (SelectedPasswordType == "Coneccion")
+        {
+            ClientService.UpdateConnPassword(NewPassword);
+        }
+        else
+        {
+            ClientService.UpdateAdminPassword(NewPassword);
+        }
         _window.Close();
     }
     

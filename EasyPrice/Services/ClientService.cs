@@ -128,7 +128,7 @@ public static class ClientService
         }
     }
 
-    public static async Task UpdateConnPassword(string newPassword)
+    public static async void UpdateConnPassword(string newPassword)
     {
         var encryptedPassword = Crypto.Hash(newPassword);
         if (encryptedPassword.Equals(SettingsService.Settings.ConnPassword))
@@ -136,17 +136,13 @@ public static class ClientService
         
         var addressParams = $"http://{SettingsService.Settings.ServerIp}/password/conn";
         var response = await _client.PatchAsJsonAsync(addressParams, new{password = encryptedPassword});
-        if (response.IsSuccessStatusCode)
-        {
-            SettingsService.UpdateConnPassword(encryptedPassword);
-        }
-        else
+        if (!response.IsSuccessStatusCode)
         {
             throw new Exception("Error");
         }
     }
 
-    public static async Task UpdateAdminPassword(string newPassword)
+    public static async void UpdateAdminPassword(string newPassword)
     {
         var encryptedPassword = Crypto.Hash(newPassword);
         if (encryptedPassword.Equals(SettingsService.Settings.AdminPassword))
@@ -156,7 +152,7 @@ public static class ClientService
         var response = await _client.PatchAsJsonAsync(addressParams, new{password = encryptedPassword});
         if (response.IsSuccessStatusCode)
         {
-            SettingsService.UpdateAdminPassword(encryptedPassword);
+            SettingsService.UpdateConnPassword(encryptedPassword);
         }
         else
         {
