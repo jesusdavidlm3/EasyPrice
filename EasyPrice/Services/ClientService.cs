@@ -14,7 +14,7 @@ namespace EasyPrice.Services;
 public static class ClientService
 {
     private static HttpClient _client = new HttpClient();
-    private static Timer _timer;
+    private static Timer? _timer;
 
     static ClientService()
     {
@@ -159,14 +159,15 @@ public static class ClientService
         }
     }
 
-    public static void StartServerWatcher(Action reload)
+    public static void StartServerWatcher(Action<List<Product>> processUpdates)
     {
-        _timer = new Timer(ServerWatcher, reload, 0, 600000);
+        /*_timer = new Timer(ServerWatcher!, processUpdates, 0, 600000);*/
+        _timer = new Timer(ServerWatcher!, processUpdates, 0, 1500);
     }
 
     public static void StopServerWatcher()
     {
-        _timer.Dispose();
+        _timer?.Dispose();
     }
     
     private static async void ServerWatcher(object state)
@@ -175,35 +176,11 @@ public static class ClientService
         {
             await GetDollar();
             var products = await GetProducts(SettingsService.Settings.LastUpdate);
-            foreach (var p in products)
-            {
-                Console.WriteLine(p.Name);
-                Product? existingProduct = null;
-                try
-                {
-                    existingProduct = ProductService.productList.FirstOrDefault(pl => pl.Id == p.Id);
-                }
-                catch (Exception e)
-                {
-                    
-                }
-                if (existingProduct != null)
-                {
-                    ProductService.UpdateProduct(p);
-                    ProductService.productList.Remove(existingProduct);
-                }
-                else
-                {
-                    ProductService.AddProduct(p);
-                }
-                ProductService.productList.Add(p);
-            }
-
             if (products.Count > 0)
             {
                 SettingsService.UpdateLastUpdate(DateTime.Now);
-                var a = (Action)state;
-                a();
+                var a = (Action<List<Product>>)state;
+                a(products);
             }
         }
         catch (Exception e)

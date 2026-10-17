@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -48,7 +50,7 @@ public partial class MainViewModel : ViewModelBase
         ProductService.productList = FullList;
         _showAdministrationWindowService = new ShowAdministrationWindowService(window);
         if (SettingsService.Settings.WorkMode == 2)
-            ClientService.StartServerWatcher(() => Reload());
+            ClientService.StartServerWatcher((List<Product> receivedProducts) => ProcessUpdates(receivedProducts));
         
     }
 
@@ -64,7 +66,7 @@ public partial class MainViewModel : ViewModelBase
         ShownList = new ObservableCollection<Product>(FullList);
     }
 
-    private Action? Reload()
+    private void Reload()
     {
         var newList = ProductService.GetAll();
         FullList.Clear();
@@ -74,7 +76,35 @@ public partial class MainViewModel : ViewModelBase
             FullList.Add(item);
             ShownList.Add(item);
         }
+    }
 
-        return null;
+    private void ProcessUpdates(List<Product> receivedProducts)
+    {
+        foreach (var p in receivedProducts)
+        {
+            Console.WriteLine(p.Name);
+            Product? existingProduct = null;
+            try
+            {
+                existingProduct = FullList.FirstOrDefault(pl => pl.Id == p.Id);
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+
+            if (existingProduct != null)
+            {
+                ProductService.UpdateProduct(p);
+                ProductService.productList.Remove(existingProduct);
+            }
+            else
+            {
+                ProductService.AddProduct(p);
+            }
+            ProductService.productList.Add(p);
+        }
+
+        Reload();
     }
 }
