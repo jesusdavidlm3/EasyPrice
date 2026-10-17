@@ -85,6 +85,8 @@ public class SettingsService
 
     public static void UpdateDolarPrice(double  dolarPrice)
     {
+        if (_settings.DolarPrice.Equals(dolarPrice))
+            return;
         _settings.DolarPrice = dolarPrice;
         SaveToFile(_settings);
     }

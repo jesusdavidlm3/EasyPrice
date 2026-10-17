@@ -117,7 +117,7 @@ public static class ClientService
             return;
         
         var addressParam = $"http://{SettingsService.Settings.ServerIp}/dollar";
-        var response = await _client.PatchAsJsonAsync(addressParam, new { dollar = newDollarPrice });
+        var response = await _client.PatchAsJsonAsync(addressParam, new { DolarPrice = newDollarPrice });
         if (response.IsSuccessStatusCode)
         {
             SettingsService.UpdateDolarPrice(newDollarPrice);

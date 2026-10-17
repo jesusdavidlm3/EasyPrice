@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Models;
 using EasyPrice.Services;
+using System.Threading.Tasks;
 
 namespace EasyPrice.ViewModels.Desktop;
 
@@ -22,9 +23,16 @@ public partial class ChangeDolarPriceViewModel : ViewModelBase
     }
     
     [RelayCommand(CanExecute = nameof(CanSave))]
-    public void Save()
+    public async Task Save()
     {
-        SettingsService.UpdateDolarPrice((double)DolarPrice!);
+        if (SettingsService.Settings.WorkMode == 2)
+        {
+            await ClientService.UpdateDollar((double)DolarPrice);
+        }
+        else
+        {
+            SettingsService.UpdateDolarPrice((double)DolarPrice!);
+        }
         _ownerVm.Reload();
         _ownerWindow.Close();
     }
