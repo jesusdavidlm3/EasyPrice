@@ -41,9 +41,8 @@
                 Content="Ajustes de servidor"
                 Command="{Binding ShowServerSettingsCommand}"/>
             <Button
-                Content="Cambiar contraseña de coneccion"/>
-            <Button
-                Content="Cambiar contraseña de servidor"/>
+                Content="Cambiar contraseñas de servidor"
+                Command="{Binding ShowServerPasswordsCommand}"/>
         </StackPanel>
         <Grid ColumnDefinitions="1* 15* 1*" RowDefinitions=".25* .5* 4*">
             <TextBlock Grid.Column="1" Grid.Row="0"

@@ -43,6 +43,7 @@ public partial class AdministrationViewModel : ViewModelBase
     private ShowSettingsService _showSettingsService;
     private ShowChangePasswordService _showChangePasswordService;
     private ShowServerSettingsService _showServerSettingsService;
+    private ShowServerPasswordsService _showServerPasswordsService;
     
     public AdministrationViewModel(Window window, MainViewModel ownerVm)
     {
@@ -55,6 +56,7 @@ public partial class AdministrationViewModel : ViewModelBase
         _showSettingsService = new ShowSettingsService(window, this);
         _showChangePasswordService = new ShowChangePasswordService(window);
         _showServerSettingsService = new ShowServerSettingsService(window);
+        _showServerPasswordsService = new ShowServerPasswordsService(window);
     }
     
     [RelayCommand]
@@ -115,6 +117,12 @@ public partial class AdministrationViewModel : ViewModelBase
     private void ShowServerSettings()
     {
         _showServerSettingsService.ShowServerSettings();
+    }
+
+    [RelayCommand]
+    private void ShowServerPasswords()
+    {
+        _showServerPasswordsService.ShowServerPassword();
     }
 
     public void Reload()
