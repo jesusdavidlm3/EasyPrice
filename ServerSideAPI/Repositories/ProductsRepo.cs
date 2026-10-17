@@ -65,7 +65,7 @@ public class ProductsRepo : IProductsRepo
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
             ("@Gain", product.Gain),
-            ("@LastUpdate", product.LastUpdate)
+            ("@LastUpdate", DateTime.Now.ToString())
         };
         _dbService.Execute("INSERT INTO products(Id, Name, PackPrice, PackQuantity, Gain, LastUpdate) VALUES(@Id, @Name, @PackPrice, @PackQuantity, @Gain, @LastUpdate)", queryParams);
         return product;
@@ -81,7 +81,7 @@ public class ProductsRepo : IProductsRepo
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
             ("@Gain", product.Gain),
-            ("@LastUpdate", product.LastUpdate)
+            ("@LastUpdate", DateTime.Now.ToString())
         };
         _dbService.Execute("UPDATE products SET Name=@Name, PackPrice=@PackPrice, PackQuantity=@PackQuantity, Gain=@Gain, LastUpdate=@LastUpdate WHERE Id=@Id", queryParams);
         return product;

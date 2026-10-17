@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using System;
+using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasyPrice.Services;
@@ -32,9 +33,19 @@ public partial class AddProductViewModel : ViewModelBase
     }
 
     [RelayCommand(CanExecute = nameof(CanFinish))]
-    public void Finish()
+    public async void Finish()
     {
-        var product = ProductService.AddProduct(Name, (double)PackPrice!, (int)PackQuantity!, (int)Gain!);
+        Product product;
+        if (SettingsService.Settings.WorkMode == 2)
+        {
+            product = await ClientService.CreateProduct(new Product(Name, (double)PackPrice!, (int)PackQuantity!, (int)Gain!, DateTime.Now));
+            SettingsService.Settings.LastUpdate = product.LastUpdate ?? DateTime.Now;
+            ProductService.AddProduct(product);
+        }
+        else
+        {
+            product = ProductService.AddProduct(Name, (double)PackPrice!, (int)PackQuantity!, (int)Gain!);
+        }
         _window.Close(product);
     }
     

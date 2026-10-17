@@ -54,7 +54,7 @@ public static class ProductService
         string query = "INSERT INTO products VALUES (@Id, @Name, @PackPrice, @PackQuantity, @Gain, @LastUpdate)";
         List<(string, object)> parameters =
         [
-            ("@Id", newProduct.Id.ToString()),
+            ("@Id", newProduct.Id.ToString() ?? Guid.NewGuid().ToString()),
             ("@Name", newProduct .Name),
             ("@PackPrice", newProduct.PackPrice),
             ("@PackQuantity", newProduct.PackQuantity),

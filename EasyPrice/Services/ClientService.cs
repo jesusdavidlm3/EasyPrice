@@ -68,11 +68,16 @@ public static class ClientService
         }
     }
 
-    public static async Task CreateProduct(Product product)
+    public static async Task<Product> CreateProduct(Product product)
     {
         var addressParam = $"http://{SettingsService.Settings.ServerIp}/product";
         var response = await _client.PostAsJsonAsync(addressParam, product);
-        if (!response.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode)
+        {
+            Product? resProduct = response.Content.ReadFromJsonAsync<Product>().Result;
+            return resProduct!;
+        }
+        else
         {
             throw new Exception("Error");
         }
