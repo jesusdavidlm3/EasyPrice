@@ -35,11 +35,15 @@
                 Content="Cambiar precio del dolar"
                 Command="{Binding ShowSettingsWindowCommand}"/>
             <Button
-                Content="Cambiar contraseña"
+                Content="Cambiar contraseña local"
                 Command="{Binding ShowChangePasswordCommand}"/>
             <Button
                 Content="Ajustes de servidor"
                 Command="{Binding ShowServerSettingsCommand}"/>
+            <Button
+                Content="Cambiar contraseña de coneccion"/>
+            <Button
+                Content="Cambiar contraseña de servidor"/>
         </StackPanel>
         <Grid ColumnDefinitions="1* 15* 1*" RowDefinitions=".25* .5* 4*">
             <TextBlock Grid.Column="1" Grid.Row="0"
@@ -53,6 +57,7 @@
                 Height="10"
                 Margin="10 0"/>
             <TableView Grid.Row="2" Grid.Column="1"
+                CanUserResizeColumns="False"
                 Margin="10 0 10 20"
                 ItemsSource="{Binding ShownList, Mode=TwoWay}">
                 <TableView.Columns>
@@ -68,10 +73,10 @@
                         Width="1*"
                         Header="Precio en $"
                         Binding="{Binding GetValueDolar, StringFormat=${0:f2}}"/>
-                    <TableViewColumn Width="2*">
+                    <TableViewColumn Width="2*" HorizontalContentAlignment="Right">
                         <TableViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Button
                                         Content="Cambiar precio"
                                         Classes="Primary"
