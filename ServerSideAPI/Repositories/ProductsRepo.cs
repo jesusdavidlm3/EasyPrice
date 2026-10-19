@@ -17,7 +17,7 @@ public class ProductsRepo : IProductsRepo
     public List<Product> GetProducts()
     {
         var res = new List<Product>();
-        var dbResponse = _dbService.Query("SELECT * FROM Products");
+        var dbResponse = _dbService.Query("SELECT * FROM Products WHERE Deleted = 0");
         while (dbResponse.Read())
         {
             var id = dbResponse.GetGuid("Id");
@@ -48,7 +48,8 @@ public class ProductsRepo : IProductsRepo
             var packQuantity = dbResponse.GetInt32("PackQuantity");
             var gain = dbResponse.GetInt32("Gain");
             var lastUpdate = dbResponse.GetDateTime("LastUpdate");
-            var product = new Product(id, name, packPrice, packQuantity, gain, lastUpdate);
+            var deleted = dbResponse.GetBoolean("Deleted");
+            var product = new Product(id, name, packPrice, packQuantity, gain, lastUpdate, deleted);
             res.Add(product);
         }
         return res;
@@ -65,7 +66,7 @@ public class ProductsRepo : IProductsRepo
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
             ("@Gain", product.Gain),
-            ("@LastUpdate", DateTime.Now.ToString())
+            ("@LastUpdate", DateTime.Now),
         };
         _dbService.Execute("INSERT INTO products(Id, Name, PackPrice, PackQuantity, Gain, LastUpdate) VALUES(@Id, @Name, @PackPrice, @PackQuantity, @Gain, @LastUpdate)", queryParams);
         return product;
@@ -77,13 +78,12 @@ public class ProductsRepo : IProductsRepo
         var queryParams = new List<(string, object)>
         {
             ("@Id", product.Id.ToString()!),
-            ("@Name", product.Name),
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
             ("@Gain", product.Gain),
-            ("@LastUpdate", DateTime.Now.ToString())
+            ("@LastUpdate", DateTime.Now)
         };
-        _dbService.Execute("UPDATE products SET Name=@Name, PackPrice=@PackPrice, PackQuantity=@PackQuantity, Gain=@Gain, LastUpdate=@LastUpdate WHERE Id=@Id", queryParams);
+        _dbService.Execute("UPDATE products SET PackPrice=@PackPrice, PackQuantity=@PackQuantity, Gain=@Gain, LastUpdate=@LastUpdate WHERE Id=@Id", queryParams);
         return product;
     }
 
@@ -113,8 +113,10 @@ public class ProductsRepo : IProductsRepo
     {
         var queryParams = new List<(string, object)>
         {
-            ("@Id", id)
+            ("@Id", id.ToString()),
+            ("@Deleted", true),
+            ("@LastUpdate", DateTime.Now)
         };
-        _dbService.Execute("DELETE FROM products WHERE Id = @Id", queryParams);
+        _dbService.Execute("UPDATE products SET Deleted=@Deleted, LastUpdate=@LastUpdate WHERE Id=@Id", queryParams);
     }
 }
