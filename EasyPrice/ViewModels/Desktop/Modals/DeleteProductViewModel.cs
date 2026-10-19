@@ -22,8 +22,12 @@ public partial class DeleteProductViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    public void Delete()
+    public async void Delete()
     {
+        if (SettingsService.Settings.WorkMode == 2)
+        {
+            await ClientService.DeleteProduct(ProductToDelete);
+        }
         ProductService.DeleteProduct(ProductToDelete);
         _window.Close(true);
     }

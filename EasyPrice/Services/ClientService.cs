@@ -60,9 +60,9 @@ public static class ClientService
         }
     }
 
-    public static async Task DeleteProduct(Guid productId)
+    public static async Task DeleteProduct(Product product)
     {
-        var addressParam = $"http://{SettingsService.Settings.ServerIp}/product/{productId}";
+        var addressParam = $"http://{SettingsService.Settings.ServerIp}/product/{product.Id}";
         var response = await _client.DeleteAsync(addressParam);
         if (!response.IsSuccessStatusCode)
         {
