@@ -1,4 +1,6 @@
-﻿namespace Models;
+﻿using System.Text.Json.Serialization;
+
+namespace Models;
 
 public class Product
 {
@@ -8,11 +10,11 @@ public class Product
     public int PackQuantity { get; set; }
     public int Gain { get; set; }
     public DateTime? LastUpdate { get; set; }
-    public bool Deleted { get; private set; }
+    public bool Deleted { get; set; }
     
     public Product(){}
     
-    public Product(Guid id, string name, double packPrice, int packQuantity, int gain, DateTime lastUpdate, bool deleted = false)
+    public Product(Guid id, string name, double packPrice, int packQuantity, int gain, DateTime lastUpdate, bool? deleted = false)
     {
         Id = id;
         Name = name;
@@ -20,10 +22,10 @@ public class Product
         PackQuantity = packQuantity;
         Gain = gain;
         LastUpdate = lastUpdate;
-        Deleted = deleted;
+        Deleted = deleted ?? false;
     }
     
-    public Product(string name, double packPrice, int packQuantity, int gain, DateTime lastUpdate, bool deleted = false)
+    public Product(string name, double packPrice, int packQuantity, int gain, DateTime lastUpdate, bool? deleted = false)
     {
         Id = Guid.NewGuid();
         Name = name;
@@ -31,7 +33,7 @@ public class Product
         PackQuantity = packQuantity;
         Gain = gain;
         LastUpdate =  lastUpdate;
-        Deleted = deleted;
+        Deleted = deleted ??  false;
     }
 
     public Product(Product newProduct)

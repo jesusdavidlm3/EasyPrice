@@ -47,7 +47,7 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel(Window window)
     {
         GetProducts();
-        ProductService.productList = FullList;
+        ProductService.ProductList = FullList;
         _showAdministrationWindowService = new ShowAdministrationWindowService(window);
         if (SettingsService.Settings.WorkMode == 2)
             ClientService.StartServerWatcher((List<Product> receivedProducts) => ProcessUpdates(receivedProducts));
@@ -82,7 +82,6 @@ public partial class MainViewModel : ViewModelBase
     {
         foreach (var p in receivedProducts)
         {
-            Console.WriteLine(p.Name);
             Product? existingProduct = null;
             try
             {
@@ -93,16 +92,20 @@ public partial class MainViewModel : ViewModelBase
                 // ignored
             }
 
-            if (existingProduct != null)
+            if (p is { Deleted: true })
+            {
+                ProductService.DeleteProduct(existingProduct!);
+                ProductService.ProductList.Remove(existingProduct!);
+            }else if (existingProduct is {Deleted: false})
             {
                 ProductService.UpdateProduct(p);
-                ProductService.productList.Remove(existingProduct);
+                ProductService.ProductList.Remove(existingProduct);
             }
             else
             {
                 ProductService.AddProduct(p);
+                ProductService.ProductList.Add(p);
             }
-            ProductService.productList.Add(p);
         }
 
         Reload();

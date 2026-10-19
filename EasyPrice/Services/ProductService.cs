@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using Models;
 
 namespace EasyPrice.Services;
 
 public static class ProductService
 {
-    public static ObservableCollection<Product> productList { get; set; }
+    public static ObservableCollection<Product> ProductList { get; set; }
     
     public static ObservableCollection<Product> GetAll()
     {
@@ -18,12 +19,12 @@ public static class ProductService
         {
             var p = new Product
             (
-                Guid.Parse(reader["Id"].ToString()),  
-                reader["Name"].ToString(), 
-                float.Parse(reader["PackPrice"].ToString()),  
-                int.Parse(reader["PackQuantity"].ToString()), 
-                int.Parse(reader["Gain"].ToString()),
-                DateTime.Parse(reader["LastUpdate"].ToString())
+                reader.GetGuid("Id"),  
+                reader.GetString("Name"), 
+                reader.GetDouble("PackPrice"),  
+                reader.GetInt32("PackQuantity"), 
+                reader.GetInt32("Gain"),
+                reader.GetDateTime("LastUpdate")
             );
             products.Add(p);
         }
@@ -37,7 +38,7 @@ public static class ProductService
         string query = "INSERT INTO products VALUES (@Id, @Name, @PackPrice, @PackQuantity, @Gain, @LastUpdate)";
         List<(string, object)> parameters =
         [
-            ("@Id", product.Id.ToString()),
+            ("@Id", product.Id!),
             ("@Name", product.Name),
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
@@ -54,7 +55,7 @@ public static class ProductService
         string query = "INSERT INTO products VALUES (@Id, @Name, @PackPrice, @PackQuantity, @Gain, @LastUpdate)";
         List<(string, object)> parameters =
         [
-            ("@Id", newProduct.Id.ToString() ?? Guid.NewGuid().ToString()),
+            ("@Id", newProduct.Id ?? Guid.NewGuid()),
             ("@Name", newProduct .Name),
             ("@PackPrice", newProduct.PackPrice),
             ("@PackQuantity", newProduct.PackQuantity),
@@ -69,19 +70,19 @@ public static class ProductService
         string query = "UPDATE products SET PackPrice = @PackPrice, PackQuantity = @PackQuantity, Gain = @Gain, LastUpdate = @LastUpdate WHERE Id = @Id";
         List< (string, object)> parameters =
         [
-            ("@PackPrice", product.PackPrice.ToString()),
-            ("@PackQuantity", product.PackQuantity.ToString()),
-            ("@Gain", product.Gain.ToString()),
+            ("@PackPrice", product.PackPrice),
+            ("@PackQuantity", product.PackQuantity),
+            ("@Gain", product.Gain),
             ("@LastUpdate", DateTime.Now),
-            ("@Id", product.Id.ToString())
+            ("@Id", product.Id)!
         ];
         DBService.Execute(query, parameters);
     }
 
     public static void DeleteProduct(Product product)
     {
-        string query = "DELETE FROM products WHERE Id = @Id";
-        List<(string, object)> parameters = [("@Id", product.Id.ToString())];
+        string query = "DELETE FROM products WHERE Id=@Id";
+        List<(string, object)> parameters = [("@Id", product.Id)!];
         DBService.Execute(query, parameters);
     }
 }

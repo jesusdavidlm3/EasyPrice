@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using EasyPrice.Utils;
@@ -15,6 +16,7 @@ public static class ClientService
 {
     private static HttpClient _client = new HttpClient();
     private static Timer? _timer;
+    private static Action<List<Product>> _timerCallback;
 
     static ClientService()
     {
@@ -163,7 +165,8 @@ public static class ClientService
     public static void StartServerWatcher(Action<List<Product>> processUpdates)
     {
         /*_timer = new Timer(ServerWatcher!, processUpdates, 0, 600000);*/
-        _timer = new Timer(ServerWatcher!, processUpdates, 0, 1500);
+        _timerCallback = processUpdates;
+        _timer = new Timer(ServerWatcher, null, 0, 1500);
     }
 
     public static void StopServerWatcher()
@@ -171,7 +174,7 @@ public static class ClientService
         _timer?.Dispose();
     }
     
-    private static async void ServerWatcher(object state)
+    private static async void ServerWatcher(object? state)
     {
         try
         {
@@ -180,8 +183,7 @@ public static class ClientService
             if (products.Count > 0)
             {
                 SettingsService.UpdateLastUpdate(DateTime.Now);
-                var a = (Action<List<Product>>)state;
-                a(products);
+                _timerCallback(products);
             }
         }
         catch (Exception e)
