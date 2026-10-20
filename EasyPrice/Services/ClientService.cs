@@ -51,7 +51,7 @@ public static class ClientService
         var response = await _client.GetAsync(addressParam);
         if (response.IsSuccessStatusCode)
         {
-            var res = response.Content.ReadFromJsonAsync<List<Product>>().Result;
+            var res = await response.Content.ReadFromJsonAsync<List<Product>>();
             return res ?? new List<Product>();
         }
         else

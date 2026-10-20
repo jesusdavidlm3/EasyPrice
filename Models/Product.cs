@@ -6,6 +6,7 @@ public class Product
 {
     public Guid? Id { get; set; }
     public string Name { get; set; }
+    [JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)]
     public double PackPrice { get; set; }
     public int PackQuantity { get; set; }
     public int Gain { get; set; }
@@ -47,6 +48,7 @@ public class Product
         Deleted = newProduct.Deleted;
     }
     
+    [JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)]
     public double GetValueDolar
     {
         get

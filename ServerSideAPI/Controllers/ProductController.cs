@@ -10,6 +10,7 @@ namespace ServerSideAPI.Controllers;
 public class ProductController : Controller
 {
     
+    
     [HttpGet]
     [TypeFilter(typeof(AuthConn))]
     public IActionResult Get([FromServices] IProductsRepo productsRepo)
