@@ -4,25 +4,38 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="600"
-    x:Class="EasyPrice.Views.Mobile.HomeView">
+    x:Class="EasyPrice.Views.Mobile.HomeView"
+    xmlns:vm="clr-namespace:EasyPrice.ViewModels.Mobile"
+    x:DataType="vm:HomeViewModel"
+    xmlns:converters="clr-namespace:EasyPrice.Converters">
+    
+    <UserControl.Resources>
+        <converters:DolarToBs x:Key="DolarToBs"/>
+    </UserControl.Resources>
     
     <Grid Classes="PrincipalBackground" RowDefinitions="1* 9*">
         <TextBox Grid.Row="0"
+            Text="{Binding SearchText}"
             PlaceholderText="Que producto buscas?"
             Height="25"
             Margin="10 0"/>
-        <DataGrid Grid.Row="1" Margin="10 0 10 20">
-            <DataGrid.Columns>
-                <DataGridTextColumn
+        <TableView Grid.Row="1" Margin="10 0 10 20"
+            ItemsSource="{Binding ShownList, Mode=TwoWay}"
+            CanUserResizeColumns="False">
+            <TableView.Columns>
+                <TableViewColumn
+                    Binding="{Binding Name}"
                     Header="Producto"
                     Width="2*"/>
-                <DataGridTextColumn
+                <TableViewColumn
+                    Binding="{Binding GetValueDolar, StringFormat=Bs. {0:f2}, Converter={StaticResource DolarToBs}}"
                     Header="Bs."
                     Width="1*"/>
-                <DataGridTextColumn
+                <TableViewColumn
                     Header="$"
-                    Width="1*"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                    Width="1*"
+                    Binding="{Binding GetValueDolar, StringFormat=${0:f2}}"/>
+            </TableView.Columns>
+        </TableView>
     </Grid>
 </UserControl>
