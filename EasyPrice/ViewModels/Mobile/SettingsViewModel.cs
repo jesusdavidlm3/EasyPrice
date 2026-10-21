@@ -9,13 +9,22 @@ namespace EasyPrice.ViewModels.Mobile;
 
 public partial class SettingsViewModel : ViewModelBase
 {
-    [ObservableProperty] public partial bool OpenMenu { get; set; } = false;
+    public Action Logout { get; set; }
 
-    [RelayCommand]
-    public void HandleMenu()
+    public SettingsViewModel(Action logout)
     {
-        OpenMenu = !OpenMenu;
+        Logout = logout;
     }
 
-    public Bitmap MenuIcon { get; } = new Bitmap(AssetLoader.Open(new Uri("avares://EasyPrice/Assets/icons/menudots.png")));
+    [RelayCommand]
+    public void HandleLogout()
+    {
+        Logout();
+    }
+
+    [RelayCommand]
+    public void HandleLogin()
+    {
+        
+    }
 }

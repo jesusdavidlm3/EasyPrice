@@ -25,9 +25,11 @@
                 Spacing="20">
                 <Button
                     Classes="Red"
-                    Content="Desvincular"/>
+                    Content="Desvincular"
+                    Command="{Binding HandleLogoutCommand}"/>
                 <Button
-                    Content="Vincular"/>
+                    Content="Vincular"
+                    Command="{Binding HandleLoginCommand}"/>
             </StackPanel>
         </StackPanel>
 </UserControl>

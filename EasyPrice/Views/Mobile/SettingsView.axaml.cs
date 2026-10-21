@@ -9,8 +9,6 @@ public partial class SettingsView : UserControl
 {
     public SettingsView()
     {
-        var vm = new SettingsViewModel();
-        DataContext = vm;
         InitializeComponent();
     }
 }

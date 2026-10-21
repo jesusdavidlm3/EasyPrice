@@ -27,4 +27,4 @@ ENTRYPOINT ["dotnet", "ServerSideAPI.dll"]
 #sudo docker build -t {{image identification}}-f ServerSideAPI/docker .
 
 #run with
-#sudo docker run -p {{port to expose}}:8080 -v {{host files path}}:/app/EasyPrice {{image identification}}
+#sudo docker run --restart always -p {{port to expose}}:8080 -v {{host files path}}:/app/EasyPrice {{image identification}}

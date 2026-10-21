@@ -3,7 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="1000"
-             x:Class="EasyPrice.Views.Mobile.InitialSettingsView">
+             x:Class="EasyPrice.Views.Mobile.InitialSettingsView"
+             xmlns:vm="clr-namespace:EasyPrice.ViewModels.Mobile"
+             x:DataType="vm:InitialSettingsViewModel">
     <Grid 
         RowDefinitions="1* 8* 1*" 
         ColumnDefinitions="1* 5* 1*"
@@ -39,17 +41,20 @@
                         Content="Direccion de servidor:"
                         Margin="15 0"/>
                     <TextBox
+                        Text="{Binding ServerIp}"
                         Margin=" 15 0"/>
                     <Label
                         Content="Contraseña:"
                         Margin=" 15 20 15 0"/>
                     <TextBox
+                        Text="{Binding ServerPassword}"
                         PasswordChar="*"
                         Margin="15 0"/>
                     <Button
                         HorizontalAlignment="Center"
                         Content="Vincular"
-                        Margin=" 0 35 0 0"/>
+                        Margin=" 0 35 0 0"
+                        Command="{Binding AttempLoginCommand}"/>
                 </StackPanel>
             </Border>
         </StackPanel>

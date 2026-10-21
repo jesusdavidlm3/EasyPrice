@@ -17,7 +17,7 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty] 
     public partial bool NavBarVisibility { get; set; } = false;
 
-    [ObservableProperty]
+    [ObservableProperty] 
     private ObservableObject _currentPage;
     
     [RelayCommand]
@@ -35,7 +35,7 @@ public partial class MainViewModel : ViewModelBase
     {
         NavBarVisibility = true;
         Title = "Ajustes";
-        CurrentPage = new SettingsViewModel();
+        CurrentPage = new SettingsViewModel(() =>  NavigateLogin());
         OpenMenu = false;
     }
 
@@ -47,16 +47,24 @@ public partial class MainViewModel : ViewModelBase
         CurrentPage = new HomeViewModel();
         OpenMenu = false;
     }
+
+    public void NavigateLogin()
+    {
+        NavBarVisibility = false;
+        Title = "Lista de precios";
+        CurrentPage = new InitialSettingsViewModel(() => NavigateHome());
+        OpenMenu = false;
+    }
     
     public MainViewModel()
     {
         if (SettingsService.Settings.ServerIp == null)
         {
-            _currentPage = new InitialSettingsViewModel();
+            NavigateLogin();
         }
         else
         {
-            _currentPage = new HomeViewModel();
+            NavigateHome();
         }
     }
 }

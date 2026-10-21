@@ -37,6 +37,7 @@ public static class ClientService
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(SettingsService.Settings.ConnPassword!);
             return true;
         }
+
         return false;
     }
 
