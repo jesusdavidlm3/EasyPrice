@@ -8,6 +8,19 @@
     xmlns:views="using:EasyPrice.Views.Mobile"
     xmlns:vm="using:EasyPrice.ViewModels.Mobile"
     x:DataType="vm:MainViewModel">
+    
+    <UserControl.DataTemplates>
+        <DataTemplate DataType="vm:HomeViewModel">
+            <views:HomeView/>
+        </DataTemplate>
+        <DataTemplate DataType="vm:InitialSettingsViewModel">
+            <views:InitialSettingsView/>
+        </DataTemplate>
+        <DataTemplate DataType="vm:SettingsViewModel">
+            <views:SettingsView/>
+        </DataTemplate>
+    </UserControl.DataTemplates>
+    
     <SplitView
         PanePlacement="Right"
         IsPaneOpen="{Binding OpenMenu}"
@@ -28,19 +41,22 @@
                         HorizontalAlignment="Right"
                         Content="Inicio"
                         Classes="TextButton"
-                        FontSize="15"/>
+                        FontSize="15"
+                        Command="{Binding NavigateHomeCommand}"/>
                     <Button
                         Margin="0 0 10 0"
                         HorizontalAlignment="Right"
                         Content="Ajustes"
                         Classes="TextButton"
-                        FontSize="15"/>
+                        FontSize="15"
+                        Command="{Binding NavigateSettingsCommand}"/>
                 </StackPanel>
             </Border>
         </SplitView.Pane>
         
         <Grid RowDefinitions="1* 9*" Classes="PrincipalBackground">
             <DockPanel
+                IsVisible="{Binding NavBarVisibility}"
                 Margin="20 0"
                 Classes="PrincipalBackground">
                 <TextBlock
@@ -61,8 +77,11 @@
                     />
                 </Button>
             </DockPanel>
-            <views:HomeView
-                Grid.Row="1"/>
+            <!--<views:HomeView
+                Grid.Row="1"/>-->
+            <ContentControl
+                Grid.Row="1"
+                Content="{Binding CurrentPage}"/>
         </Grid>
     </SplitView>
 </UserControl>
