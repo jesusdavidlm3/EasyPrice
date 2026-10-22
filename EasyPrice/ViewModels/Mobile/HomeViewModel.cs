@@ -73,6 +73,10 @@ public partial class HomeViewModel : ViewModelBase
 
     private void ProcessUpdates(List<Product> receivedProducts)
     {
+        DateTime? newLastDate = SettingsService.Settings.LastUpdate;
+        if(receivedProducts.Count > 0)
+            newLastDate = receivedProducts[0].LastUpdate;
+        
         foreach (var p in receivedProducts)
         {
             Product? existingProduct = null;
@@ -99,8 +103,14 @@ public partial class HomeViewModel : ViewModelBase
                 ProductService.AddProduct(p);
                 ProductService.ProductList.Add(p);
             }
+            
+            if (p.LastUpdate > newLastDate)
+                newLastDate = p.LastUpdate;
         }
 
+        if(!SettingsService.Settings.LastUpdate.Equals(newLastDate))
+            SettingsService.UpdateLastUpdate((DateTime)newLastDate!);
+        
         Reload();
     }
 }

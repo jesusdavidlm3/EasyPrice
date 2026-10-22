@@ -85,4 +85,10 @@ public static class ProductService
         List<(string, object)> parameters = [("@Id", product.Id)!];
         DBService.Execute(query, parameters);
     }
+    
+    public static void  DeleteAllProducts()
+    {
+        string query = "DELETE FROM products";
+        DBService.Execute(query);
+    }
 }

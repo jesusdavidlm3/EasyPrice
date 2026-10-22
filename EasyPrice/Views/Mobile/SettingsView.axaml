@@ -7,29 +7,9 @@
              x:Class="EasyPrice.Views.Mobile.SettingsView"
              x:DataType="vm:SettingsViewModel">
         <StackPanel Classes="PrincipalBackground" Margin="0 20 0 0">
-            <Label 
-                Content="Direccion de servidor:"
-                Margin="20 0"/>
-            <TextBox
-                Margin="20 0 20 20"/>
-            
-            <Label
-                Content="Contraseña:"
-                Margin="20 0"/>
-            <TextBox
-                PasswordChar="*"
-                Margin="20 0 20 20"/>
-            <StackPanel
-                Orientation="Horizontal"
-                HorizontalAlignment="Center"
-                Spacing="20">
-                <Button
-                    Classes="Red"
-                    Content="Desvincular"
-                    Command="{Binding HandleLogoutCommand}"/>
-                <Button
-                    Content="Vincular"
-                    Command="{Binding HandleLoginCommand}"/>
-            </StackPanel>
+            <Button
+                Classes="Red"
+                Content="Desvincular"
+                Command="{Binding HandleLogoutCommand}"/>
         </StackPanel>
 </UserControl>

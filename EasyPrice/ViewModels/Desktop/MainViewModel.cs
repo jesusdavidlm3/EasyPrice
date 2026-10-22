@@ -80,6 +80,8 @@ public partial class MainViewModel : ViewModelBase
     private void ProcessUpdates(List<Product> receivedProducts)
     {
         DateTime? newLastDate = SettingsService.Settings.LastUpdate;
+        if(receivedProducts.Count > 0)
+            newLastDate = receivedProducts[0].LastUpdate;
         
         foreach (var p in receivedProducts)
         {
@@ -113,7 +115,7 @@ public partial class MainViewModel : ViewModelBase
         }
         
         if(!SettingsService.Settings.LastUpdate.Equals(newLastDate))
-            SettingsService.UpdateLastUpdate((DateTime)newLastDate);
+            SettingsService.UpdateLastUpdate((DateTime)newLastDate!);
 
         Reload();
     }

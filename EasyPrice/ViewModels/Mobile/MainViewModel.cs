@@ -50,8 +50,11 @@ public partial class MainViewModel : ViewModelBase
 
     public void NavigateLogin()
     {
+        ClientService.StopServerWatcher();
+        SettingsService.UpdateConnPassword("");
+        SettingsService.UpdateServerIp("");
+        ProductService.DeleteAllProducts();
         NavBarVisibility = false;
-        Title = "Lista de precios";
         CurrentPage = new InitialSettingsViewModel(() => NavigateHome());
         OpenMenu = false;
     }
