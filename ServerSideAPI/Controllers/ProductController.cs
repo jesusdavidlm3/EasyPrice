@@ -51,7 +51,7 @@ public class ProductController : Controller
     {
         var newLastUpdate = productsRepo.DeleteProduct(id);
         settingsRepo.UpdateLastUpdate(newLastUpdate);
-        return Ok();
+        return Ok(newLastUpdate);
     }
 
     [HttpPatch]

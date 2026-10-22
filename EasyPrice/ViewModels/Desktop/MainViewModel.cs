@@ -16,7 +16,6 @@ public partial class MainViewModel : ViewModelBase
 {
     public ObservableCollection<Product> FullList { get; set; } = [];
     public ObservableCollection<Product> ShownList { get; set; } = [];
-
     private ShowAdministrationWindowService _showAdministrationWindowService;
     
     [ObservableProperty]
@@ -80,6 +79,8 @@ public partial class MainViewModel : ViewModelBase
 
     private void ProcessUpdates(List<Product> receivedProducts)
     {
+        DateTime? newLastDate = SettingsService.Settings.LastUpdate;
+        
         foreach (var p in receivedProducts)
         {
             Product? existingProduct = null;
@@ -106,7 +107,13 @@ public partial class MainViewModel : ViewModelBase
                 ProductService.AddProduct(p);
                 ProductService.ProductList.Add(p);
             }
+
+            if (p.LastUpdate > newLastDate)
+                newLastDate = p.LastUpdate;
         }
+        
+        if(!SettingsService.Settings.LastUpdate.Equals(newLastDate))
+            SettingsService.UpdateLastUpdate((DateTime)newLastDate);
 
         Reload();
     }

@@ -73,13 +73,24 @@ public partial class EditProductViewModel : ViewModelBase
     }
 
     [RelayCommand(CanExecute = nameof(CanSave))]
-    public void Save()
+    public async void Save()
     {
-        CurrentProduct.PackPrice = (double)PackPrice!;
-        CurrentProduct.PackQuantity = (int)PackQuantity!;
-        CurrentProduct.Gain = (int)Gain!;
-        ProductService.UpdateProduct(CurrentProduct);
-        _window.Close(CurrentProduct);
+        var newProduct = new Product(CurrentProduct);
+        newProduct.PackPrice = (double)PackPrice!;
+        newProduct.PackQuantity = (int)PackQuantity!;
+        newProduct.Gain = (int)Gain!;
+        
+        if (SettingsService.Settings.WorkMode == 2)
+        {
+            var updatedProduct = await ClientService.UpdateProduct(newProduct);
+            ProductService.UpdateProduct(updatedProduct);
+            _window.Close(updatedProduct);
+        }
+        else
+        {
+            ProductService.UpdateProduct(newProduct);
+            _window.Close(newProduct);
+        }
     }
 
     private bool CanSave() => PackPrice != null && PackQuantity != null && Gain != null;

@@ -82,11 +82,10 @@ public partial class AdministrationViewModel : ViewModelBase
         var newProduct = await _showEditProductService.ShowEditProduct(product);
         if (newProduct != null)
         {
-            var toAdd = new Product(newProduct);
             FullList.Remove(product);
-            FullList.Add(toAdd);
+            FullList.Add(newProduct);
             ShownList.Remove(product);
-            ShownList.Add(toAdd);
+            ShownList.Add(newProduct);
         }
     }
 

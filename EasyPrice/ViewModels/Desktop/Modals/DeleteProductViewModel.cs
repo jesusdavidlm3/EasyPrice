@@ -26,7 +26,8 @@ public partial class DeleteProductViewModel : ViewModelBase
     {
         if (SettingsService.Settings.WorkMode == 2)
         {
-            await ClientService.DeleteProduct(ProductToDelete);
+            var newLastUpdate = await ClientService.DeleteProduct(ProductToDelete);
+            SettingsService.UpdateLastUpdate(newLastUpdate);
         }
         ProductService.DeleteProduct(ProductToDelete);
         _window.Close(true);

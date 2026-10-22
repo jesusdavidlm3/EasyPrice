@@ -61,11 +61,16 @@ public static class ClientService
         }
     }
 
-    public static async Task DeleteProduct(Product product)
+    public static async Task<DateTime> DeleteProduct(Product product)
     {
         var addressParam = $"http://{SettingsService.Settings.ServerIp}/product/{product.Id}";
         var response = await _client.DeleteAsync(addressParam);
-        if (!response.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode)
+        {
+            var res = await response.Content.ReadFromJsonAsync<DateTime>();
+            return res;
+        }
+        else
         {
             throw new Exception("Error");
         }
@@ -77,8 +82,8 @@ public static class ClientService
         var response = await _client.PostAsJsonAsync(addressParam, product);
         if (response.IsSuccessStatusCode)
         {
-            Product? resProduct = response.Content.ReadFromJsonAsync<Product>().Result;
-            return resProduct!;
+            Product resProduct = (await response.Content.ReadFromJsonAsync<Product>())!;
+            return resProduct;
         }
         else
         {
@@ -86,11 +91,16 @@ public static class ClientService
         }
     }
 
-    public static async Task UpdateProduct(Product product)
+    public static async Task<Product> UpdateProduct(Product product)
     {
         var addressParam = $"http://{SettingsService.Settings.ServerIp}/product";
         var response = await _client.PatchAsJsonAsync(addressParam, product);
-        if (!response.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode)
+        {
+            Product res = (await response.Content.ReadFromJsonAsync<Product>())!;
+            return res;
+        }
+        else
         {
             throw new Exception("Error");
         }
