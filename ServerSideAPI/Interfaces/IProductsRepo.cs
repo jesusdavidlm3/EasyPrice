@@ -8,5 +8,5 @@ public interface IProductsRepo
     public List<Product> GetProducts(DateTime date);
     public Product SaveProduct(Product product);
     public Product EditProduct(Product product);
-    public void DeleteProduct(Guid id);
+    public DateTime DeleteProduct(Guid id);
 }

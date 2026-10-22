@@ -3,53 +3,63 @@ using Microsoft.AspNetCore.Mvc;
 using Models;
 using ServerSideAPI.Interfaces;
 using ServerSideAPI.Middlewares;
+using ServerSideAPI.Repositories;
 
 namespace ServerSideAPI.Controllers;
 [ApiController]
 [Route("[controller]")]
 public class ProductController : Controller
 {
-    
-    
     [HttpGet]
     [TypeFilter(typeof(AuthConn))]
     public IActionResult Get([FromServices] IProductsRepo productsRepo)
     {
-        var response = JsonSerializer.Serialize(productsRepo.GetProducts());
+        var response = productsRepo.GetProducts();
         return Ok(response);
     }
 
     [HttpGet]
     [Route("{date}")]
     [TypeFilter(typeof(AuthConn))]
-    public IActionResult Update([FromServices] IProductsRepo productsRepo, [FromRoute] DateTime date)
+    public IActionResult Update([FromServices] IProductsRepo productsRepo, [FromServices] ISettingsRepo settingsRepo, [FromRoute] DateTime date)
     {
-        var response = JsonSerializer.Serialize(productsRepo.GetProducts(date));
+        List<Product> response;
+        if (settingsRepo.Current.LastUpdate > date && !settingsRepo.Current.LastUpdate.Equals(date))
+        {
+            response = productsRepo.GetProducts(date);
+        }
+        else
+        {
+            response = new List<Product>();
+        }
         return Ok(response);
     }
 
     [HttpPost]
     [TypeFilter(typeof(AuthAdmin))]
-    public IActionResult Post([FromServices] IProductsRepo productsRepo, [FromBody]Product product)
+    public IActionResult Post([FromServices] IProductsRepo productsRepo, [FromServices] ISettingsRepo settingsRepo, [FromBody]Product product)
     {
         var response = productsRepo.SaveProduct(product);
+        settingsRepo.UpdateLastUpdate(product.LastUpdate ?? DateTime.Now);
         return Created("", response);
     }
 
     [HttpDelete]
     [Route("{id}")]
     [TypeFilter(typeof(AuthAdmin))]
-    public IActionResult Delete([FromServices] IProductsRepo productsRepo, [FromRoute]Guid id)
+    public IActionResult Delete([FromServices] IProductsRepo productsRepo, [FromServices] ISettingsRepo settingsRepo, [FromRoute]Guid id)
     {
-        productsRepo.DeleteProduct(id);
+        var newLastUpdate = productsRepo.DeleteProduct(id);
+        settingsRepo.UpdateLastUpdate(newLastUpdate);
         return Ok();
     }
 
     [HttpPatch]
     [TypeFilter(typeof(AuthAdmin))]
-    public IActionResult Patch([FromServices] IProductsRepo productsRepo, [FromBody]Product product)
+    public IActionResult Patch([FromServices] IProductsRepo productsRepo, [FromServices] ISettingsRepo settingsRepo, [FromBody]Product product)
     {
         var response = productsRepo.EditProduct(product);
+        settingsRepo.UpdateLastUpdate(response.LastUpdate ?? DateTime.Now);
         return Accepted(response);
     }
 }

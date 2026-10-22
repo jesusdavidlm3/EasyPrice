@@ -81,7 +81,7 @@ public class ProductsRepo : IProductsRepo
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
             ("@Gain", product.Gain),
-            ("@LastUpdate", DateTime.Now)
+            ("@LastUpdate", product.LastUpdate)
         };
         _dbService.Execute("UPDATE products SET PackPrice=@PackPrice, PackQuantity=@PackQuantity, Gain=@Gain, LastUpdate=@LastUpdate WHERE Id=@Id", queryParams);
         return product;
@@ -109,14 +109,16 @@ public class ProductsRepo : IProductsRepo
         return res;
     }
 
-    public void DeleteProduct(Guid id)
+    public DateTime DeleteProduct(Guid id)
     {
+        var updated = DateTime.Now;
         var queryParams = new List<(string, object)>
         {
             ("@Id", id.ToString()),
             ("@Deleted", true),
-            ("@LastUpdate", DateTime.Now)
+            ("@LastUpdate", updated)
         };
         _dbService.Execute("UPDATE products SET Deleted=@Deleted, LastUpdate=@LastUpdate WHERE Id=@Id", queryParams);
+        return updated;
     }
 }
