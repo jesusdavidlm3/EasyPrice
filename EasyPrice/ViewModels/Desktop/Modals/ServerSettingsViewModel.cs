@@ -67,17 +67,12 @@ public partial class ServerSettingsViewModel : ViewModelBase
                 {
                     SettingsService.UpdateWorkMode(WorkModes.FirstOrDefault(x => x.Key == SelectedWorkMode).Value);
                     var productsRes = await ClientService.GetProducts();
-                    foreach (var product in productsRes)
-                    {
-                        //Se estan agregando a la base de datos pero no la lista del programa en tiempo real
-                        //Revisar eso
-                        ProductService.AddProduct(product);
-                        _window.Close();
-                    }
+                    _window.Close(productsRes);
                 }
                 else
                 {
                     Console.WriteLine("Cancelado");
+                    _window.Close();
                 }
             }
         }

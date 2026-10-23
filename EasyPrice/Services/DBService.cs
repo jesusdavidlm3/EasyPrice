@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Avalonia.Controls.ApplicationLifetimes;
 using Microsoft.Data.Sqlite;
 
 namespace EasyPrice.Services;
@@ -12,7 +13,9 @@ public class DBService
     static DBService()
     {
         var appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        var filePath = Path.Combine(appDataFolder, "EasyPrice");
+        var filePath = appDataFolder;
+        if(App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime)
+            filePath = Path.Combine(appDataFolder, "EasyPrice");
         if(!Directory.Exists(filePath))
             Directory.CreateDirectory(filePath);
         filePath = Path.Combine(filePath, "db.db");

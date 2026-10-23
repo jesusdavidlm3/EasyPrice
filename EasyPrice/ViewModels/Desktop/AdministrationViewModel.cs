@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -44,8 +45,9 @@ public partial class AdministrationViewModel : ViewModelBase
     private ShowChangePasswordService _showChangePasswordService;
     private ShowServerSettingsService _showServerSettingsService;
     private ShowServerPasswordsService _showServerPasswordsService;
+    private Action<List<Product>> _processUpdates;
     
-    public AdministrationViewModel(Window window, MainViewModel ownerVm)
+    public AdministrationViewModel(Window window, MainViewModel ownerVm, Action<List<Product>> processUpdates)
     {
         GetProducts();
         FullList = ownerVm.FullList;
@@ -57,6 +59,8 @@ public partial class AdministrationViewModel : ViewModelBase
         _showChangePasswordService = new ShowChangePasswordService(window);
         _showServerSettingsService = new ShowServerSettingsService(window);
         _showServerPasswordsService = new ShowServerPasswordsService(window);
+
+        _processUpdates = processUpdates;
     }
     
     [RelayCommand]
@@ -113,9 +117,19 @@ public partial class AdministrationViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void ShowServerSettings()
+    private async void ShowServerSettings()
     {
-        _showServerSettingsService.ShowServerSettings();
+        var serverFullList = await _showServerSettingsService.ShowServerSettings();
+        if (serverFullList != null)
+        {
+            ClientService.StartServerWatcher(_processUpdates);
+            foreach (var item in serverFullList)
+            {
+                ProductService.AddProduct(item);
+                FullList.Add(item);
+                ShownList.Add(item);
+            }
+        }
     }
 
     [RelayCommand]

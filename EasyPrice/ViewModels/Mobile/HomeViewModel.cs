@@ -22,9 +22,6 @@ public partial class HomeViewModel : ViewModelBase
     [ObservableProperty]
     public partial string SearchText { get; set; } = string.Empty;
 
-    [ObservableProperty]
-    public partial double DolarPrice { get; private set; } = SettingsService.Settings.DolarPrice;
-
     partial void OnSearchTextChanged(string value)
     {
         ShownList.Clear();

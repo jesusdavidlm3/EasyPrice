@@ -24,7 +24,7 @@ VOLUME /home/jesus/test:/app/EasyPrice
 ENTRYPOINT ["dotnet", "ServerSideAPI.dll"]
 
 #build with
-#sudo docker build -t {{image identification}}-f ServerSideAPI/docker .
+#sudo docker build -t {{image identification}}-f ServerSideAPI/dockerfile .
 
 #run with
 #sudo docker run --restart always -p {{port to expose}}:8080 -v {{host files path}}:/app/EasyPrice {{image identification}}

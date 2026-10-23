@@ -52,15 +52,15 @@ public class SettingsRepo : ISettingsRepo
         return settings;
     }
     
-    private Settings ResetSettings(Settings? newSettings = null)
+    private Settings ResetSettings()
     {
         var settings = new Settings();
-        settings.DolarPrice = newSettings?.DolarPrice ?? 1;
-        settings.AdminPassword = newSettings?.AdminPassword ?? Crypto.Hash("123456");
-        settings.ConnPassword = newSettings?.ConnPassword ?? Crypto.Hash("1234");
-        settings.WorkMode = newSettings?.WorkMode ?? 1;
-        settings.ServerIp = newSettings?.ServerIp ?? null;
-        settings.LastUpdate = newSettings?.LastUpdate ?? new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+        settings.DolarPrice = 1;
+        settings.AdminPassword = Crypto.Hash("123456");
+        settings.ConnPassword = Crypto.Hash("1234");
+        settings.WorkMode = 1;
+        settings.ServerIp = null;
+        settings.LastUpdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTimeKind.Utc);
         
         SaveToFile(settings);
         return settings;
@@ -69,7 +69,16 @@ public class SettingsRepo : ISettingsRepo
     public void UpdateLastUpdate(DateTime newLastUpdate)
     {
         var newSettings = Current;
-        newSettings.LastUpdate = newLastUpdate;
+        var kind = newLastUpdate.Kind;
+        if (kind.Equals(DateTimeKind.Local))
+        {
+            newLastUpdate.Deconstruct(out DateOnly dateOnly, out TimeOnly timeOnly);
+            newSettings.LastUpdate = new DateTime(dateOnly,  timeOnly, DateTimeKind.Utc);
+        }
+        else
+        {
+            newSettings.LastUpdate = newLastUpdate;
+        }
         SaveToFile(newSettings);
         _current = newSettings;
     }

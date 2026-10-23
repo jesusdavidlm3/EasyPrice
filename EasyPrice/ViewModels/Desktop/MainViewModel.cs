@@ -56,7 +56,7 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private async Task ShowAdministration()
     {
-        _showAdministrationWindowService.ShowAdministrationWindow(this);
+        _showAdministrationWindowService.ShowAdministrationWindow(this, (List<Product> rec) => ProcessUpdates(rec));
     }
     
     private void GetProducts()

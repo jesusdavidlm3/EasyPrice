@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text.Json;
@@ -56,7 +57,7 @@ public class SettingsService
         settings.DolarPrice = 1;
         settings.AdminPassword = Crypto.Hash("1234");
         settings.ServerIp = null;
-        settings.LastUpdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+        settings.LastUpdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTimeKind.Utc);
 
         if (App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime)
         {
@@ -117,7 +118,16 @@ public class SettingsService
 
     public static void UpdateLastUpdate(DateTime newLastUpdate)
     {
-        _settings.LastUpdate = newLastUpdate;
+        var kind = newLastUpdate.Kind;
+        if (kind.Equals(DateTimeKind.Local))
+        {
+            newLastUpdate.Deconstruct(out DateOnly dateOnly, out TimeOnly timeOnly);
+            _settings.LastUpdate = new DateTime(dateOnly, timeOnly, DateTimeKind.Utc);
+        }
+        else
+        {
+            _settings.LastUpdate = newLastUpdate;
+        }
         SaveToFile(_settings);
     }
 }

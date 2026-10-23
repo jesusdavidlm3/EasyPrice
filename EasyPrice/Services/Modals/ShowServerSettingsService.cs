@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using EasyPrice.Views.Desktop.Modals;
+using Models;
 
 namespace EasyPrice.Services.Windows;
 
@@ -12,10 +14,10 @@ public class ShowServerSettingsService
         _window = window;
     }
 
-    public Task ShowServerSettings()
+    public async Task<List<Product>?> ShowServerSettings()
     {
         var window = new ServerSettings();
-        window.ShowDialog(_window);
-        return Task.CompletedTask;
+        var res = await window.ShowDialog<List<Product>>(_window);
+        return res;
     }
 }
