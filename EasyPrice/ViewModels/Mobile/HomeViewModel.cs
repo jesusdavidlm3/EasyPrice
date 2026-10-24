@@ -7,7 +7,6 @@ using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EasyPrice.Services;
-using EasyPrice.Services.Windows;
 using Models;
 
 namespace EasyPrice.ViewModels.Mobile;
@@ -17,8 +16,6 @@ public partial class HomeViewModel : ViewModelBase
     public ObservableCollection<Product> FullList { get; set; } = [];
     public ObservableCollection<Product> ShownList { get; set; } = [];
 
-    private ShowAdministrationWindowService _showAdministrationWindowService;
-    
     [ObservableProperty]
     public partial string SearchText { get; set; } = string.Empty;
 
@@ -37,7 +34,7 @@ public partial class HomeViewModel : ViewModelBase
         }
         else
         {
-            Reload();
+            ShownList = FullList;
         }
     }
     

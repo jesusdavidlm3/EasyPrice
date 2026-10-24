@@ -26,6 +26,8 @@ public static class ProductService
                 reader.GetInt32("Gain"),
                 reader.GetDateTime("LastUpdate")
             );
+            p.LastUpdate!.Value.Deconstruct(out DateOnly dateOnly, out TimeOnly timeOnly);
+            p.LastUpdate = new DateTime(dateOnly, timeOnly, DateTimeKind.Utc);
             products.Add(p);
         }
         return products;
@@ -33,7 +35,7 @@ public static class ProductService
     
     public static Product AddProduct(string name, double packPrice, int packQuantity, int gain)
     {
-        var product = new Product(Guid.NewGuid(), name, packPrice, packQuantity, gain, DateTime.Now);
+        var product = new Product(Guid.NewGuid(), name, packPrice, packQuantity, gain, DateTime.Now.ToUniversalTime());
         
         string query = "INSERT INTO products VALUES (@Id, @Name, @PackPrice, @PackQuantity, @Gain, @LastUpdate)";
         List<(string, object)> parameters =
@@ -43,7 +45,7 @@ public static class ProductService
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
             ("@Gain", product.Gain),
-            ("@LastUpdate", product.LastUpdate)!
+            ("@LastUpdate", product.LastUpdate!)
         ];
         DBService.Execute(query, parameters);
         
@@ -60,7 +62,7 @@ public static class ProductService
             ("@PackPrice", newProduct.PackPrice),
             ("@PackQuantity", newProduct.PackQuantity),
             ("@Gain", newProduct.Gain),
-            ("@LastUpdate", newProduct.LastUpdate)!
+            ("@LastUpdate", newProduct.LastUpdate!.Value.ToUniversalTime())
         ];
         DBService.Execute(query, parameters);
     }
@@ -73,7 +75,7 @@ public static class ProductService
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
             ("@Gain", product.Gain),
-            ("@LastUpdate", DateTime.Now),
+            ("@LastUpdate", DateTime.Now.ToUniversalTime()),
             ("@Id", product.Id)!
         ];
         DBService.Execute(query, parameters);

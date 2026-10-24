@@ -57,7 +57,7 @@ public class SettingsService
         settings.DolarPrice = 1;
         settings.AdminPassword = Crypto.Hash("1234");
         settings.ServerIp = null;
-        settings.LastUpdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTimeKind.Utc);
+        settings.LastUpdate = DateTime.Now.ToUniversalTime();
 
         if (App.Current.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime)
         {
@@ -118,16 +118,7 @@ public class SettingsService
 
     public static void UpdateLastUpdate(DateTime newLastUpdate)
     {
-        var kind = newLastUpdate.Kind;
-        if (kind.Equals(DateTimeKind.Local))
-        {
-            newLastUpdate.Deconstruct(out DateOnly dateOnly, out TimeOnly timeOnly);
-            _settings.LastUpdate = new DateTime(dateOnly, timeOnly, DateTimeKind.Utc);
-        }
-        else
-        {
-            _settings.LastUpdate = newLastUpdate;
-        }
+        _settings.LastUpdate = newLastUpdate;
         SaveToFile(_settings);
     }
 }

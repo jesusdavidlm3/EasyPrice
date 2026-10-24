@@ -60,7 +60,7 @@ public class SettingsRepo : ISettingsRepo
         settings.ConnPassword = Crypto.Hash("1234");
         settings.WorkMode = 1;
         settings.ServerIp = null;
-        settings.LastUpdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second, DateTimeKind.Utc);
+        settings.LastUpdate = DateTime.Now;
         
         SaveToFile(settings);
         return settings;
@@ -68,19 +68,8 @@ public class SettingsRepo : ISettingsRepo
 
     public void UpdateLastUpdate(DateTime newLastUpdate)
     {
-        var newSettings = Current;
-        var kind = newLastUpdate.Kind;
-        if (kind.Equals(DateTimeKind.Local))
-        {
-            newLastUpdate.Deconstruct(out DateOnly dateOnly, out TimeOnly timeOnly);
-            newSettings.LastUpdate = new DateTime(dateOnly,  timeOnly, DateTimeKind.Utc);
-        }
-        else
-        {
-            newSettings.LastUpdate = newLastUpdate;
-        }
-        SaveToFile(newSettings);
-        _current = newSettings;
+        Current.LastUpdate = newLastUpdate;
+        SaveToFile(Current);
     }
 
     public void UpdateDolarPrice(double newDolarPrice)

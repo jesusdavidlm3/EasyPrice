@@ -26,7 +26,9 @@ public class ProductsRepo : IProductsRepo
             var packQuantity = dbResponse.GetInt32("PackQuantity");
             var gain = dbResponse.GetInt32("Gain");
             var lastUpdate = dbResponse.GetDateTime("LastUpdate");
-            var product = new Product(id, name, packPrice, packQuantity, gain, lastUpdate);
+            
+            lastUpdate.Deconstruct(out DateOnly date, out TimeOnly time);
+            var product = new Product(id, name, packPrice, packQuantity, gain, new DateTime(date, time, DateTimeKind.Utc));
             res.Add(product);
         }
         return res;
@@ -49,7 +51,9 @@ public class ProductsRepo : IProductsRepo
             var gain = dbResponse.GetInt32("Gain");
             var lastUpdate = dbResponse.GetDateTime("LastUpdate");
             var deleted = dbResponse.GetBoolean("Deleted");
-            var product = new Product(id, name, packPrice, packQuantity, gain, lastUpdate, deleted);
+            
+            lastUpdate.Deconstruct(out DateOnly dateOnly, out TimeOnly timeOnly);
+            var product = new Product(id, name, packPrice, packQuantity, gain, new DateTime(dateOnly, timeOnly, DateTimeKind.Utc), deleted);
             res.Add(product);
         }
         return res;
@@ -66,7 +70,7 @@ public class ProductsRepo : IProductsRepo
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
             ("@Gain", product.Gain),
-            ("@LastUpdate", DateTime.Now),
+            ("@LastUpdate", DateTime.Now.ToUniversalTime()),
         };
         _dbService.Execute("INSERT INTO products(Id, Name, PackPrice, PackQuantity, Gain, LastUpdate) VALUES(@Id, @Name, @PackPrice, @PackQuantity, @Gain, @LastUpdate)", queryParams);
         return product;
@@ -81,37 +85,15 @@ public class ProductsRepo : IProductsRepo
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
             ("@Gain", product.Gain),
-            ("@LastUpdate", product.LastUpdate)
+            ("@LastUpdate", product.LastUpdate.Value.ToUniversalTime()),
         };
         _dbService.Execute("UPDATE products SET PackPrice=@PackPrice, PackQuantity=@PackQuantity, Gain=@Gain, LastUpdate=@LastUpdate WHERE Id=@Id", queryParams);
         return product;
     }
 
-    public List<Product> FilterProductsByName(string productName)
-    {
-        var res = new List<Product>();
-        var queryParams = new List<(string, object)>
-        {
-            ("@Name", productName)
-        };
-        var dbResponse = _dbService.Query("SELECT * FROM products WHERE Name = @Name", queryParams);
-        while (dbResponse.Read())
-        {
-            var id = dbResponse.GetGuid("Id");
-            var name = dbResponse.GetString("Name");
-            var packPrice = dbResponse.GetDouble("PackPrice");
-            var packQuantity = dbResponse.GetInt32("PackQuantity");
-            var gain = dbResponse.GetInt32("Gain");
-            var lastUpdate = dbResponse.GetDateTime("LastUpdate");
-            var product = new Product(id, name, packPrice, packQuantity, gain, lastUpdate);
-            res.Add(product);
-        }
-        return res;
-    }
-
     public DateTime DeleteProduct(Guid id)
     {
-        var updated = DateTime.Now;
+        var updated = DateTime.Now.ToUniversalTime();
         var queryParams = new List<(string, object)>
         {
             ("@Id", id.ToString()),

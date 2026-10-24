@@ -21,8 +21,9 @@ public class ProductController : Controller
     [HttpGet]
     [Route("{date}")]
     [TypeFilter(typeof(AuthConn))]
-    public IActionResult Update([FromServices] IProductsRepo productsRepo, [FromServices] ISettingsRepo settingsRepo, [FromRoute] DateTime date)
+    public IActionResult Update([FromServices] IProductsRepo productsRepo, [FromServices] ISettingsRepo settingsRepo, [FromRoute] Int64 ticks)
     {
+        var date = DateTimeOffset.FromUnixTimeSeconds(ticks).DateTime;
         List<Product> response;
         if (settingsRepo.Current.LastUpdate > date && !settingsRepo.Current.LastUpdate.Equals(date))
         {

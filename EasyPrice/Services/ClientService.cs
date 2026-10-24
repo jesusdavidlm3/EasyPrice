@@ -46,8 +46,10 @@ public static class ClientService
         var addressParam = $"http://{SettingsService.Settings.ServerIp}/product";
         if (date != null)
         {
-            var dateString = $"{date.Value.Year}-{date.Value.Month}-{date.Value.Day} {date.Value.Hour}:{date.Value.Minute}:{date.Value.Second}";
-            addressParam = $"{addressParam}/{dateString}";
+            var urlDate = date.Value.Ticks;
+            /*var urlDate = date.Value.ToString("dd-MM-yyyy HH:mm:sszz");*/
+            /*var dateString = $"{date.Value.Year}-{date.Value.Month}-{date.Value.Day} {date.Value.Hour}:{date.Value.Minute}:{date.Value.Second}Z";*/
+            addressParam = $"{addressParam}/{urlDate}";
         }
         var response = await _client.GetAsync(addressParam);
         if (response.IsSuccessStatusCode)
@@ -175,9 +177,9 @@ public static class ClientService
 
     public static void StartServerWatcher(Action<List<Product>> processUpdates)
     {
-        /*_timer = new Timer(ServerWatcher!, processUpdates, 0, 600000);*/
+        const int coolDown = 15000;
         _timerCallback = processUpdates;
-        _timer = new Timer(ServerWatcher, null, 0, 1500);
+        _timer = new Timer(ServerWatcher, null, 0, coolDown);
     }
 
     public static void StopServerWatcher()
@@ -193,7 +195,6 @@ public static class ClientService
             var products = await GetProducts(SettingsService.Settings.LastUpdate);
             if (products.Count > 0)
             {
-                SettingsService.UpdateLastUpdate(DateTime.Now);
                 _timerCallback(products);
             }
         }
