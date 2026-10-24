@@ -17,6 +17,7 @@ public static class ClientService
     private static HttpClient _client = new HttpClient();
     private static Timer? _timer;
     private static Action<List<Product>> _timerCallback;
+    public static bool isRunning { get; private set; } = false;
 
     static ClientService()
     {
@@ -177,13 +178,15 @@ public static class ClientService
 
     public static void StartServerWatcher(Action<List<Product>> processUpdates)
     {
-        const int coolDown = 15000;
+        const int coolDown = 20000;
         _timerCallback = processUpdates;
-        _timer = new Timer(ServerWatcher, null, 0, coolDown);
+        _timer = new Timer(ServerWatcher, null, coolDown, coolDown);
+        isRunning = true;
     }
 
     public static void StopServerWatcher()
     {
+        isRunning = false;
         _timer?.Dispose();
     }
     

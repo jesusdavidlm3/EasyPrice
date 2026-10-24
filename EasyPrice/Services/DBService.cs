@@ -27,7 +27,7 @@ public class DBService
     private static void InitDb()
     {
         var products = connection.CreateCommand();
-        products.CommandText = "CREATE TABLE IF NOT EXISTS products(Id TEXT, Name string, PackPrice REAL,PackQuantity INTEGER, Gain INTEGER, LastUpdate DATETIME)";
+        products.CommandText = "CREATE TABLE IF NOT EXISTS products(Id TEXT PRIMARY KEY, Name string, PackPrice REAL,PackQuantity INTEGER, Gain INTEGER, LastUpdate DATETIME)";
         products.ExecuteNonQuery();
     }
     

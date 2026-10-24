@@ -19,11 +19,11 @@ public class ProductController : Controller
     }
 
     [HttpGet]
-    [Route("{date}")]
+    [Route("{ticks}")]
     [TypeFilter(typeof(AuthConn))]
-    public IActionResult Update([FromServices] IProductsRepo productsRepo, [FromServices] ISettingsRepo settingsRepo, [FromRoute] Int64 ticks)
+    public IActionResult Update([FromServices] IProductsRepo productsRepo, [FromServices] ISettingsRepo settingsRepo, [FromRoute] long ticks)
     {
-        var date = DateTimeOffset.FromUnixTimeSeconds(ticks).DateTime;
+        var date = new DateTime(ticks);
         List<Product> response;
         if (settingsRepo.Current.LastUpdate > date && !settingsRepo.Current.LastUpdate.Equals(date))
         {

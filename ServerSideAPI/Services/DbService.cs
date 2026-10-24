@@ -29,7 +29,7 @@ public class DbService : IDbService
         _sqliteConnection.Open();
         var products = _sqliteConnection.CreateCommand();
         products.CommandText =
-            "CREATE TABLE IF NOT EXISTS products(Id TEXT, Name string, PackPrice REAL,PackQuantity INTEGER, Gain INTEGER, LastUpdate DATETIME, Deleted BOOL DEFAULT 0 NOT NULL )";
+            "CREATE TABLE IF NOT EXISTS products(Id TEXT PRIMARY KEY, Name string, PackPrice REAL,PackQuantity INTEGER, Gain INTEGER, LastUpdate DATETIME, Deleted BOOL DEFAULT 0 NOT NULL )";
         products.ExecuteNonQuery();
     }
 

@@ -62,7 +62,7 @@ public class ProductsRepo : IProductsRepo
     public Product SaveProduct(Product product)
     {
         product.Id = Guid.NewGuid();
-        product.LastUpdate = DateTime.Now;
+        product.LastUpdate = DateTime.Now.ToUniversalTime();
         var queryParams = new List<(string, object)>
         {
             ("@Id", product.Id.ToString())!,
@@ -70,7 +70,7 @@ public class ProductsRepo : IProductsRepo
             ("@PackPrice", product.PackPrice),
             ("@PackQuantity", product.PackQuantity),
             ("@Gain", product.Gain),
-            ("@LastUpdate", DateTime.Now.ToUniversalTime()),
+            ("@LastUpdate", product.LastUpdate),
         };
         _dbService.Execute("INSERT INTO products(Id, Name, PackPrice, PackQuantity, Gain, LastUpdate) VALUES(@Id, @Name, @PackPrice, @PackQuantity, @Gain, @LastUpdate)", queryParams);
         return product;
