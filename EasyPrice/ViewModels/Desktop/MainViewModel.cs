@@ -99,15 +99,21 @@ public partial class MainViewModel : ViewModelBase
             {
                 ProductService.DeleteProduct(existingProduct!);
                 ProductService.ProductList.Remove(existingProduct!);
+                FullList.Remove(existingProduct!);
+                ShownList.Remove(existingProduct!);
             }else if (existingProduct is {Deleted: false})
             {
                 ProductService.UpdateProduct(p);
                 ProductService.ProductList.Remove(existingProduct);
+                FullList.Remove(existingProduct);
+                FullList.Add(p);
             }
             else
             {
                 ProductService.AddProduct(p);
                 ProductService.ProductList.Add(p);
+                FullList.Add(p);
+                ShownList.Add(p);
             }
 
             if (p.LastUpdate > newLastDate)
@@ -116,7 +122,5 @@ public partial class MainViewModel : ViewModelBase
         
         if(!SettingsService.Settings.LastUpdate.Equals(newLastDate))
             SettingsService.UpdateLastUpdate((DateTime)newLastDate!);
-
-        Reload();
     }
 }
