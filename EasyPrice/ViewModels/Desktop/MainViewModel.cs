@@ -95,20 +95,26 @@ public partial class MainViewModel : ViewModelBase
                 // ignored
             }
 
-            if (p is { Deleted: true })
+            if (existingProduct != null && p is { Deleted: true })
             {
                 ProductService.DeleteProduct(existingProduct!);
                 ProductService.ProductList.Remove(existingProduct!);
                 FullList.Remove(existingProduct!);
-                ShownList.Remove(existingProduct!);
-            }else if (existingProduct is {Deleted: false})
+                if(ShownList.Contains(existingProduct!))
+                    ShownList.Remove(existingProduct!);
+            }else if (existingProduct != null && p is {Deleted: false})
             {
                 ProductService.UpdateProduct(p);
                 ProductService.ProductList.Remove(existingProduct);
                 FullList.Remove(existingProduct);
                 FullList.Add(p);
+                if (ShownList.Contains(existingProduct))
+                {
+                    ShownList.Remove(existingProduct);
+                    ShownList.Add(p);
+                }
             }
-            else
+            else if(p is {Deleted: false})
             {
                 ProductService.AddProduct(p);
                 ProductService.ProductList.Add(p);
