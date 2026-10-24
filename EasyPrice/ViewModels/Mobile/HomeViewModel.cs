@@ -13,11 +13,13 @@ namespace EasyPrice.ViewModels.Mobile;
 
 public partial class HomeViewModel : ViewModelBase
 {
-    public ObservableCollection<Product> FullList { get; set; } = [];
-    public ObservableCollection<Product> ShownList { get; set; } = [];
+    [ObservableProperty]
+    public ObservableCollection<Product> _fullList = [];
+    [ObservableProperty]
+    public ObservableCollection<Product> _shownList = [];
 
     [ObservableProperty]
-    public partial string SearchText { get; set; } = string.Empty;
+    public string _searchText = string.Empty;
 
     partial void OnSearchTextChanged(string value)
     {
@@ -34,7 +36,10 @@ public partial class HomeViewModel : ViewModelBase
         }
         else
         {
-            ShownList = FullList;
+            foreach (var item in FullList)
+            {
+                ShownList.Add(item);
+            }
         }
     }
     
@@ -42,26 +47,29 @@ public partial class HomeViewModel : ViewModelBase
     {
         GetProducts();
         ProductService.ProductList = FullList;
-        if (SettingsService.Settings.WorkMode == 2)
-            ClientService.StartServerWatcher((List<Product> receivedProducts) => ProcessUpdates(receivedProducts));
-        
+        if (!ClientService.isRunning)
+            ClientService.StartServerWatcher(receivedProducts => ProcessUpdates(receivedProducts));
     }
     
-    private void GetProducts()
+    private async void GetProducts()
     {
         FullList = ProductService.GetAll();
-        ShownList = new ObservableCollection<Product>(FullList);
-    }
-
-    private void Reload()
-    {
-        var newList = ProductService.GetAll();
-        FullList.Clear();
-        ShownList.Clear();
-        foreach (var item in newList)
+        if (FullList.Count == 0)
         {
-            FullList.Add(item);
-            ShownList.Add(item);
+            var receivedList = await ClientService.GetProducts();
+            foreach (var product in receivedList)
+            {
+                ProductService.AddProduct(product);
+                FullList.Add(product);
+                ShownList.Add(product);
+            }
+        }
+        else
+        {
+            foreach (var item in FullList)
+            {
+                ShownList.Add(item);
+            }
         }
     }
 
@@ -87,15 +95,27 @@ public partial class HomeViewModel : ViewModelBase
             {
                 ProductService.DeleteProduct(existingProduct!);
                 ProductService.ProductList.Remove(existingProduct!);
-            }else if (existingProduct is {Deleted: false})
+                FullList.Remove(existingProduct!);
+                if(ShownList.Contains(existingProduct!))
+                    ShownList.Remove(existingProduct!);
+            }else if (existingProduct != null && p is {Deleted: false})
             {
                 ProductService.UpdateProduct(p);
                 ProductService.ProductList.Remove(existingProduct);
+                FullList.Remove(existingProduct);
+                FullList.Add(p);
+                if (ShownList.Contains(existingProduct))
+                {
+                    ShownList.Remove(existingProduct);
+                    ShownList.Add(p);
+                }
             }
-            else
+            else if(p is {Deleted: false})
             {
                 ProductService.AddProduct(p);
                 ProductService.ProductList.Add(p);
+                FullList.Add(p);
+                ShownList.Add(p);
             }
             
             if (p.LastUpdate > newLastDate)
@@ -104,7 +124,5 @@ public partial class HomeViewModel : ViewModelBase
 
         if(!SettingsService.Settings.LastUpdate.Equals(newLastDate))
             SettingsService.UpdateLastUpdate((DateTime)newLastDate!);
-        
-        Reload();
     }
 }

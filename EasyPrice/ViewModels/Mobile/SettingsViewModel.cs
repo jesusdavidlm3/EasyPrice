@@ -15,6 +15,8 @@ public partial class SettingsViewModel : ViewModelBase
     public SettingsViewModel(Action logout)
     {
         Logout = logout;
+        if (ClientService.isRunning)
+            ClientService.StopServerWatcher();
     }
 
     [RelayCommand]

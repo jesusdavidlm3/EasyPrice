@@ -13,6 +13,8 @@ public partial class InitialSettingsViewModel : ViewModelBase
     public InitialSettingsViewModel(Action loginSuccess)
     {
         LoginSuccess = loginSuccess;
+        if(ClientService.isRunning)
+            ClientService.StopServerWatcher();
     }
 
     [ObservableProperty] public partial string ServerIp { get; set; }

@@ -61,7 +61,7 @@ public partial class MainViewModel : ViewModelBase
     
     public MainViewModel()
     {
-        if (SettingsService.Settings.ServerIp == null)
+        if (SettingsService.Settings.ServerIp == null || SettingsService.Settings.ServerIp == "")
         {
             NavigateLogin();
         }

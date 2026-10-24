@@ -7,7 +7,12 @@
              x:Class="EasyPrice.Views.Mobile.SettingsView"
              x:DataType="vm:SettingsViewModel">
         <StackPanel Classes="PrincipalBackground" Margin="0 20 0 0">
+            <Label
+                HorizontalAlignment="Center"
+                Margin="10"
+                Content="Desvincular la app del inventario principal"/>
             <Button
+                HorizontalAlignment="Center"
                 Classes="Red"
                 Content="Desvincular"
                 Command="{Binding HandleLogoutCommand}"/>

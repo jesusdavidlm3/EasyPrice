@@ -11,8 +11,6 @@ public partial class HomeView : UserControl
 {
     public HomeView()
     {
-        var vm = new HomeViewModel();
-        DataContext = vm;
         InitializeComponent();
     }
 }

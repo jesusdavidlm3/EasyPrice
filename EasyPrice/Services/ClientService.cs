@@ -178,9 +178,9 @@ public static class ClientService
 
     public static void StartServerWatcher(Action<List<Product>> processUpdates)
     {
-        const int coolDown = 20000;
+        const int coolDown = 1800000;
         _timerCallback = processUpdates;
-        _timer = new Timer(ServerWatcher, null, coolDown, coolDown);
+        _timer = new Timer(ServerWatcher, null, 5000, coolDown);
         isRunning = true;
     }
 
