@@ -8,7 +8,8 @@
         xmlns:local="clr-namespace:EasyPrice.Converters"
         x:DataType="vm:EditProductViewModel"
         ShowInTaskbar="False"
-        Title="Editar producto">
+        Title="Editar producto"
+        Icon="/Assets/Icon.ico">
     
     <Window.Resources>
         <local:DolarToBs x:Key="DolarToBs"/>

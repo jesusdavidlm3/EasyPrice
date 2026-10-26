@@ -6,7 +6,8 @@
         x:Class="EasyPrice.Views.Desktop.Modals.ServerSettings"
         Title="Ajustes de servidor"
         xmlns:vm="clr-namespace:EasyPrice.ViewModels.Desktop"
-        x:DataType="vm:ServerSettingsViewModel">
+        x:DataType="vm:ServerSettingsViewModel"
+        Icon="/Assets/Icon.ico">
     
     <Window.KeyBindings>
         <KeyBinding Gesture="Escape" Command="{Binding CancelCommand}"/>

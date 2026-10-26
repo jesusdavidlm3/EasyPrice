@@ -7,7 +7,8 @@
         xmlns:vm="clr-namespace:EasyPrice.ViewModels.Desktop"
         x:DataType="vm:ChangeDolarPriceViewModel"
         Title="Cambiar precio del dolar"
-        ShowInTaskbar="False">
+        ShowInTaskbar="False"
+        Icon="/Assets/Icon.ico">
     
     <Window.KeyBindings>
         <KeyBinding

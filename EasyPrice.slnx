@@ -3,9 +3,12 @@
   <Project Path="EasyPrice.Android/EasyPrice.Android.csproj">
     <Deploy />
   </Project>
-  <Project Path="EasyPrice.Browser/EasyPrice.Browser.csproj" />
+  <Project Path="EasyPrice.Browser/EasyPrice.Browser.csproj">
+    <Build Project="false" />
+  </Project>
   <Project Path="EasyPrice.Desktop/EasyPrice.Desktop.csproj" />
   <Project Path="EasyPrice.iOS/EasyPrice.iOS.csproj">
+    <Build Project="false" />
     <Deploy />
   </Project>
   <Project Path="EasyPrice/EasyPrice.csproj" />

@@ -7,7 +7,8 @@
         x:Class="EasyPrice.Views.Desktop.DeleteProduct"
         x:DataType="vm:DeleteProductViewModel"
         Title="Eliminar producto"
-        ShowInTaskbar="False">
+        ShowInTaskbar="False"
+        Icon="/Assets/Icon.ico">
     
     <Window.KeyBindings>
         <KeyBinding

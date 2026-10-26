@@ -8,7 +8,7 @@
         WindowState="Maximized"
         x:Class="EasyPrice.Views.Desktop.Administration"
         x:DataType="vm:AdministrationViewModel"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/Icon.ico"
         Title="Administracion"
         ShowInTaskbar="False">
 
